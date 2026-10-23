@@ -97,9 +97,10 @@ def test_model_and_final_evaluation_are_not_available(command: str) -> None:
 
 
 def test_module_help_command_works(tmp_path: Path) -> None:
-    """Verify the documented module entry point in a separate process."""
-    root = Path(__file__).resolve().parents[1]
-    environment = {**os.environ, "PYTHONPATH": str(root / "src"), "PYTHONDONTWRITEBYTECODE": "1"}
+    """Verify the installed package from outside the source checkout."""
+    environment = os.environ.copy()
+    environment.pop("PYTHONPATH", None)
+    environment["PYTHONDONTWRITEBYTECODE"] = "1"
     result = subprocess.run(
         [sys.executable, "-B", "-m", "airfoil_noise", "--help"],
         cwd=tmp_path, env=environment, capture_output=True, text=True, check=False,

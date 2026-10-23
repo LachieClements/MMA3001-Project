@@ -64,3 +64,41 @@ Student review remains outstanding: explain the identifier/checksum distinction,
 why whole conditions are withheld, why CV is development evidence, how the fixed
 seed was chosen, and why thickness must be supplied. Record actual student
 checks, disagreements, revisions and effects on learning when they occur.
+
+## 2026-10-23: Git checkout and installation reproducibility follow-up
+
+The student reported that an external reviewer independently ran all 125 tests
+and validated the original frozen bundle. This is attributed to the student's
+report; it does not establish independent student understanding or physical
+validity. The student then requested and approved a seven-file follow-up scope.
+
+Codex drafted the Git attributes, CLI subprocess test correction, README changes
+and verification records. Essentially all new text/code in this follow-up was
+AI drafted; the student identified the review concerns and approved the policy.
+There had been no .gitattributes: the original data uses CRLF, while the two
+checksum-bound assignment CSVs use LF. The new rules preserve this distinction.
+The previous CLI subprocess test also injected PYTHONPATH, so it was changed
+to remove that variable and test the installed package outside the checkout.
+
+Verification used a disposable fixture commit and a separate clone, with
+clone-local core.autocrlf=true set before checkout. The original raw checksum
+and both assignment checksums survived commit/checkout; assignment CSVs were LF.
+A fresh virtual environment then installed using the README command, without
+dependency bypasses or source-path overrides. Installed console/module entry
+points, audit and check-split passed; two focused integrity tests and all 125
+tests passed, with no skips, expected failures or deselections. Actual commands,
+environment, package versions and outputs are in docs/reproducibility-report.txt.
+
+The first installation attempt was blocked by sandbox network permissions;
+the same command succeeded after download permission was granted. A temporary
+logging helper initially failed to print pip's Unicode error symbols to its
+cp1252 console; stdout was changed to UTF-8. The complete pip error had already
+been retained in the log. Neither issue required a package-code or pyproject
+change. These operational failures are retained in the verification record.
+
+The approved dataset, metadata, seed and assignments were not edited. Project
+HEAD, index and Git configuration were checked against their starting hashes.
+Only disposable repositories received fixture commits/configuration; no project
+commit, push or global Git configuration change occurred. The retained baseline
+regression test ran within pytest; no model comparison or final evaluation ran.
+Student interpretation and presentation preparation remain outstanding.

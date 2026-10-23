@@ -153,3 +153,32 @@ Additional executed checks:
 - HTML relative resource links: 11 checked across 6 HTML files, zero missing.
 - Generated artifact trailing whitespace normalised after pdoc.
 - pip check: No broken requirements found.
+
+======================================================================
+2026-10-23: installed-package verification in a fresh autocrlf=true clone
+README installation succeeded in a new isolated virtual environment.
+PYTHONPATH/PYTHONHOME were unset; there was no sys.path injection.
+The module-help subprocess test also removed inherited PYTHONPATH and
+ran outside the source checkout.
+
+CWD: C:\Users\lachi\AppData\Local\Temp\mma3001-reproducibility-si1w11ay\checkout
+Exact argv: ["C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-reproducibility-si1w11ay\\checkout\\.venv\\Scripts\\python.exe", "-m", "pytest", "-q", "-ra", "tests/test_data.py::test_source_file_integrity_and_audit", "tests/test_split.py::test_committed_bundle_matches_original_source"]
+..                                                                       [100%]
+2 passed in 1.84s
+
+Exit code: 0
+
+CWD: C:\Users\lachi\AppData\Local\Temp\mma3001-reproducibility-si1w11ay\checkout
+Exact argv: ["C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-reproducibility-si1w11ay\\checkout\\.venv\\Scripts\\python.exe", "-m", "pytest", "-q", "-ra"]
+........................................................................ [ 57%]
+.....................................................                    [100%]
+125 passed in 8.40s
+
+Exit code: 0
+
+The full run had 0 skipped, 0 xfailed, 0 deselected tests.
+The two focused checks are included in the 125-test suite; they are not
+additional distinct test cases. Console/module audit and check-split,
+outside-checkout entry points, checkout checksums and pip check also passed.
+Full commands, bootstrap packages, environment, dependency inventory and
+the initial network-blocked install attempt: docs/reproducibility-report.txt

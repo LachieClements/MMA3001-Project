@@ -49,6 +49,9 @@ Use Python 3.10 or later. From the repository root:
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install -e ".[dev]"
+airfoil-noise --help
+airfoil-noise audit
+airfoil-noise check-split
 python -m airfoil_noise audit
 python -m airfoil_noise check-split
 python -m pytest -q
@@ -58,15 +61,17 @@ pdoc -o docs/api airfoil_noise airfoil_noise.__main__
 The console entry point airfoil-noise offers the same commands as
 python -m airfoil_noise. [docs/environment.txt](docs/environment.txt) identifies
 the environment actually used for milestone checks. Dependency ranges are not
-a complete dependency lock; the inspection environment differs from the older
-Python 3.12 snapshot.
+a complete dependency lock. Install the package before running its commands or
+tests; no PYTHONPATH setting or source-path injection is needed. The subprocess
+entry-point test runs from outside the checkout and removes any inherited
+PYTHONPATH setting.
 
-For a source-tree check with dependencies already installed, PowerShell can use:
-
-~~~powershell
-$env:PYTHONPATH = (Resolve-Path src).Path
-python -m airfoil_noise check-split
-~~~
+The repository attributes preserve the original raw .dat bytes and enforce LF
+checkout endings for data/splits/*.csv, including when core.autocrlf=true.
+Do not normalise the raw file: its approved checksum includes CRLF endings.
+The [reproducibility report](docs/reproducibility-report.txt) records the isolated
+Git checkout and fresh editable-install checks. Git configuration changes and
+fixture commits for that check are confined to temporary repositories.
 
 The complete pytest suite includes synthetic unit/CLI tests, real-source/bundle
 integration checks and the retained legacy baseline regression test. A quick

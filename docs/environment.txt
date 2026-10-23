@@ -56,3 +56,127 @@ Detected native thread pools:
 pip check: No broken requirements found.
 This snapshot records checks; it is not a dependency lock.
 pypdf was used only to inspect the supplied brief and is not a project runtime requirement.
+
+======================================================================
+2026-10-23: fresh Git-checkout and editable-install reproduction
+This completed follow-up supersedes the earlier 'reproduction pending'
+status above. The preceding snapshot is retained as historical evidence.
+
+The fresh environment was created in a disposable clone after checkout
+with clone-local core.autocrlf=true. Initial packages: pip 22.0.4,
+setuptools 58.1.0. include-system-site-packages=false.
+README command: python -m pip install -e ".[dev]"
+PYTHONPATH and PYTHONHOME were unset; no sys.path injection was used.
+Pip's isolated build used setuptools 84.2.1, as recorded by the project's
+installed WHEEL metadata; the venv's bootstrap setuptools remained 58.1.0.
+
+{
+
+  "python": "3.10.5 (tags/v3.10.5:f377153, Jun  6 2022, 16:14:13) [MSC v.1929 64 bit (AMD64)]",
+
+  "executable": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-reproducibility-si1w11ay\\checkout\\.venv\\Scripts\\python.exe",
+
+  "prefix": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-reproducibility-si1w11ay\\checkout\\.venv",
+
+  "base_prefix": "C:\\Users\\lachi\\AppData\\Local\\Programs\\Python\\Python310",
+
+  "platform": "Windows-10-10.0.26200-SP0",
+
+  "user_site_enabled": false,
+
+  "PYTHONPATH": null,
+
+  "PYTHONHOME": null,
+
+  "package_file": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-reproducibility-si1w11ay\\checkout\\src\\airfoil_noise\\__init__.py",
+
+  "versions": {
+
+    "mma3001-airfoil-noise": "0.1.0",
+
+    "numpy": "2.2.6",
+
+    "pandas": "2.3.3",
+
+    "scikit-learn": "1.7.2",
+
+    "scipy": "1.15.3",
+
+    "pytest": "9.1.1",
+
+    "pdoc": "16.0.0",
+
+    "pip": "22.0.4",
+
+    "setuptools": "58.1.0"
+
+  },
+
+  "editable_install": "{\"dir_info\": {\"editable\": true}, \"url\": \"file:///C:/Users/lachi/AppData/Local/Temp/mma3001-reproducibility-si1w11ay/checkout\"}",
+
+  "wheel_generator": "Wheel-Version: 1.0\nGenerator: setuptools (84.2.1)\nRoot-Is-Purelib: true\nTag: py3-none-any\n\n"
+
+}
+
+
+Installed inventory:
+cloudpickle==3.1.2
+
+colorama==0.4.6
+
+exceptiongroup==1.3.1
+
+iniconfig==2.3.1
+
+Jinja2==3.1.6
+
+joblib==1.6.0
+
+markdown2==2.5.5
+
+MarkupSafe==3.0.4
+
+-e git+file:///C:/Users/lachi/AppData/Local/Temp/mma3001-reproducibility-si1w11ay/fixture@37a7f1dbb0d04fd1a6681cd04e9d26d611f40c68#egg=mma3001_airfoil_noise
+
+numpy==2.2.6
+
+packaging==26.3
+
+pandas==2.3.3
+
+pdoc==16.0.0
+
+pip==22.0.4
+
+pluggy==1.7.0
+
+Pygments==2.21.0
+
+pytest==9.1.1
+
+python-dateutil==3.0.0
+
+pytz==2026.5
+
+scikit-learn==1.7.2
+
+scipy==1.15.3
+
+setuptools==58.1.0
+
+six==1.17.0
+
+threadpoolctl==3.7.0
+
+tomli==2.5.0
+
+typing_extensions==4.16.0
+
+tzdata==2026.5
+
+
+The editable URL names a temporary fixture and is not a permanent lock.
+Console/module entry points, audit, frozen-bundle checks, source integrity
+and the full pytest suite passed. Complete exact commands and outcomes:
+docs/reproducibility-report.txt
+No new predictive experiment, timing benchmark or final evaluation.

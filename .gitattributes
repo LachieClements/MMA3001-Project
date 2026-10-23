@@ -1,0 +1,5 @@
+# Preserve the original dataset bytes, including its CRLF record endings.
+/data/raw/airfoil_self_noise.dat -text
+
+# Keep checksum-bound assignment CSVs identical after checkout.
+/data/splits/*.csv text eol=lf
