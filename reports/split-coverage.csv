@@ -1,0 +1,11 @@
+feature,split,rows,conditions,distinct_values,minimum,q25,median,q75,maximum,rows_outside_development_range
+frequency_hz,development,1194,84,21,200.0,800.0,1600.0,4000.0,20000.0,0
+frequency_hz,test,309,22,21,200.0,800.0,1600.0,4000.0,20000.0,0
+angle_deg,development,1194,84,26,0.0,2.0,5.3,9.9,22.2,0
+angle_deg,test,309,22,14,0.0,2.0,5.4,9.9,22.2,0
+chord_m,development,1194,84,6,0.0254,0.0508,0.1016,0.2286,0.3048,0
+chord_m,test,309,22,6,0.0254,0.0508,0.1016,0.2286,0.3048,0
+velocity_m_s,development,1194,84,4,31.7,39.6,39.6,71.3,71.3,0
+velocity_m_s,test,309,22,4,31.7,39.6,55.5,71.3,71.3,0
+displacement_thickness_m,development,1194,84,83,0.000400682,0.00245138,0.00485029,0.014072,0.0584113,0
+displacement_thickness_m,test,309,22,22,0.000791822,0.0027238,0.0051942,0.0165706,0.0528487,0

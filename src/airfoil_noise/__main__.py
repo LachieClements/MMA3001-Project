@@ -1,89 +1,85 @@
-"""Command-line entry points for data checks and development baselines."""
+"""Audit source data and create or verify frozen condition/fold assignments."""
 
 import argparse
+import json
 from pathlib import Path
 
-from airfoil_noise.baseline import development_baselines
-from airfoil_noise.data import audit_data, load_airfoil
-from airfoil_noise.split import apply_manifest, make_manifest, read_manifest
+from airfoil_noise.data import SOURCE_SHA256, audit_data, load_airfoil
+from airfoil_noise.split import read_frozen_splits, split_coverage, write_frozen_splits
 
 
 DEFAULT_DATA = Path("data/raw/airfoil_self_noise.dat")
-DEFAULT_MANIFEST = Path("data/splits/conditions.csv")
+DEFAULT_SPLITS = Path("data/splits")
+
+
+def _write_new(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("x", encoding="utf-8", newline="") as stream:
+        stream.write(text)
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Run an audit, create/check a fixed split, or compare baselines.
+    """Run an explicit data/split operation without fitting an estimator.
 
     Parameters
     ----------
     argv : list of str, optional
-        Command-line arguments without executable name. ``None`` uses the
-        current process arguments. Paths default to the repository layout.
+        Arguments excluding executable name. None uses sys.argv.
 
     Returns
     -------
     int
-        Zero after a successful command. Invalid inputs raise exceptions or
-        are rejected by ``argparse``.
+        Zero after successful checks or generation.
+
+    Raises
+    ------
+    ValueError
+        Source integrity, schema or frozen-assignment checks fail.
+    FileExistsError
+        A requested output exists. Outputs are never overwritten.
+
+    Notes
+    -----
+    Legacy baseline-cv is paused until Milestone 2 replaces its log-frequency
+    transform and fold regeneration. Final evaluation is not implemented or
+    invoked by these commands.
     """
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
-    for command in ("audit", "make-split", "check-split", "baseline-cv"):
+    for command in ("audit", "make-split", "check-split"):
         part = sub.add_parser(command)
         part.add_argument("--data", type=Path, default=DEFAULT_DATA)
-        if command != "audit":
-            part.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
+        part.add_argument("--expected-sha256", default=SOURCE_SHA256)
+        if command == "audit":
+            part.add_argument("--output", type=Path, help="Write a new JSON audit")
+        else:
+            part.add_argument("--directory", type=Path, default=DEFAULT_SPLITS)
         if command == "make-split":
-            part.add_argument(
-                "--force", action="store_true", help="Replace an existing split"
-            )
-        if command == "baseline-cv":
+            part.add_argument("--seed", type=int, default=3001)
+            part.add_argument("--test-fraction", type=float, default=0.2)
             part.add_argument("--folds", type=int, default=5)
+        if command == "check-split":
+            part.add_argument("--coverage-output", type=Path, help="Write a new input-only coverage CSV")
+    sub.add_parser("baseline-cv", help="Legacy command paused until Milestone 2")
     args = parser.parse_args(argv)
-    data = load_airfoil(args.data)
-
+    if args.command == "baseline-cv":
+        parser.error("baseline-cv is paused until Milestone 2 adopts raw inputs and frozen folds.")
+    data = load_airfoil(args.data, expected_sha256=args.expected_sha256)
     if args.command == "audit":
-        summary = audit_data(data)
-        for key in ("rows", "exact_duplicate_rows", "conditions", "smallest_sweep", "largest_sweep"):
-            print(f"{key}: {summary[key]}")
-        for key, (smallest, largest) in summary["ranges"].items():
-            print(f"{key}: [{smallest:g}, {largest:g}]")
+        text = json.dumps(audit_data(data), indent=2, allow_nan=False) + "\n"
+        if args.output:
+            _write_new(args.output, text)
+        print(text, end="")
         return 0
-
     if args.command == "make-split":
-        if args.manifest.exists() and not args.force:
-            raise FileExistsError(
-                f"{args.manifest} already exists; use --force only if re-splitting is intentional."
-            )
-        manifest = make_manifest(data)
-        args.manifest.parent.mkdir(parents=True, exist_ok=True)
-        manifest.to_csv(args.manifest, index=False)
-        print(f"Wrote {len(manifest)} conditions to {args.manifest}")
-        return 0
-
-    manifest = read_manifest(args.manifest)
-    development, test = apply_manifest(data, manifest)
-    if args.command == "check-split":
-        print(
-            f"development: {len(development)} rows in "
-            f"{(manifest['split'] == 'development').sum()} conditions"
+        metadata = write_frozen_splits(
+            data, args.directory, seed=args.seed, test_fraction=args.test_fraction, n_splits=args.folds,
         )
-        print(
-            f"test: {len(test)} rows in "
-            f"{(manifest['split'] == 'test').sum()} conditions"
-        )
-        return 0
-
-    results = development_baselines(development, n_splits=args.folds)
-    print(results.to_string(index=False, float_format=lambda value: f"{value:.4f}"))
-    print("\nDevelopment-fold means:")
-    print(
-        results.groupby("model")[["mae_db", "rmse_db", "fit_predict_seconds"]]
-        .mean()
-        .to_string(float_format=lambda value: f"{value:.4f}")
-    )
-    print("\nHeld-out test labels were not used.")
+    else:
+        manifest, _, metadata = read_frozen_splits(data, args.directory)
+        if args.coverage_output:
+            _write_new(args.coverage_output, split_coverage(data, manifest).to_csv(index=False))
+    print(json.dumps(metadata["counts"], indent=2))
     return 0
 
 

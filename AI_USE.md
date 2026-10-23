@@ -24,3 +24,43 @@ Student review, method selection, independent explanation and critical
 reflection remain outstanding. Do not represent planned checks as completed
 student verification. Before submission, estimate actual AI contribution and
 record errors, reasons for use and impact on learning.
+
+## 2026-10-23: inspection and Milestone 1
+
+Codex inspected the local checkout, read the supplied brief and relevant unit
+notebook sections, verified GitHub name/visibility through a read-only connector,
+checked the dataset bytes and grouping, and drafted the development plan. The
+student approved Milestone 1, its listed files and seed 3001 by replying
+"proceed". GitHub settings, commits and pushes were not authorised or performed.
+
+Codex drafted essentially all new implementation, tests and documentation in
+this milestone. It added source/row identity, input-only condition/fold creation,
+saved provenance checks, development-only loading and protected output commands.
+The student supplied the engineering question, methods, constraints and review
+requirements. Overall AI contribution to the eventual submission has not yet
+been estimated; this entry is not a claim of independent student verification.
+
+Automated checks exercised synthetic invalid inputs, source integrity, stable
+IDs, complete/disjoint conditions and folds, CSV round trips, stale/edited
+records, held-out target independence and the CLI. The retained starter baseline
+test was rerun for software regression only. No new model comparison, tuning or
+final-test evaluation was performed. Actual executed results and environment
+are recorded in docs/test-report.txt and docs/environment.txt.
+
+Inspection found that the starter split function lost custom indices and that
+its manifest checks could not detect changed frequency inputs. The starter
+baseline also applied log-frequency and regenerated folds. The index and split
+integrity issues were addressed; the legacy baseline CLI is paused pending the
+approved shared evaluator in Milestone 2, and its Python source is retained.
+
+One initial target-independence test failed because injecting missing values
+converted synthetic integer targets to floating point. The fixture was changed
+to floating-point targets, matching the real target type; equality assertions
+were retained. Signed-zero condition keys and nullable missing inputs were also
+checked during review. These are software checks, not evidence of physical
+validity or acceptable prediction error.
+
+Student review remains outstanding: explain the identifier/checksum distinction,
+why whole conditions are withheld, why CV is development evidence, how the fixed
+seed was chosen, and why thickness must be supplied. Record actual student
+checks, disagreements, revisions and effects on learning when they occur.

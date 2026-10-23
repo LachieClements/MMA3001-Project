@@ -1,0 +1,58 @@
+{
+  "source_sha256": "74c75fd71783f1e6b71f8a622b993dc592897a97cd689c5090a07147a1b097b3",
+  "row_id_scheme": "row_ plus one-based source record number, padded to six digits",
+  "condition_id_scheme": "c=<chord>|v=<velocity>|a=<angle>, using str(float(value))",
+  "columns": [
+    "frequency_hz",
+    "angle_deg",
+    "chord_m",
+    "velocity_m_s",
+    "displacement_thickness_m",
+    "spl_db"
+  ],
+  "feature_columns": [
+    "frequency_hz",
+    "angle_deg",
+    "chord_m",
+    "velocity_m_s",
+    "displacement_thickness_m"
+  ],
+  "condition_columns": [
+    "chord_m",
+    "velocity_m_s",
+    "angle_deg"
+  ],
+  "rows": 1503,
+  "exact_duplicate_rows": 0,
+  "conditions": 106,
+  "smallest_sweep": 8,
+  "largest_sweep": 19,
+  "repeated_condition_frequency_rows": 0,
+  "thickness_conflicts": [],
+  "ranges": {
+    "frequency_hz": [
+      200.0,
+      20000.0
+    ],
+    "angle_deg": [
+      0.0,
+      22.2
+    ],
+    "chord_m": [
+      0.0254,
+      0.3048
+    ],
+    "velocity_m_s": [
+      31.7,
+      71.3
+    ],
+    "displacement_thickness_m": [
+      0.000400682,
+      0.0584113
+    ],
+    "spl_db": [
+      103.38,
+      140.987
+    ]
+  }
+}

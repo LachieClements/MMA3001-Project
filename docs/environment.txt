@@ -1,10 +1,58 @@
-Validated 2026-10-23
-Python 3.12.14
-numpy==2.3.5
-pandas==2.2.3
-scikit-learn==1.8.0
-scipy==1.17.0
-joblib==1.5.3
-threadpoolctl==3.6.0
+MMA3001 Milestone 1 executed-check environment
+Date: 2026-10-23 (Australia/Sydney)
+Runner: Codex; independent student review pending
+Python: 3.10.5 (tags/v3.10.5:f377153, Jun  6 2022, 16:14:13) [MSC v.1929 64 bit (AMD64)]
+Platform: Windows-10-10.0.26200-SP0
+Processor: Intel Core i7-9750H @ 2.60 GHz, 6 physical cores, 12 logical processors (read-only Windows query during inspection)
+RAM: not measured in this milestone; required before performance benchmarks
+Environment: isolated temporary virtual environment; VS Code interpreter was not changed
+Source imports: repository src path; fresh editable-install reproduction is still pending
+No timing benchmark, profiling study or final evaluation was performed.
+
+Installed versions used by checks:
+numpy==2.2.6
+pandas==2.3.3
+scikit-learn==1.7.2
+scipy==1.15.3
+joblib==1.6.0
+threadpoolctl==3.7.0
 pytest==9.1.1
 pdoc==16.0.0
+
+Thread environment settings:
+OMP_NUM_THREADS=unset
+OPENBLAS_NUM_THREADS=unset
+MKL_NUM_THREADS=unset
+NUMEXPR_NUM_THREADS=unset
+
+Detected native thread pools:
+[
+  {
+    "user_api": "blas",
+    "internal_api": "openblas",
+    "num_threads": 12,
+    "version": "0.3.29",
+    "threading_layer": "pthreads",
+    "architecture": "Haswell"
+  },
+  {
+    "user_api": "openmp",
+    "internal_api": "openmp",
+    "num_threads": 12,
+    "version": null,
+    "threading_layer": null,
+    "architecture": null
+  },
+  {
+    "user_api": "blas",
+    "internal_api": "openblas",
+    "num_threads": 12,
+    "version": "0.3.28",
+    "threading_layer": "pthreads",
+    "architecture": "Haswell"
+  }
+]
+
+pip check: No broken requirements found.
+This snapshot records checks; it is not a dependency lock.
+pypdf was used only to inspect the supplied brief and is not a project runtime requirement.
