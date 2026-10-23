@@ -274,3 +274,112 @@ typing_extensions==4.16.0
 tzdata==2026.5
 
 Package ranges are not a lock; temporary editable paths are not portable.
+
+
+MILESTONE 3: CONFIGURABLE MODELS AND PIPELINE RECORDS (2026-10-24 Australia/Sydney)
+Recorded UTC: 2026-10-23T13:11:43.988875+00:00
+Recorded Sydney: 2026-10-24T00:11:44.000057+11:00
+Runner: Codex automated verification; independent student review remains pending.
+Reused installed editable Milestone 2 venv; this is not a fresh-install experiment.
+No dependencies, thread settings, VS Code interpreter or Git settings changed.
+PYTHONPATH/PYTHONHOME removed for checks; no sys.path injection.
+CPU name recorded previously: Intel Core i7-9750H @ 2.60GHz; not remeasured here.
+No RAM, model-size, profiling or final timing benchmark measured in Milestone 3.
+{
+  "python": "3.10.5 (tags/v3.10.5:f377153, Jun  6 2022, 16:14:13) [MSC v.1929 64 bit (AMD64)]",
+  "executable": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\python.exe",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+  "logical_cpus": 12,
+  "packages": {
+    "mma3001-airfoil-noise": "0.1.0",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "scipy": "1.15.3",
+    "scikit-learn": "1.7.2",
+    "pytest": "9.1.1",
+    "pdoc": "16.0.0"
+  },
+  "thread_environment": {
+    "OMP_NUM_THREADS": null,
+    "MKL_NUM_THREADS": null,
+    "OPENBLAS_NUM_THREADS": null,
+    "NUMEXPR_NUM_THREADS": null
+  },
+  "thread_pools": [
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 12,
+      "prefix": "libscipy_openblas",
+      "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-13e2df515630b4a41f92893938845698.dll",
+      "version": "0.3.29",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    },
+    {
+      "user_api": "openmp",
+      "internal_api": "openmp",
+      "num_threads": 12,
+      "prefix": "vcomp",
+      "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Lib\\site-packages\\sklearn\\.libs\\vcomp140.dll",
+      "version": null
+    },
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 12,
+      "prefix": "libscipy_openblas",
+      "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Lib\\site-packages\\scipy.libs\\libscipy_openblas-f07f5a5d207a3a47104dca54d6d0c86a.dll",
+      "version": "0.3.28",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    }
+  ]
+}
+
+Base HEAD: 5069e19aaf8004e4d2c4952c11ed05b5a04b4105
+Milestone 3 code is currently uncommitted.
+Working-file byte hashes (Git text conversion may change endings without changing semantics):
+{
+  "src\\airfoil_noise\\__init__.py": "52910cff40ad209d4ec704b434939e15517be7c1bebbee9d35fb0791157bdd98",
+  "src\\airfoil_noise\\__main__.py": "fd93ba10ec63ed5a58500d2b2ccc977e31dc477356fd17487230df84fdfd346a",
+  "src\\airfoil_noise\\baseline.py": "7c493be5be2e8eacef9322e5d5d2dd19daaf92e31e3e2521faa462794839d830",
+  "src\\airfoil_noise\\data.py": "934fb73dd9a413224406b3cca4674fbae25fe2d26e339e6f2f8c00e82a772544",
+  "src\\airfoil_noise\\metrics.py": "1d768ba4374b5267f0ad00a173241cfdd4cc9d8e8a5215a204278458f9a4058f",
+  "src\\airfoil_noise\\models.py": "45303354daddea96a095b1a5765c8c767e549380c7cb666a707111e9c350397d",
+  "src\\airfoil_noise\\split.py": "dd580ba5ab7843b6c049dbcfd70b399b90fc945b88e0bf2e29b0e9d1bb89a2b0",
+  "src\\airfoil_noise\\validation.py": "39223c8459821bdd657ba7bf26b62b4fef60098e2ef7f4ad106a4b3304c589f0"
+}
+
+Exact argv: ['C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\python.exe', '-m', 'pip', 'freeze', '--all']
+cloudpickle==3.1.2
+colorama==0.4.6
+exceptiongroup==1.3.1
+iniconfig==2.3.1
+Jinja2==3.1.6
+joblib==1.6.0
+markdown2==2.5.5
+MarkupSafe==3.0.4
+-e git+https://github.com/LachieClements/MMA3001-Project.git@5069e19aaf8004e4d2c4952c11ed05b5a04b4105#egg=mma3001_airfoil_noise
+numpy==2.2.6
+packaging==26.3
+pandas==2.3.3
+pdoc==16.0.0
+pip==22.0.4
+pluggy==1.7.0
+Pygments==2.21.0
+pytest==9.1.1
+python-dateutil==3.0.0
+pytz==2026.5
+scikit-learn==1.7.2
+scipy==1.15.3
+setuptools==58.1.0
+six==1.17.0
+threadpoolctl==3.7.0
+tomli==2.5.0
+typing_extensions==4.16.0
+tzdata==2026.5
+
+The editable URL identifies base HEAD, not uncommitted Milestone 3 changes.
+Reproduce from the current source snapshot with recorded versions; dependency ranges are not a lock.

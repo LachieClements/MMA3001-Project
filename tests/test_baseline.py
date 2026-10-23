@@ -2,6 +2,7 @@
 
 import numpy as np
 import pandas as pd
+import pytest
 
 from airfoil_noise.baseline import development_baselines
 from airfoil_noise.data import COLUMNS, load_airfoil
@@ -9,7 +10,8 @@ from airfoil_noise.split import load_development, read_frozen_splits, write_froz
 from airfoil_noise.validation import evaluate_development
 
 
-def test_frozen_workflow_is_independent_of_final_test_targets(tmp_path) -> None:
+@pytest.mark.parametrize("additional_model", [None, "tree", "svr", "mlp"])
+def test_frozen_workflow_is_independent_of_final_test_targets(tmp_path, additional_model) -> None:
     source = tmp_path / "synthetic.dat"
     rows = [
         [frequency, angle, .1, 40, .002, 120 + angle - .001 * frequency]
@@ -21,17 +23,26 @@ def test_frozen_workflow_is_independent_of_final_test_targets(tmp_path) -> None:
     write_frozen_splits(data, directory)
     original_bytes = {path.name: path.read_bytes() for path in directory.iterdir()}
     development, row_folds = load_development(data, directory)
-    original = development_baselines(development, row_folds)
-    shared = evaluate_development(development, row_folds)
-    pd.testing.assert_frame_equal(original["predictions"], shared["predictions"])
-    pd.testing.assert_frame_equal(original["summary"], shared["summary"])
+    def evaluate(observations, assignments):
+        if additional_model is None:
+            return development_baselines(observations, assignments)
+        parameters = {"hidden_layer_sizes": (6,), "max_iter": 5} if additional_model == "mlp" else {}
+        return evaluate_development(observations, assignments, configurations={
+            additional_model: {"model": additional_model, "parameters": parameters},
+        })
+
+    original = evaluate(development, row_folds)
+    if additional_model is None:
+        shared = evaluate_development(development, row_folds)
+        pd.testing.assert_frame_equal(original["predictions"], shared["predictions"])
+        pd.testing.assert_frame_equal(original["summary"], shared["summary"])
 
     manifest, _, _ = read_frozen_splits(data, directory)
     test_ids = manifest.loc[manifest["split"] == "test", "condition_id"]
     changed = data.copy()
     changed.loc[changed["condition_id"].isin(test_ids), "spl_db"] = np.nan
     alternate_development, alternate_folds = load_development(changed, directory)
-    alternate = development_baselines(alternate_development, alternate_folds)
+    alternate = evaluate(alternate_development, alternate_folds)
     for table in ("predictions", "summary", "condition_metrics", "fold_metrics"):
         pd.testing.assert_frame_equal(original[table], alternate[table])
     assert original["run"]["models"] == alternate["run"]["models"]

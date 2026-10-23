@@ -159,3 +159,85 @@ the definition of undefined R-squared, and what the observed error reduction
 does and does not show. Review coefficients as associations, not causal effects.
 Record the student's actual checks, decisions, disagreements and learning
 reflection when they occur; automated verification does not substitute for them.
+
+## 2026-10-24: Milestone 3 constructors, configurations and diagnostics
+
+The student reported independent external review of Milestone 2: 191 tests,
+all 2,388 prediction records, ten reconstructed fits and the reported summary
+comparisons matched. This is attributed to the student's report, not claimed
+as the student's own verification or evidence of independent understanding.
+The student explicitly authorised the reviewed Milestone 2 commit/push, which
+created commit 5069e19. The student then approved the proposed Milestone 3 file
+scope before any Milestone 3 edits. That approval did not authorise a new commit,
+a tuning study or final evaluation.
+
+Codex drafted essentially all new implementation, tests and documentation in
+this milestone (approximately 100% of the newly added text/code, while reusing
+the existing package). The student supplied the requirements and approved the
+scope. There is no claim that the student has independently read, checked or
+understood these changes, or that this fraction describes the eventual whole
+assignment. Student decisions about later tuning and method selection remain
+outstanding.
+
+The existing builder now supports a raw-input decision tree, StandardScaler
+plus RBF SVR, and StandardScaler plus a small Adam MLP. The original five inputs
+and unscaled dB target are retained. Tree/MLP default model seed 17 is explicitly
+recorded, separate from holdout seed 3001; it was declared before new method
+comparisons. Tree depth 5/leaf size 5, SVR C=10/epsilon=0.1/gamma='scale', and
+MLP (20,)/max_iter=2000 are starting construction settings, not tuned results.
+The small-MLP policy permits one or two layers with at most 64 neurons each.
+Automatic early stopping remains disabled; training-loss stopping can still
+occur. No row-based internal validation set or target scaling was introduced.
+
+The same evaluator now accepts explicit named configurations. Unfitted
+prototypes are checked before any fold is fitted, then sklearn clone creates
+fresh nested scalers and regressors for each fold. Recursive JSON records retain
+estimator classes, every constructor parameter, named pipeline steps and tuple
+types, with reconstruction limited to the seven supported sklearn classes.
+Original Milestone 2 baseline configuration records remain readable. Fitted
+state is separate: scaler statistics, tree size/depth, SVR support/iteration
+counts, and MLP iteration count, parameter count, loss history and warnings.
+Unsupported objects are rejected before writing output rather than converted
+to opaque strings. New run metadata uses schema version 2 and records actual
+preprocessing and per-configuration seeds.
+
+All 121 focused tests passed, followed by all 270 full-suite tests, with zero
+skips, expected failures or deselections. No pytest failure occurred during
+this milestone. Tests check hand-defined policies, finite prediction shape,
+seed repeatability, training-only scaling, fresh nested state, complete saved
+OOF records and configuration reconstruction. The small five-method synthetic
+workflow reconstructs each saved configuration and reproduces its fold
+predictions within numerical tolerances. Changing withheld targets leaves
+development results unchanged for all five methods. Existing M2 linear recovery
+and metric checks still pass; no model ranking or fragile timing threshold is
+asserted.
+
+Temporary test doubles deliberately produce warnings, failed fits and invalid
+predictions. A real one-epoch synthetic MLP test also reaches its iteration
+limit, confirming that convergence warnings and loss diagnostics are retained
+without claiming convergence. These are verification cases, not empirical
+evidence that the new methods predict airfoil noise well. There are no active
+deliberate faults in the implementation.
+
+Verification reuses the installed editable Milestone 2 virtual environment;
+it is not a new installation-reproducibility experiment. No dependencies,
+PYTHONPATH overrides or source-path injection were added. README configuration
+examples, pip check, installed console/module audit and check-split commands,
+generated HTML and protected-file hashes were checked. Actual commands,
+outcomes and environment are appended to docs/test-report.txt and
+docs/environment.txt. Model tests fit synthetic observations only; real-source
+checks audit the data and frozen bundle without evaluating models.
+
+The dataset, frozen assignments, split code, metrics, original baseline wrapper,
+CLI and all reviewed baseline outputs remain unchanged. No real-data comparison
+of the new methods, tuning study, final-test evaluation or new commit/push ran
+in Milestone 3. No performance claim or acceptable engineering error threshold
+was inferred from the synthetic tests.
+
+Student review remains necessary: follow a scaler's training-only statistics,
+explain fresh cloning versus sharing fitted state, distinguish constructor
+JSON from a saved fitted model, reconstruct a pipeline, interpret iteration
+limits/loss history, and explain why disabled validation-based early stopping
+still permits training-loss stopping. Record actual student checks, disagreements
+and reflections when they occur. Planned searches and seed sensitivity must
+be agreed before the later real-data development study.

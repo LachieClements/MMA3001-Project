@@ -10,8 +10,9 @@ from sklearn.exceptions import ConvergenceWarning
 import warnings
 
 from airfoil_noise import validation
-from airfoil_noise.data import COLUMNS, FEATURE_COLUMNS, add_identifiers
+from airfoil_noise.data import COLUMNS, FEATURE_COLUMNS, add_identifiers, feature_matrix
 from airfoil_noise.metrics import regression_metrics
+from airfoil_noise.models import MODEL_NAMES, model_configuration, model_from_configuration
 from airfoil_noise.validation import evaluate_development, save_development_results
 
 
@@ -29,6 +30,19 @@ def observations():
     folds = data[["row_id", "condition_id"]].copy()
     folds["fold"] = data["angle_deg"].astype(int) % 5 + 1
     return data, folds
+
+
+@pytest.fixture
+def five_configurations():
+    return {
+        "training_mean": {"model": "training_mean"},
+        "linear": {"model": "linear"},
+        "tree": {"model": "tree", "seed": 17, "parameters": {"max_depth": 3, "min_samples_leaf": 2}},
+        "svr": {"model": "svr", "parameters": {"C": 2.0}},
+        "mlp": {"model": "mlp", "seed": 17, "parameters": {
+            "hidden_layer_sizes": (6,), "max_iter": 5, "tol": 0.0,
+        }},
+    }
 
 
 def test_complete_predictions_identical_folds_and_exact_linear_recovery(observations) -> None:
@@ -81,12 +95,11 @@ def test_fresh_estimator_per_fold_and_no_metadata_features(observations, monkeyp
             assert x.columns.tolist() == list(FEATURE_COLUMNS)
             assert x["frequency_hz"].min() >= 200  # No log transform.
             self.training_rows = x.index.tolist()
+            estimators.append(self)
             return super().fit(x, y)
 
     def factory(name):
-        model = FitOnce(strategy="mean")
-        estimators.append(model)
-        return model
+        return FitOnce(strategy="mean")
 
     monkeypatch.setattr(validation, "build_model", factory)
     result = evaluate_development(data, folds)
@@ -97,13 +110,13 @@ def test_fresh_estimator_per_fold_and_no_metadata_features(observations, monkeyp
         assert model.training_rows == expected_indices
 
 
-def test_validation_truth_does_not_affect_that_folds_fit(observations) -> None:
+def test_validation_truth_does_not_affect_that_folds_fit(observations, five_configurations) -> None:
     data, folds = observations
-    original = evaluate_development(data, folds)
+    original = evaluate_development(data, folds, configurations=five_configurations)
     changed = data.copy()
     changed.loc[folds["fold"] == 1, "spl_db"] += 1000
-    alternate = evaluate_development(changed, folds)
-    for name in ("training_mean", "linear"):
+    alternate = evaluate_development(changed, folds, configurations=five_configurations)
+    for name in MODEL_NAMES:
         before = original["predictions"].query("model == @name and fold == 1")
         after = alternate["predictions"].query("model == @name and fold == 1")
         np.testing.assert_allclose(before["prediction_db"], after["prediction_db"], rtol=0, atol=0)
@@ -164,7 +177,7 @@ def test_invalid_development_inputs_rejected(observations, fault) -> None:
         evaluate_development(data, folds)
 
 
-@pytest.mark.parametrize("names", [(), ("linear", "linear"), ("linear_log_frequency",), ("tree",)])
+@pytest.mark.parametrize("names", [(), ("linear", "linear"), ("linear_log_frequency",), ("forest",)])
 def test_invalid_model_names_rejected(observations, names) -> None:
     with pytest.raises(ValueError):
         evaluate_development(*observations, model_names=names)
@@ -191,6 +204,7 @@ def test_warnings_and_failures_are_recorded_without_partial_scores(observations,
     assert result["summary"].empty and result["fold_metrics"].empty
     for record in result["diagnostics"]:
         assert record["warnings"][0]["category"] == "ConvergenceWarning"
+        assert record["convergence_warning"] is True
         assert record["error"]["type"] in ("RuntimeError", "ValueError")
     output = tmp_path / "failed-check"
     save_development_results(result, output, provenance={"kind": "synthetic_check"})
@@ -241,3 +255,164 @@ def test_constant_truth_serialization_uses_blank_csv_and_strict_json(observation
     save_development_results(result, output, provenance={"undefined_example": float("nan")})
     assert pd.read_csv(output / "summary.csv")["r2"].isna().all()
     assert json.loads((output / "run.json").read_text())["provenance"]["undefined_example"] is None
+
+
+def test_all_models_share_folds_and_save_reconstructable_records(observations, five_configurations, tmp_path) -> None:
+    data, folds = observations
+    result = evaluate_development(data, folds, configurations=five_configurations)
+    assert result["status"] == "success"
+    assert len(result["predictions"]) == 5 * len(data)
+    assert result["run"]["fits_attempted"] == result["run"]["fits_succeeded"] == 25
+    assert not result["predictions"].duplicated(["model", "row_id"]).any()
+    output = tmp_path / "five-model-synthetic-check"
+    save_development_results(result, output, provenance={"kind": "synthetic_check"})
+    run = json.loads((output / "run.json").read_text())
+    records = pd.read_csv(output / "predictions.csv", float_precision="round_trip")
+    assert run["schema_version"] == 2
+    assert run["model_methods"] == {name: name for name in MODEL_NAMES}
+    assert run["model_random_seeds"] == {
+        "training_mean": None, "linear": None, "tree": 17, "svr": None, "mlp": 17,
+    }
+    assert run["feature_transformations"]["linear"] == []
+    assert run["feature_transformations"]["tree"] == []
+    assert run["target_transformation"] == "none"
+    for name in ("svr", "mlp"):
+        steps = run["feature_transformations"][name]
+        assert steps[0]["step_name"] == "scaler"
+        assert steps[0]["estimator_class"].endswith(".StandardScaler")
+        assert steps[0]["parameters"]["with_mean"] is True
+    for name, rows in records.groupby("model"):
+        assert set(rows["row_id"]) == set(data["row_id"])
+        np.testing.assert_array_equal(rows["fold"], folds.set_index("row_id").loc[rows["row_id"], "fold"])
+        configuration = run["models"][name]
+        for fold in range(1, 6):
+            estimator = model_from_configuration(configuration)
+            assert model_configuration(estimator) == configuration
+            training = folds["fold"].to_numpy() != fold
+            expected = rows[rows["fold"] == fold]
+            validation_data = data.set_index("row_id").loc[expected["row_id"]]
+            with warnings.catch_warnings(record=True):
+                warnings.simplefilter("always")
+                estimator.fit(feature_matrix(data.iloc[np.flatnonzero(training)]), data.loc[training, "spl_db"])
+            np.testing.assert_allclose(
+                estimator.predict(feature_matrix(validation_data)), expected["prediction_db"], rtol=1e-12, atol=1e-12,
+            )
+    assert len(json.loads((output / "diagnostics.json").read_text())) == 25
+
+
+def test_nested_diagnostics_and_training_only_scaler_statistics(observations, five_configurations) -> None:
+    data, folds = observations
+    result = evaluate_development(data, folds, configurations=five_configurations)
+    for record in result["diagnostics"]:
+        fitted = record["fitted"]
+        assert fitted["n_features_in_"] == 5
+        if record["model"] == "tree":
+            assert 0 <= fitted["depth"] <= 3
+            assert fitted["node_count"] == 2 * fitted["leaf_count"] - 1
+        if record["model"] in ("svr", "mlp"):
+            training = folds["fold"].to_numpy() != record["fold"]
+            x = feature_matrix(data.iloc[np.flatnonzero(training)]).to_numpy()
+            scaler = fitted["steps"]["scaler"]
+            assert scaler["n_samples_seen_"] == record["n_train"]
+            assert scaler["feature_names_in_"] == list(FEATURE_COLUMNS)
+            np.testing.assert_allclose(scaler["mean_"], x.mean(axis=0), rtol=1e-13)
+            np.testing.assert_allclose(scaler["var_"], x.var(axis=0), rtol=1e-13)
+            np.testing.assert_allclose(scaler["scale_"], np.sqrt(x.var(axis=0)), rtol=1e-13)
+            regressor = fitted["steps"]["regressor"]
+            if record["model"] == "svr":
+                assert regressor["support_vector_count"] == sum(regressor["n_support_"])
+                assert 0 < regressor["support_vector_count"] <= record["n_train"]
+                assert regressor["fit_status_"] == 0
+            else:
+                assert regressor["n_iter_"] == len(regressor["loss_curve_"]) == 5
+                assert regressor["loss_"] == pytest.approx(regressor["loss_curve_"][-1])
+                assert regressor["parameter_count"] == 43  # 5*6 + 6 biases + 6*1 + 1 bias.
+                assert np.isfinite(regressor["loss_curve_"]).all()
+
+
+def test_validation_features_cannot_change_training_scaler(observations, five_configurations) -> None:
+    data, folds = observations
+    configurations = {name: five_configurations[name] for name in ("svr", "mlp")}
+    original = evaluate_development(data, folds, configurations=configurations)
+    changed = data.copy()
+    changed.loc[folds["fold"] == 1, "frequency_hz"] *= 100
+    alternate = evaluate_development(changed, folds, configurations=configurations)
+    for name in ("svr", "mlp"):
+        before = next(r for r in original["diagnostics"] if r["model"] == name and r["fold"] == 1)
+        after = next(r for r in alternate["diagnostics"] if r["model"] == name and r["fold"] == 1)
+        assert before["fitted"] == after["fitted"]
+
+
+def test_every_fold_has_fresh_nested_pipeline_state(observations, five_configurations, monkeypatch) -> None:
+    instances, prototypes = [], []
+    original_clone = validation.clone
+
+    def spy_clone(prototype):
+        fresh = original_clone(prototype)
+        if hasattr(fresh, "named_steps"):
+            assert not hasattr(fresh.named_steps["scaler"], "mean_")
+            assert fresh.named_steps["scaler"] is not prototype.named_steps["scaler"]
+            assert fresh.named_steps["regressor"] is not prototype.named_steps["regressor"]
+        instances.append(fresh)
+        prototypes.append(prototype)
+        return fresh
+
+    monkeypatch.setattr(validation, "clone", spy_clone)
+    result = evaluate_development(*observations, configurations=five_configurations)
+    assert result["status"] == "success"
+    assert len(instances) == len({id(instance) for instance in instances}) == 25
+    pipelines = [instance for instance in instances if hasattr(instance, "named_steps")]
+    assert len({id(model.named_steps["scaler"]) for model in pipelines}) == 10
+    assert len({id(model.named_steps["regressor"]) for model in pipelines}) == 10
+    assert all(not hasattr(prototype, "n_features_in_") for prototype in prototypes)
+
+
+def test_multiple_seed_configuration_ids_remain_distinct(observations) -> None:
+    configurations = {
+        f"mlp_seed{seed}": {"model": "mlp", "seed": seed, "parameters": {"max_iter": 2}}
+        for seed in (17, 29)
+    }
+    result = evaluate_development(*observations, configurations=configurations)
+    assert result["status"] == "success"
+    assert set(result["predictions"]["model"]) == set(configurations)
+    assert result["run"]["configurations_per_model"] == {"mlp": 2}
+    assert result["run"]["model_random_seeds"] == {"mlp_seed17": 17, "mlp_seed29": 29}
+    assert result["run"]["configuration_selection"].startswith("None")
+
+
+@pytest.mark.parametrize("configurations", [
+    {}, [], {"": {"model": "tree"}}, {"tree": {}},
+    {"tree": {"model": "forest"}}, {"tree": {"model": "tree", "unknown": 1}},
+    {"valid": {"model": "linear"}, "invalid": {"model": "svr", "parameters": {"C": -1}}},
+])
+def test_invalid_configurations_fail_before_any_fold_fit(observations, configurations, monkeypatch) -> None:
+    def forbidden_clone(*args, **kwargs):
+        pytest.fail("All configurations must be validated before evaluating any fold.")
+
+    monkeypatch.setattr(validation, "clone", forbidden_clone)
+    with pytest.raises(ValueError):
+        evaluate_development(*observations, configurations=configurations)
+
+
+def test_names_and_configurations_are_mutually_exclusive(observations) -> None:
+    with pytest.raises(ValueError, match="not both"):
+        evaluate_development(*observations, model_names=("tree",), configurations={"tree": {"model": "tree"}})
+
+
+def test_real_mlp_iteration_limit_warning_is_recorded(observations) -> None:
+    result = evaluate_development(*observations, configurations={
+        "mlp_limit_check": {"model": "mlp", "seed": 17, "parameters": {"max_iter": 1, "tol": 0}},
+    })
+    assert result["status"] == "success"  # A finite prediction with a warning remains traceable.
+    for record in result["diagnostics"]:
+        assert record["convergence_warning"] is True
+        assert any(warning["category"] == "ConvergenceWarning" for warning in record["warnings"])
+        assert record["fitted"]["steps"]["regressor"]["n_iter_"] == 1
+
+
+def test_unknown_json_objects_rejected_before_output_creation(observations, tmp_path) -> None:
+    result = evaluate_development(*observations)
+    output = tmp_path / "invalid-record"
+    with pytest.raises(TypeError):
+        save_development_results(result, output, provenance={"opaque": object()})
+    assert not output.exists()

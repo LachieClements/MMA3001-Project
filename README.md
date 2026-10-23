@@ -19,7 +19,7 @@ The comparison concerns the experimental domain represented by this dataset.
 It cannot establish prediction quality for other airfoils, observer positions,
 measurement arrangements or unsupported flow regimes.
 
-## Current status: Milestone 2
+## Current status: Milestone 3
 
 The raw source is unchanged and passes the recorded SHA-256 check. It contains
 1,503 observations, 106 chord–velocity–angle conditions, no exact duplicates and
@@ -47,6 +47,12 @@ On the frozen development folds, equal-condition MAE is **5.680 dB** for the
 training mean and **3.771 dB** for linear regression (pooled RMSE: 6.944 and
 4.855 dB respectively). These are development comparisons, not final-test
 estimates. Full results and limitations are in the interpretation linked below.
+
+Milestone 3 adds decision tree, scaled RBF SVR and small scaled MLP construction
+to the same evaluator. Verification uses synthetic data; these new methods
+have not yet been compared on the real development observations. The reviewed
+Milestone 2 records remain unchanged. No tuning study or final evaluation has
+been run for this milestone.
 
 ## Setup and checks
 
@@ -148,7 +154,7 @@ NaN internally, blank in CSV and null in JSON, with an explicit reason.
 Each run saves predictions.csv (model, row/condition IDs, fold, measured and
 predicted dB), summary.csv, condition_metrics.csv and fold_metrics.csv.
 diagnostics.json retains separate fit/prediction seconds, warnings, failures
-and fitted coefficients/rank or mean. run.json records every estimator setting,
+and fitted diagnostics. run.json records every estimator setting,
 feature order, environment/thread details and the frozen bundle's checksums,
 seed and assignment metadata. Fit/predict timings are single measurements,
 without warmup or repetitions: they are preliminary diagnostics, not the final
@@ -165,10 +171,104 @@ for the development results. Cross-validation here is development evidence,
 not an independent final performance estimate. It does not establish an
 acceptable engineering error threshold or performance beyond this dataset.
 
+## Configurable models and records
+
+build_model now accepts parameters (regressor parameter overrides) and seed.
+Mean and linear defaults remain unchanged. SVR and MLP have independent
+StandardScaler and regressor steps, fitted together inside each training fold.
+There are still only five original features, and no target scaling. The
+baseline-cv CLI still explicitly runs only the two reviewed baselines.
+
+| Method | Initial construction settings | Preprocessing / seed |
+| --- | --- | --- |
+| training_mean | strategy="mean" | None / not applicable |
+| linear | Intercept, ordinary least squares, n_jobs=1 | None / not applicable |
+| tree | max_depth=5, min_samples_leaf=5 | None / random_state=17 |
+| svr | RBF, C=10, epsilon=0.1 dB, gamma="scale" | StandardScaler / not applicable |
+| mlp | (20,), ReLU, Adam, alpha=0.0001, learning_rate_init=0.001, max_iter=2000, tol=0.0001, n_iter_no_change=20 | StandardScaler / random_state=17 |
+
+These are explicit starting settings, not tuned or selected results. Every
+sklearn constructor parameter, including defaults not shown in the table, is
+saved in configuration records. Model seed 17 was chosen before new model
+comparisons and is independent of holdout seed 3001. Deterministic methods
+reject an unused model seed; tree/MLP use the explicit seed or the documented
+default. Parameters use regressor names such as C or max_depth, not pipeline
+prefixes; preprocessing cannot be replaced through those overrides.
+
+For the small MLP, automatic early_stopping stays False and warm_start stays
+False. No row-based internal validation set is used; validation_fraction is
+recorded as a constructor default but is inactive. Training-loss tolerance and
+n_iter_no_change can still end training before max_iter. This differs from
+stopping on a grouped validation set, which is not implemented here. Hidden
+layers are limited to one or two layers of at most 64 neurons each, with Adam
+as the supported optimiser. Tree sample-count settings use integers. Common
+tuning ranges and study controls are checked before fitting; sklearn validates
+remaining solver-specific constraints during fit, with failures recorded.
+
+To supply configurations to the existing evaluate_development function, use
+unique IDs mapped to model, optional parameters and optional seed:
+
+~~~python
+configurations = {
+    "tree_depth3": {"model": "tree", "parameters": {"max_depth": 3}, "seed": 17},
+    "svr_initial": {"model": "svr", "parameters": {"C": 10.0}},
+    "mlp_seed17": {"model": "mlp", "parameters": {"hidden_layer_sizes": (20,)}, "seed": 17},
+}
+# development and row_folds must come from load_development and the saved bundle.
+# results = evaluate_development(development, row_folds, configurations=configurations)
+~~~
+
+Alternatively, model_names selects distinct methods at their construction
+defaults. Omitting both options preserves the two-baseline workflow. The two
+options cannot be combined. Configurations are checked before any fold fit,
+then cloned per fold so nested scalers/regressors share no fitted state. The
+model column in predictions and metric tables is the configuration ID; run.json
+maps it to the underlying method. The evaluator does not generate, search or
+select configurations. Planned search budgets and sensitivity experiments
+remain for Milestone 4; supplying several named settings is not an independent
+final validation procedure.
+
+New run records use schema version 2. They contain per-configuration methods,
+actual preprocessing and random states rather than a blanket "no transforms"
+or "no seeds" claim. Constructor records use their own version 1 schema:
+qualified estimator_class and complete parameters, recursively including
+pipeline steps and typed tuples. They contain settings, not fitted weights.
+For example, after installation this round trip performs no fitting:
+
+~~~python
+import json
+from airfoil_noise.models import build_model, model_configuration, model_from_configuration
+
+original = build_model("mlp", parameters={"hidden_layer_sizes": (20,)}, seed=17)
+record = json.loads(json.dumps(model_configuration(original), allow_nan=False))
+restored = model_from_configuration(record)
+assert model_configuration(restored) == record
+~~~
+
+To reconstruct a saved run's configuration, pass run["models"][configuration_id]
+to model_from_configuration. Reconstruction creates fresh, unfitted objects
+from the seven supported sklearn classes; unknown classes, opaque objects,
+incomplete parameters and incompatible schemas/versions fail explicitly.
+The original Milestone 2 mean/linear records remain readable. Exact numerical
+reproduction also requires the recorded inputs, fold assignments, seeds and
+compatible package environment; configuration JSON is not a saved fitted model.
+
+Nested diagnostics retain scaler mean/variance/scale and training-row count;
+tree node/leaf counts and depth; SVR support-vector counts, iterations and fit
+status; and MLP iterations, parameter count, final/best loss and loss history.
+Warnings remain attached to each fit, with an explicit convergence-warning
+flag. Finite predictions with a convergence warning remain traceable successful
+fits; this does not claim that optimisation converged. Loss-history length and
+final loss are checked, without requiring monotone loss or a particular model
+ranking. For Adam, MLP n_iter_ counts training epochs; it is not directly
+comparable to an SVR solver iteration. Complexity counts describe different structures and are not equivalent
+cost units. JSON is checked before output creation so unsupported objects cannot
+leave partially written metric tables after a serialization failure.
+
 ## Remaining milestones
 
-1. Add tree, scaled RBF SVR and small scaled MLP pipelines and predefined
-   configurations. Initially disable automatic MLP early stopping.
+1. Propose modest search spaces, fit budgets and a small predefined set of MLP
+   seeds before running the development study.
 2. Run grouped development comparisons, tuning, seed sensitivity and separate
    fit/prediction/search cost measurements. Select using equal-condition MAE,
    supported by pooled metrics, diagnostics and engineering trade-offs.

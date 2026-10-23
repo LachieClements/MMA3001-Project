@@ -587,3 +587,351 @@ and all 20 local links resolve. No legacy baseline transform appears in HTML.
 git --no-optional-locks diff --check returned exit 0 after whitespace
 normalisation. Git informational LF-to-CRLF notices concern ordinary text
 files; protected source data and assignment checksums were unchanged.
+
+
+MILESTONE 3: CONFIGURABLE MODELS AND PIPELINE RECORDS (2026-10-24 Australia/Sydney)
+
+Approved scope: extend the existing evaluator and builder, add synthetic verification,
+update documentation/records. No new real-data comparison or tuning study.
+Working tree began clean at 5069e19aaf8004e4d2c4952c11ed05b5a04b4105.
+The existing installed editable venv resolves to this checkout (verified below).
+No fresh installation, dependency changes, PYTHONPATH/PYTHONHOME override or sys.path injection.
+All model fits in this milestone used small synthetic observations.
+
+--- focused-tests-1.txt ---
+CWD: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+Exact argv: ['C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\python.exe', '-m', 'pytest', 'tests/test_models.py', 'tests/test_validation.py', 'tests/test_baseline.py', '-q', '-ra']
+........................................................................ [ 59%]
+.................................................                        [100%]
+121 passed in 8.76s
+
+Exit code: 0
+
+--- full-tests-1.txt ---
+CWD: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+Exact argv: ['C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\python.exe', '-m', 'pytest', '-q', '-ra']
+........................................................................ [ 26%]
+........................................................................ [ 53%]
+........................................................................ [ 80%]
+......................................................                   [100%]
+270 passed in 15.27s
+
+Exit code: 0
+
+--- workflow-commands.txt ---
+Recorded UTC: 2026-10-23T13:07:44.257904+00:00
+CWD: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+Reused installed Milestone 2 editable venv; package resolves to current checkout.
+PYTHONPATH/PYTHONHOME removed; PYTHONDONTWRITEBYTECODE=1.
+
+Exact argv: ['C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\python.exe', '-c', 'import airfoil_noise, airfoil_noise.models; print(airfoil_noise.__file__); print(airfoil_noise.models.__file__)']
+C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project\src\airfoil_noise\__init__.py
+C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project\src\airfoil_noise\models.py
+
+Exit code: 0
+
+Exact argv: ['C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\python.exe', '-m', 'pip', 'check']
+No broken requirements found.
+
+Exit code: 0
+
+Exact argv: ['C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\airfoil-noise.exe', '--help']
+usage: airfoil-noise [-h] {audit,make-split,check-split,baseline-cv} ...
+
+Audit data, verify frozen assignments and explicitly run development
+baselines.
+
+positional arguments:
+  {audit,make-split,check-split,baseline-cv}
+
+options:
+  -h, --help            show this help message and exit
+
+Exit code: 0
+
+Exact argv: ['C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\airfoil-noise.exe', 'audit']
+{
+  "source_sha256": "74c75fd71783f1e6b71f8a622b993dc592897a97cd689c5090a07147a1b097b3",
+  "row_id_scheme": "row_ plus one-based source record number, padded to six digits",
+  "condition_id_scheme": "c=<chord>|v=<velocity>|a=<angle>, using str(float(value))",
+  "columns": [
+    "frequency_hz",
+    "angle_deg",
+    "chord_m",
+    "velocity_m_s",
+    "displacement_thickness_m",
+    "spl_db"
+  ],
+  "feature_columns": [
+    "frequency_hz",
+    "angle_deg",
+    "chord_m",
+    "velocity_m_s",
+    "displacement_thickness_m"
+  ],
+  "condition_columns": [
+    "chord_m",
+    "velocity_m_s",
+    "angle_deg"
+  ],
+  "rows": 1503,
+  "exact_duplicate_rows": 0,
+  "conditions": 106,
+  "smallest_sweep": 8,
+  "largest_sweep": 19,
+  "repeated_condition_frequency_rows": 0,
+  "thickness_conflicts": [],
+  "ranges": {
+    "frequency_hz": [
+      200.0,
+      20000.0
+    ],
+    "angle_deg": [
+      0.0,
+      22.2
+    ],
+    "chord_m": [
+      0.0254,
+      0.3048
+    ],
+    "velocity_m_s": [
+      31.7,
+      71.3
+    ],
+    "displacement_thickness_m": [
+      0.000400682,
+      0.0584113
+    ],
+    "spl_db": [
+      103.38,
+      140.987
+    ]
+  }
+}
+
+Exit code: 0
+
+Exact argv: ['C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\airfoil-noise.exe', 'check-split']
+{
+  "development": {
+    "conditions": 84,
+    "rows": 1194
+  },
+  "test": {
+    "conditions": 22,
+    "rows": 309
+  },
+  "validation_folds": {
+    "1": {
+      "conditions": 17,
+      "rows": 241
+    },
+    "2": {
+      "conditions": 17,
+      "rows": 241
+    },
+    "3": {
+      "conditions": 17,
+      "rows": 240
+    },
+    "4": {
+      "conditions": 17,
+      "rows": 240
+    },
+    "5": {
+      "conditions": 16,
+      "rows": 232
+    }
+  }
+}
+
+Exit code: 0
+
+Exact argv: ['C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\python.exe', '-m', 'airfoil_noise', 'audit']
+{
+  "source_sha256": "74c75fd71783f1e6b71f8a622b993dc592897a97cd689c5090a07147a1b097b3",
+  "row_id_scheme": "row_ plus one-based source record number, padded to six digits",
+  "condition_id_scheme": "c=<chord>|v=<velocity>|a=<angle>, using str(float(value))",
+  "columns": [
+    "frequency_hz",
+    "angle_deg",
+    "chord_m",
+    "velocity_m_s",
+    "displacement_thickness_m",
+    "spl_db"
+  ],
+  "feature_columns": [
+    "frequency_hz",
+    "angle_deg",
+    "chord_m",
+    "velocity_m_s",
+    "displacement_thickness_m"
+  ],
+  "condition_columns": [
+    "chord_m",
+    "velocity_m_s",
+    "angle_deg"
+  ],
+  "rows": 1503,
+  "exact_duplicate_rows": 0,
+  "conditions": 106,
+  "smallest_sweep": 8,
+  "largest_sweep": 19,
+  "repeated_condition_frequency_rows": 0,
+  "thickness_conflicts": [],
+  "ranges": {
+    "frequency_hz": [
+      200.0,
+      20000.0
+    ],
+    "angle_deg": [
+      0.0,
+      22.2
+    ],
+    "chord_m": [
+      0.0254,
+      0.3048
+    ],
+    "velocity_m_s": [
+      31.7,
+      71.3
+    ],
+    "displacement_thickness_m": [
+      0.000400682,
+      0.0584113
+    ],
+    "spl_db": [
+      103.38,
+      140.987
+    ]
+  }
+}
+
+Exit code: 0
+
+Exact argv: ['C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\python.exe', '-m', 'airfoil_noise', 'check-split']
+{
+  "development": {
+    "conditions": 84,
+    "rows": 1194
+  },
+  "test": {
+    "conditions": 22,
+    "rows": 309
+  },
+  "validation_folds": {
+    "1": {
+      "conditions": 17,
+      "rows": 241
+    },
+    "2": {
+      "conditions": 17,
+      "rows": 241
+    },
+    "3": {
+      "conditions": 17,
+      "rows": 240
+    },
+    "4": {
+      "conditions": 17,
+      "rows": 240
+    },
+    "5": {
+      "conditions": 16,
+      "rows": 232
+    }
+  }
+}
+
+Exit code: 0
+
+Exact argv: ['C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\python.exe', '-c', 'configurations = {\n    "tree_depth3": {"model": "tree", "parameters": {"max_depth": 3}, "seed": 17},\n    "svr_initial": {"model": "svr", "parameters": {"C": 10.0}},\n    "mlp_seed17": {"model": "mlp", "parameters": {"hidden_layer_sizes": (20,)}, "seed": 17},\n}\n# development and row_folds must come from load_development and the saved bundle.\n# results = evaluate_development(development, row_folds, configurations=configurations)']
+
+Exit code: 0
+
+Exact argv: ['C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\python.exe', '-c', 'import json\nfrom airfoil_noise.models import build_model, model_configuration, model_from_configuration\n\noriginal = build_model("mlp", parameters={"hidden_layer_sizes": (20,)}, seed=17)\nrecord = json.loads(json.dumps(model_configuration(original), allow_nan=False))\nrestored = model_from_configuration(record)\nassert model_configuration(restored) == record']
+
+Exit code: 0
+
+Exact argv: ['C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\python.exe', '-m', 'pdoc', '-o', 'docs/api', 'airfoil_noise', 'airfoil_noise.__main__']
+
+Exit code: 0
+PASS: generated HTML current, 20 local links resolve.
+Generated whitespace normalised in 9 HTML/JS files.
+PASS: all 21 protected file/index hashes and HEAD unchanged.
+No real-data estimator study, tuning, final evaluation, commit or push.
+
+Focused run: 121 passed. Full suite: 270 passed; 0 skipped, 0 xfailed, 0 deselected.
+The 121 are a subset of the 270, not additional distinct cases. No pytest failures occurred.
+No model-performance ordering, acceptable dB threshold or fragile timing assertion is tested.
+The five-model synthetic saved-record test checks 25 fold fits and reconstructs
+all 25 saved configurations/folds, reproducing predictions at rtol=atol=1e-12.
+Other checks cover baseline linear recovery, seed repeatability, tuple/list/int
+configuration types, corrupt/incomplete records, independent nested state, actual
+training-only scaler statistics, all-model target isolation and warning/failure capture.
+The real one-epoch MLP warning case intentionally uses max_iter=1 and tol=0.
+Warnings remain in each fit record; a finite prediction is not a convergence claim.
+Original Milestone 2 baseline configuration records reconstruct without fitting real data.
+New constructor defaults are unselected starting settings; no seed/settings choice used
+real development scores or final-test results. Model seeds are distinct from split provenance.
+The complete dependency inventory and working-source hashes are in docs/environment.txt.
+
+Generated-file whitespace normalisation after the recorded pdoc command (python -B -):
+from pathlib import Path
+for path in sorted(Path('docs/api').rglob('*')):
+    if path.is_file() and path.suffix in ('.html', '.js'):
+        old = path.read_text(encoding='utf-8')
+        new = '\n'.join(line.rstrip() for line in old.splitlines()) + '\n'
+        if old != new:
+            path.write_text(new, encoding='utf-8', newline='\n')
+
+HTML validation used html.parser.HTMLParser, urllib.parse.urlsplit/unquote and
+pathlib to parse generated pages and resolve every local href path. Current
+model_configuration/model_from_configuration/evaluate_development/configurations
+were required in the relevant generated API pages. All 20 local links resolved.
+
+Protected starting file/index hashes and HEAD:
+{
+  "data/raw/airfoil_self_noise.dat": "74c75fd71783f1e6b71f8a622b993dc592897a97cd689c5090a07147a1b097b3",
+  ".gitattributes": "f83f728ac404c6a18b13f7d4d5071bf51bc48ac34afe4b6b03e97f25efc6602e",
+  "pyproject.toml": "b31a95663a56cc9826f15c0ca477d92017833b4760abc0804e63532aefcb5a81",
+  "src/airfoil_noise/data.py": "934fb73dd9a413224406b3cca4674fbae25fe2d26e339e6f2f8c00e82a772544",
+  "src/airfoil_noise/split.py": "dd580ba5ab7843b6c049dbcfd70b399b90fc945b88e0bf2e29b0e9d1bb89a2b0",
+  "src/airfoil_noise/metrics.py": "1d768ba4374b5267f0ad00a173241cfdd4cc9d8e8a5215a204278458f9a4058f",
+  "src/airfoil_noise/baseline.py": "7c493be5be2e8eacef9322e5d5d2dd19daaf92e31e3e2521faa462794839d830",
+  "src/airfoil_noise/__main__.py": "fd93ba10ec63ed5a58500d2b2ccc977e31dc477356fd17487230df84fdfd346a",
+  "tests/test_cli.py": "3abf3d3cdcb2908a75c2684fe03462abc49ea081572736fdad66d8e4d437f31d",
+  "data/splits/conditions.csv": "7b276f489f0ea0e90a78be46d9fb9323e6400dbd37c6f91a93248221839b79f3",
+  "data/splits/development_folds.csv": "838e206edfec7f753e30ae731be964310cf5ee05c00f86010e910fded603c04f",
+  "data/splits/metadata.json": "d03df9a7f96b2fe8734a038e372a5a2abccae7453a1f0e5d10983e91f227a20d",
+  "data/splits/README.md": "781126752580842b13037d73572f7d3d6f0bd735f247df3d0214e6c0e567d376",
+  "reports/development/milestone-2-baselines/condition_metrics.csv": "feff3fd752afbc17031d3a54ab4a93f38d1ea316332b10468762501b9dc6008f",
+  "reports/development/milestone-2-baselines/diagnostics.json": "26a2dbcd23c73cc9f7226d06c3526b689689e8543fecd7148f069cf48f8e6823",
+  "reports/development/milestone-2-baselines/fold_metrics.csv": "92c7b2aa7550b0c7e441f829576ef76e9f0801b900e15ddb295661146d30973a",
+  "reports/development/milestone-2-baselines/interpretation.md": "5f8eaf3b35d5973e16fa8b1e1463e496d180b9f9ec15f25b7734a87d67223cf5",
+  "reports/development/milestone-2-baselines/predictions.csv": "c445e2d42dfedd9439697093ff8893b32a83fcc961af3a5a4b419c70c5494373",
+  "reports/development/milestone-2-baselines/run.json": "31cad9a80d581a7bcde5ccbbd8d7bcff5b1900274240b4ba4fa73ba34f826b4c",
+  "reports/development/milestone-2-baselines/summary.csv": "7876b215bb5c4d3db4e7ce34a3bc84d01e9367ba24929080adc500e1b64b19c9",
+  ".git/index": "59bbf6173f37a9afaa9f79883e87eb52ad0c57c45c4578e9dd967707d67ec7db",
+  "HEAD": "5069e19aaf8004e4d2c4952c11ed05b5a04b4105"
+}
+
+Read-only protection check (python -B -; baseline hashes are printed above):
+from hashlib import sha256
+from pathlib import Path
+import subprocess
+for name, digest in snapshot.items():
+    if name == 'HEAD':
+        assert subprocess.check_output(['git', '--no-optional-locks', 'rev-parse', 'HEAD'], text=True).strip() == digest
+    else:
+        assert sha256(Path(name).read_bytes()).hexdigest() == digest, name
+PASS: original dataset, frozen assignments/metadata, reviewed baseline outputs,
+protected utility/CLI/test/configuration files, Git index and HEAD are unchanged.
+No final-test predictions, real-data model study, automatic tuning, commit or push.
+Passing pytest verifies software behaviour, not physical/predictive validity or student understanding.
+
+Final checks: git --no-optional-locks diff --check returned exit 0.
+git --no-optional-locks diff --cached --name-only returned no files.
+All 14 changed files are within the approved Milestone 3 source/test/docs scope;
+there are no new untracked project files. Protected file/index hashes and HEAD
+were checked again after documentation updates and remained unchanged.
