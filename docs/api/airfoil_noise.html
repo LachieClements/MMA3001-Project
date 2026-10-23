@@ -26,7 +26,10 @@
             <ul>
                     <li><a href="airfoil_noise/baseline.html">baseline</a></li>
                     <li><a href="airfoil_noise/data.html">data</a></li>
+                    <li><a href="airfoil_noise/metrics.html">metrics</a></li>
+                    <li><a href="airfoil_noise/models.html">models</a></li>
                     <li><a href="airfoil_noise/split.html">split</a></li>
+                    <li><a href="airfoil_noise/validation.html">validation</a></li>
             </ul>
 
             <h2>API Documentation</h2>
@@ -49,9 +52,9 @@ airfoil_noise    </h1>
 
                         <div class="docstring"><p>Tools for reproducible analysis of UCI airfoil self-noise observations.</p>
 
-<p>The current package audits the data and compares introductory regression
-baselines on development conditions. Final-test evaluation is intentionally
-outside the initial workflow while model choices are being developed.</p>
+<p>The package audits data, verifies frozen condition/fold assignments and compares
+training-mean and raw-input linear baselines through one development evaluator.
+Final-test evaluation remains outside this workflow while choices are developed.</p>
 </div>
 
                         <input id="mod-airfoil_noise-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
@@ -60,9 +63,9 @@ outside the initial workflow while model choices are being developed.</p>
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">1</span></a><span class="sd">"""Tools for reproducible analysis of UCI airfoil self-noise observations.</span>
 </span><span id="L-2"><a href="#L-2"><span class="linenos">2</span></a>
-</span><span id="L-3"><a href="#L-3"><span class="linenos">3</span></a><span class="sd">The current package audits the data and compares introductory regression</span>
-</span><span id="L-4"><a href="#L-4"><span class="linenos">4</span></a><span class="sd">baselines on development conditions. Final-test evaluation is intentionally</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos">5</span></a><span class="sd">outside the initial workflow while model choices are being developed.</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos">3</span></a><span class="sd">The package audits data, verifies frozen condition/fold assignments and compares</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos">4</span></a><span class="sd">training-mean and raw-input linear baselines through one development evaluator.</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos">5</span></a><span class="sd">Final-test evaluation remains outside this workflow while choices are developed.</span>
 </span><span id="L-6"><a href="#L-6"><span class="linenos">6</span></a><span class="sd">"""</span>
 </span><span id="L-7"><a href="#L-7"><span class="linenos">7</span></a>
 </span><span id="L-8"><a href="#L-8"><span class="linenos">8</span></a><span class="n">__version__</span> <span class="o">=</span> <span class="s2">"0.1.0"</span>

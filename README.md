@@ -19,7 +19,7 @@ The comparison concerns the experimental domain represented by this dataset.
 It cannot establish prediction quality for other airfoils, observer positions,
 measurement arrangements or unsupported flow regimes.
 
-## Current status: Milestone 1
+## Current status: Milestone 2
 
 The raw source is unchanged and passes the recorded SHA-256 check. It contains
 1,503 observations, 106 chord–velocity–angle conditions, no exact duplicates and
@@ -36,10 +36,17 @@ using held-out targets. Every holdout input lies within its corresponding
 development feature range; joint combinations and distributions still differ.
 Range overlap is not evidence of physical extrapolation capability.
 
-No new model comparison or final-test evaluation has been run. Earlier starter
-work remains in history. Its direct Python baseline utility is retained, but
-the legacy baseline-cv command is paused: its log-frequency transform and fold
-regeneration must be replaced in Milestone 2.
+The training-mean predictor and multiple linear regression now share one
+development evaluator using these saved folds. Both use the original five
+inputs; linear regression has an intercept, without scaling, log-frequency or
+added features. The mean predictor averages training observations. Neither
+method needs a model seed. The legacy transform/fold-regeneration path has
+been removed. No final-test predictions are produced by this workflow.
+
+On the frozen development folds, equal-condition MAE is **5.680 dB** for the
+training mean and **3.771 dB** for linear regression (pooled RMSE: 6.944 and
+4.855 dB respectively). These are development comparisons, not final-test
+estimates. Full results and limitations are in the interpretation linked below.
 
 ## Setup and checks
 
@@ -73,12 +80,12 @@ The [reproducibility report](docs/reproducibility-report.txt) records the isolat
 Git checkout and fresh editable-install checks. Git configuration changes and
 fixture commits for that check are confined to temporary repositories.
 
-The complete pytest suite includes synthetic unit/CLI tests, real-source/bundle
-integration checks and the retained legacy baseline regression test. A quick
-synthetic-only check of Milestone 1 is:
+The complete pytest suite includes synthetic unit/CLI tests and real-source/
+bundle integration checks. A quick synthetic check of the development evaluator
+is:
 
 ~~~powershell
-python -m pytest tests/test_data.py tests/test_split.py tests/test_cli.py -q -k "not source_file and not committed"
+python -m pytest tests/test_models.py tests/test_metrics.py tests/test_validation.py tests/test_baseline.py tests/test_cli.py -q -ra
 ~~~
 
 Tests use temporary outputs. Neither test command runs a final evaluation or
@@ -107,23 +114,67 @@ The loader appends row_id and condition_id after the six measurement columns.
 Keep these IDs when selecting or reordering rows. Use feature_matrix to obtain
 the original five features in the correct order. IDs and targets are excluded.
 
-Future development evaluation should obtain only development rows and saved
+Development evaluation obtains only development rows and saved
 row-fold assignments through load_development. The source digest includes all
 original bytes; the separate input fingerprint checks row/input correspondence
 without inspecting in-memory held-out targets.
 
+## Baseline development workflow
+
+After installation and checks, reproduce the two fixed baselines in a **new**
+directory (the recorded milestone directory already exists):
+
+~~~powershell
+airfoil-noise baseline-cv --directory data/splits --output-dir reports/development/baselines-reproduction
+~~~
+
+There are two configurations, five fits each, with no search. A fresh estimator
+is constructed per fold. Only development targets enter the evaluator. Overall
+metrics use all out-of-fold predictions; every development row is predicted
+exactly once per model. The primary score is
+
+\[
+\mathrm{MAE}_{\mathrm{condition}} = \frac{1}{G}\sum_{g=1}^{G}
+\left(\frac{1}{n_g}\sum_{i=1}^{n_g}|y_{gi}-\hat y_{gi}|\right).
+\]
+
+This gives each operating condition equal weight despite unequal frequency
+counts. It is calculated over all conditions, rather than by averaging the
+five fold scores equally. Pooled MAE/RMSE weight every observation equally;
+R² is supplementary and can be negative. R² is undefined for fewer than two
+observations or exactly constant truth, even with perfect predictions. It is
+NaN internally, blank in CSV and null in JSON, with an explicit reason.
+
+Each run saves predictions.csv (model, row/condition IDs, fold, measured and
+predicted dB), summary.csv, condition_metrics.csv and fold_metrics.csv.
+diagnostics.json retains separate fit/prediction seconds, warnings, failures
+and fitted coefficients/rank or mean. run.json records every estimator setting,
+feature order, environment/thread details and the frozen bundle's checksums,
+seed and assignment metadata. Fit/predict timings are single measurements,
+without warmup or repetitions: they are preliminary diagnostics, not the final
+speed comparison. No peak-memory or FLOP claim is made.
+
+Existing run directories are refused before fitting. Failed fits retain
+diagnostics and any partial predictions, mark the run failed and produce no
+summary tables; the CLI raises an error. Use a distinct directory for a quick
+check so it cannot replace a study. Figures and later report tables should
+read saved predictions rather than repeat fits.
+
+See the [recorded baseline interpretation](reports/development/milestone-2-baselines/interpretation.md)
+for the development results. Cross-validation here is development evidence,
+not an independent final performance estimate. It does not establish an
+acceptable engineering error threshold or performance beyond this dataset.
+
 ## Remaining milestones
 
-1. Verify training-mean and raw-input linear baselines through shared metrics,
-   saved predictions and the frozen folds.
-2. Add tree, scaled RBF SVR and small scaled MLP pipelines and predefined
+1. Add tree, scaled RBF SVR and small scaled MLP pipelines and predefined
    configurations. Initially disable automatic MLP early stopping.
-3. Run grouped development comparisons, tuning, seed sensitivity and separate
+2. Run grouped development comparisons, tuning, seed sensitivity and separate
    fit/prediction/search cost measurements. Select using equal-condition MAE,
    supported by pooled metrics, diagnostics and engineering trade-offs.
-4. Present frozen configurations, rationale and the exact final procedure for
+3. Present frozen configurations, rationale and the exact final procedure for
    student approval before opening final-test results.
-5. Complete final evaluation, figures, report support, HTML documentation and
+4. Complete final evaluation, figures, report support, HTML documentation and
    a fresh-environment reproduction/submission check.
 
 ## Repository and assessment
@@ -132,9 +183,9 @@ without inspecting in-memory held-out targets.
 | --- | --- |
 | data/raw/ | Original attributed source bytes |
 | data/splits/ | Frozen condition/fold CSVs and provenance metadata |
-| src/airfoil_noise/ | Reusable data/split code and retained starter utilities |
+| src/airfoil_noise/ | Data/split checks, estimator builders, metrics and shared validation |
 | tests/ | Software verification |
-| reports/ | Saved audit and input coverage; future experiment records |
+| reports/ | Saved audit, input coverage and traceable development records |
 | notebooks/ | Future investigation calling package functions |
 | docs/api/ | Generated HTML API documentation |
 | AI_USE.md | Actual AI assistance, checks, errors and student decisions |

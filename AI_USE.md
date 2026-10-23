@@ -102,3 +102,60 @@ Only disposable repositories received fixture commits/configuration; no project
 commit, push or global Git configuration change occurred. The retained baseline
 regression test ran within pytest; no model comparison or final evaluation ran.
 Student interpretation and presentation preparation remain outstanding.
+
+## 2026-10-23: Milestone 2 shared development baselines
+
+The student requested and approved the file scope for Milestone 2 only: mean
+and multiple linear regression, shared metrics/evaluation, CLI restoration,
+synthetic verification and saved development results. Codex drafted essentially
+all new code, tests, documentation and interpretation for this milestone
+(approximately 100% of this milestone's new implementation text). The student
+specified the methodological controls and approved the scope. This is not an
+estimate of AI's contribution to the eventual whole assignment, or a claim
+that the student has independently checked or understood the implementation.
+
+The new estimator builder uses the original five inputs with no transformations.
+The legacy log-frequency and regenerated-fold baseline path was removed. The
+shared evaluator receives only development observations and their checked
+saved row-fold mapping. It creates fresh estimators, retains complete
+out-of-fold predictions, calculates equal-condition MAE over all conditions,
+and records full settings, diagnostics, warnings/failures and separate
+preliminary fit/prediction times. Constant-target and single-row R-squared are
+explicitly undefined rather than forced to zero or one.
+
+A fresh temporary virtual environment installed the README's editable dev
+requirement. The first install attempt could not access the network inside the
+sandbox; retrying with download permission succeeded. There was no dependency
+bypass, PYTHONPATH override or sys.path injection. All 77 focused synthetic/CLI
+tests passed, followed by all 191 tests in the full suite, with no skipped,
+expected-failing or deselected tests. Tests injected failed fits, warnings,
+invalid predictions and reused-state traps through temporary test doubles;
+those deliberate faults are not active in the implementation. Hand-calculated
+metrics, unequal condition/fold sizes, synthetic linear recovery, saved-output
+round trips and withheld-target independence were checked. No failed pytest
+run occurred during this milestone.
+
+The frozen development study then completed ten fits, with no warnings or
+failures, producing 2,388 prediction records. Equal-condition MAE was 5.679567 dB
+for the training mean and 3.771056 dB for linear regression. These results were
+recomputed from saved predictions; 76 of 84 condition MAEs favoured linear
+regression. The interpretation describes CV as development evidence and does
+not invent an acceptable engineering error threshold or treat the diagnostic
+timings as a benchmark. No method settings were changed after this comparison.
+
+Generated pdoc HTML initially contained trailing whitespace detected by Git's
+diff check; generated-file whitespace was normalised. A Windows CIM hardware
+query was denied; the CPU name was obtained through a read-only registry query
+instead. Neither issue required model, data or split changes. Actual commands,
+verification code/outcomes and environment are in docs/test-report.txt and
+docs/environment.txt. Original dataset, assignment CSVs, metadata and Git index
+hashes remained unchanged. No final-test predictions, additional model families,
+project commit, push or repository-setting change occurred.
+
+Student review remains necessary: explain the arithmetic training mean versus
+equal-condition scoring, why aggregate CV differs from an unweighted mean of
+fold scores, why folds must use fresh models, how target-isolation tests work,
+the definition of undefined R-squared, and what the observed error reduction
+does and does not show. Review coefficients as associations, not causal effects.
+Record the student's actual checks, decisions, disagreements and learning
+reflection when they occur; automated verification does not substitute for them.

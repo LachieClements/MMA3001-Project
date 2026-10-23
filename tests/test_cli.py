@@ -89,8 +89,8 @@ def test_custom_source_requires_declared_checksum(source_args: list[str]) -> Non
         main(["audit", *source_args[:2]])
 
 
-@pytest.mark.parametrize("command", ["baseline-cv", "final-evaluation", "evaluate-final"])
-def test_model_and_final_evaluation_are_not_available(command: str) -> None:
+@pytest.mark.parametrize("command", ["final-evaluation", "evaluate-final"])
+def test_final_evaluation_is_not_available(command: str) -> None:
     with pytest.raises(SystemExit) as exc:
         main([command])
     assert exc.value.code == 2
@@ -112,3 +112,37 @@ def test_module_help_command_works(tmp_path: Path) -> None:
 def test_check_split_rejects_missing_bundle(tmp_path: Path, source_args: list[str]) -> None:
     with pytest.raises(ValueError, match="Incomplete"):
         main(["check-split", *source_args, "--directory", str(tmp_path / "missing")])
+
+
+def test_baseline_cli_uses_frozen_folds_and_saves_traceable_records(tmp_path: Path, source_args: list[str]) -> None:
+    directory, output = tmp_path / "splits", tmp_path / "development-check"
+    main(["make-split", *source_args, "--directory", str(directory)])
+    before = {path.name: path.read_bytes() for path in directory.iterdir()}
+    arguments = ["baseline-cv", *source_args, "--directory", str(directory), "--output-dir", str(output)]
+    assert main(arguments) == 0
+    run = json.loads((output / "run.json").read_text())
+    predictions = pd.read_csv(output / "predictions.csv")
+    assert run["kind"] == "development_cross_validation"
+    assert run["fits_attempted"] == 10 and run["fits_failed"] == 0
+    assert len(predictions) == 2 * run["n_observations"]
+    manifest = pd.read_csv(directory / "conditions.csv")
+    test_ids = manifest.loc[manifest["split"] == "test", "condition_id"]
+    assert set(predictions["condition_id"]).isdisjoint(test_ids)
+    assert not predictions.duplicated(["model", "row_id"]).any()
+    assert run["provenance"]["source_sha256"] == source_args[3]
+    assert before == {path.name: path.read_bytes() for path in directory.iterdir()}
+    with pytest.raises(FileExistsError):
+        main(arguments)
+
+
+def test_baseline_cli_requires_explicit_output_directory() -> None:
+    with pytest.raises(SystemExit) as exc:
+        main(["baseline-cv"])
+    assert exc.value.code == 2
+
+
+def test_baseline_cli_refuses_missing_folds(tmp_path: Path, source_args: list[str]) -> None:
+    output = tmp_path / "development-check"
+    with pytest.raises(ValueError, match="Incomplete"):
+        main(["baseline-cv", *source_args, "--directory", str(tmp_path / "missing"), "--output-dir", str(output)])
+    assert not output.exists()

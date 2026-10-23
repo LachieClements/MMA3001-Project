@@ -1,11 +1,13 @@
-"""Audit source data and create or verify frozen condition/fold assignments."""
+"""Audit data, verify frozen assignments and explicitly run development baselines."""
 
 import argparse
 import json
 from pathlib import Path
 
-from airfoil_noise.data import SOURCE_SHA256, audit_data, load_airfoil
-from airfoil_noise.split import read_frozen_splits, split_coverage, write_frozen_splits
+from airfoil_noise.baseline import development_baselines
+from airfoil_noise.data import SOURCE_SHA256, audit_data, file_sha256, load_airfoil
+from airfoil_noise.split import load_development, read_frozen_splits, split_coverage, write_frozen_splits
+from airfoil_noise.validation import save_development_results
 
 
 DEFAULT_DATA = Path("data/raw/airfoil_self_noise.dat")
@@ -19,7 +21,7 @@ def _write_new(path: Path, text: str) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Run an explicit data/split operation without fitting an estimator.
+    """Run an explicit data/split check or development-only baseline study.
 
     Parameters
     ----------
@@ -40,13 +42,12 @@ def main(argv: list[str] | None = None) -> int:
 
     Notes
     -----
-    Legacy baseline-cv is paused until Milestone 2 replaces its log-frequency
-    transform and fold regeneration. Final evaluation is not implemented or
-    invoked by these commands.
+    Only baseline-cv fits estimators. It uses raw inputs and checked saved folds.
+    Final evaluation is not implemented or invoked by these commands.
     """
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
-    for command in ("audit", "make-split", "check-split"):
+    for command in ("audit", "make-split", "check-split", "baseline-cv"):
         part = sub.add_parser(command)
         part.add_argument("--data", type=Path, default=DEFAULT_DATA)
         part.add_argument("--expected-sha256", default=SOURCE_SHA256)
@@ -60,16 +61,37 @@ def main(argv: list[str] | None = None) -> int:
             part.add_argument("--folds", type=int, default=5)
         if command == "check-split":
             part.add_argument("--coverage-output", type=Path, help="Write a new input-only coverage CSV")
-    sub.add_parser("baseline-cv", help="Legacy command paused until Milestone 2")
+        if command == "baseline-cv":
+            part.add_argument("--output-dir", type=Path, required=True, help="New development run directory")
     args = parser.parse_args(argv)
-    if args.command == "baseline-cv":
-        parser.error("baseline-cv is paused until Milestone 2 adopts raw inputs and frozen folds.")
+    if args.command == "baseline-cv" and args.output_dir.exists():
+        raise FileExistsError(f"Refusing to replace {args.output_dir}.")
     data = load_airfoil(args.data, expected_sha256=args.expected_sha256)
     if args.command == "audit":
         text = json.dumps(audit_data(data), indent=2, allow_nan=False) + "\n"
         if args.output:
             _write_new(args.output, text)
         print(text, end="")
+        return 0
+    if args.command == "baseline-cv":
+        # The partition boundary owns the full source. Evaluators receive only
+        # development rows and their saved mapping, never final-test targets.
+        _, _, metadata = read_frozen_splits(data, args.directory)
+        development, row_folds = load_development(data, args.directory)
+        results = development_baselines(development, row_folds)
+        save_development_results(results, args.output_dir, provenance={
+            "source_path": str(args.data), "source_sha256": data.attrs["source_sha256"],
+            "split_directory": str(args.directory), "frozen_split_metadata": metadata,
+            "implementation_sha256": {
+                name: file_sha256(Path(__file__).with_name(name)) for name in (
+                    "data.py", "split.py", "models.py", "metrics.py", "validation.py", "baseline.py", "__main__.py",
+                )
+            },
+        })
+        if results["status"] != "success":
+            raise RuntimeError(f"Development evaluation failed; inspect {args.output_dir}/diagnostics.json.")
+        print(results["summary"].to_string(index=False))
+        print(f"Development records saved to {args.output_dir}. Timings are preliminary diagnostics.")
         return 0
     if args.command == "make-split":
         metadata = write_frozen_splits(
