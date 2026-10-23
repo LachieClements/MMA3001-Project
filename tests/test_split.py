@@ -1,4 +1,4 @@
-"""Checks that the committed holdout is complete and condition-disjoint."""
+"""Checks that generated holdouts are complete and condition-disjoint."""
 
 from pathlib import Path
 
@@ -14,13 +14,12 @@ from airfoil_noise.split import (
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data/raw/airfoil_self_noise.dat"
-MANIFEST = ROOT / "data/splits/conditions.csv"
 
 
-def test_committed_split_matches_algorithm_and_has_no_condition_overlap() -> None:
+def test_generated_split_is_repeatable_and_has_no_condition_overlap() -> None:
     """Frequency siblings must never appear in both development and test."""
     data = load_airfoil(SOURCE)
-    stored = read_manifest(MANIFEST)
+    stored = make_manifest(data)
     pd.testing.assert_frame_equal(stored, make_manifest(data))
     development, test = apply_manifest(data, stored)
     assert (len(development), len(test)) == (1194, 309)
@@ -34,7 +33,7 @@ def test_committed_split_matches_algorithm_and_has_no_condition_overlap() -> Non
 def test_missing_or_conflicting_condition_assignment_fails() -> None:
     """An edited split cannot silently omit or duplicate an experimental run."""
     data = load_airfoil(SOURCE)
-    manifest = read_manifest(MANIFEST)
+    manifest = make_manifest(data)
     with pytest.raises(ValueError, match="no condition-level assignment"):
         validate_manifest(data, manifest.iloc[:-1].copy())
     duplicate = pd.concat([manifest, manifest.iloc[[0]]], ignore_index=True)

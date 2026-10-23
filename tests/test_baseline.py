@@ -6,18 +6,17 @@ import numpy as np
 
 from airfoil_noise.baseline import development_baselines
 from airfoil_noise.data import load_airfoil
-from airfoil_noise.split import apply_manifest, read_manifest
+from airfoil_noise.split import apply_manifest, make_manifest
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data/raw/airfoil_self_noise.dat"
-MANIFEST = ROOT / "data/splits/conditions.csv"
 
 
 def test_baselines_do_not_depend_on_test_targets() -> None:
     """Changing every test label must leave development CV results unchanged."""
     data = load_airfoil(SOURCE)
-    manifest = read_manifest(MANIFEST)
+    manifest = make_manifest(data)
     development, test = apply_manifest(data, manifest)
     original = development_baselines(development)
 

@@ -1,93 +1,102 @@
-# Airfoil self-noise prediction
+# Airfoil self-noise prediction — MMA3001
 
-Individual MMA3001 project. The engineering question is: **How accurately can
-a model predict NACA 0012 airfoil self-noise across frequency at operating
-conditions withheld from model development?**
+Individual project by Lachie Clements, Monash University.
 
-The program accepts the five measured numerical inputs described in
-[`data/README.md`](data/README.md) and estimates scaled sound pressure level
-in decibels. Its intended use is a comparison of prediction methods within
-the wind-tunnel conditions represented by the dataset. It is not a certified
-aircraft noise estimator. Displacement thickness is an input measurement,
-not something this project predicts.
+## Engineering question
+How accurately can regression predict NACA 0012 airfoil self-noise across
+frequency at operating conditions withheld from model development?
 
-## Status and evaluation design
+Airfoil noise matters to engineering design and acoustic assessment. This
+project compares computational methods using existing wind-tunnel measurements.
+The target is scaled sound pressure level (dB). Inputs are frequency (Hz),
+angle of attack (degrees), chord (m), flow speed (m/s), and suction-side
+displacement thickness (m). Thickness is a measured input, not a prediction.
+See [data definitions and attribution](data/README.md).
 
-This first version contains a reproducible dataset loader, an audit,
-a fixed condition-level split, a development-only baseline comparison,
-tests and HTML API documentation. It does **not** report final test accuracy.
+## Current status
+The repository has been reset to a development starting point. It retains
+the loader, audit, optional grouped-split utilities and introductory baseline
+code, with tests and HTML source documentation. No split assignment or model
+results are committed in the current version. Earlier work remains in Git
+history. No trained model or final predictive performance is provided.
 
-Rows from one chord / velocity / angle combination belong to the same
-frequency sweep. The fixed split keeps every sweep together: 84 conditions
-(1,194 rows) in development, and 22 (309 rows) reserved for final evaluation.
-All six chords and four speeds occur on both sides. It was generated with a
-20% group holdout and random seed 3001. Development models use five-fold
-grouped cross-validation. Do not use the final test labels for feature
-selection, tuning or choosing the model.
-
-The current comparison uses a training-mean predictor and a linear regression
-with log10 frequency as a transparent starting point. Planned next work:
-choose one nonlinear method covered in the unit, compare development-fold
-MAE/RMSE in dB and runtime, analyse errors by condition, then evaluate the
-selected model once on the held-out conditions. This repository does not yet
-support prediction for unmeasured inputs in a production setting.
-
-## Reproduce
-
-Python 3.10 or later is required. From the repository root:
+## Setup
+Python 3.10 or later. From the repository root:
 
 ```bash
 python -m venv .venv
-# On Windows PowerShell: .venv\Scripts\Activate.ps1
-# On macOS/Linux: source .venv/bin/activate
+# Windows PowerShell:
+.venv\Scripts\Activate.ps1
+# macOS/Linux alternative:
+# source .venv/bin/activate
 python -m pip install -e ".[dev]"
 airfoil-noise audit
-airfoil-noise check-split
-airfoil-noise baseline-cv
 python -m pytest -q
 pdoc -o docs/api airfoil_noise airfoil_noise.__main__
 ```
 
-The commands read `data/raw/airfoil_self_noise.dat` and
-`data/splits/conditions.csv` relative to the repository. The data file and
-split manifest are committed. The baseline command prints development-fold
-metrics only. Run it at the repository root or supply `--data` and
-`--manifest` paths to the commands that need them.
+Dependencies are declared in pyproject.toml: NumPy, pandas and scikit-learn;
+development tools are pytest and pdoc. A validated environment snapshot is
+in [docs/environment.txt](docs/environment.txt). Version ranges in
+pyproject.toml are not a complete dependency lock.
 
-The generated HTML documentation is committed in [`docs/api/`](docs/api/).
-Regenerate it after changing public functions. Unit and integration checks
-are in `tests/`; the last test run is recorded in `docs/test-report.txt`.
-Initial development-only baseline results are in
-[`reports/development-baseline.md`](reports/development-baseline.md).
+The audit reports row count, duplicates, operating-condition counts and ranges.
+It rejects malformed, missing, nonnumeric, nonfinite or nonpositive basic
+physical inputs. Valid format does not establish physical accuracy or
+suitability for extrapolation.
+
+## Decide the evaluation design before modelling
+Rows at different frequencies can share the same chord/speed/angle condition.
+Consider keeping these complete sweeps together to avoid condition leakage.
+Document the choice before creating a new split. The optional utilities have
+defaults of a 20% condition holdout and seed 3001; these are starter settings,
+not a newly approved or committed experimental design.
+
+Once the design is justified, create and commit the manifest:
+```bash
+airfoil-noise make-split
+airfoil-noise check-split
+airfoil-noise baseline-cv
+```
+
+The final command compares a training-mean predictor with linear regression
+using log10 frequency on development-only grouped folds. It requires the
+manifest. Choose at least one method taught in MMA3001, compare credible
+alternatives, and select settings using development data only. Reserve final
+test data for the final evaluation. Report accuracy, runtime, relevant
+sensitivity/robustness and engineering limitations.
 
 ## Repository map
-
 | Path | Purpose |
 | --- | --- |
-| `data/raw/` | Attributed UCI source file |
-| `data/splits/` | Frozen condition-level holdout |
-| `src/airfoil_noise/data.py` | Schema, units and input checks |
-| `src/airfoil_noise/split.py` | Group assignment and manifest checks |
-| `src/airfoil_noise/baseline.py` | Development-only grouped comparison |
-| `tests/` | Data, leakage and baseline behaviour checks |
-| `docs/api/` | Generated HTML function documentation |
-| `reports/` | Development results and interpretation |
+| data/raw/ | Original attributed dataset |
+| data/splits/ | Future documented condition assignments |
+| data/processed/ | Future derived data |
+| src/airfoil_noise/ | Loader, audit and optional split/baseline utilities |
+| notebooks/ | Exploratory work |
+| tests/ | Data checks and tests of split/baseline utilities |
+| docs/api/ | Generated HTML source documentation |
+| docs/test-report.txt | Latest actual test run |
+| reports/report-outline.md | Assessment-aligned report scaffold |
+| AI_USE.md | AI assistance and critical reflection record |
 
-## Limitations and project record
+## Assessment deliverables
+The supplied 2026 brief requires a functional main branch, README, source
+comments/docstrings, HTML documentation, licensing, test functions and a test
+report. Maintain meaningful development commits and keep documentation current.
 
-The 106 conditions come from one experimental campaign. A group holdout
-estimates performance on withheld combinations in this dataset; it does not
-prove accuracy for a different airfoil, observer position or flow regime.
-The raw UCI file has no column headers. The loader rejects missing, nonfinite,
-malformed and physically invalid basic inputs. It leaves questions about
-measurement uncertainty and dataset provenance for the report.
+Submit a 5–10 page individual report via Moodle (references and appendices
+excluded from the 10-page limit), an accessible final repository link and a
+zipped clone. Prepare a 5-minute demonstration/presentation and 3 minutes of
+questions in Week 14. Obtain dates from the unit overview and appointment
+schedule; this repository does not invent deadlines.
 
-Keep an `AI_USE.md` record as the project develops. Identify tools, prompts or
-tasks, how suggestions were checked, mistakes found and decisions you made.
-For this initial scaffold, AI helped draft code and documentation; the
-student must review the methods and independently explain the results before
-submission. The report's AI reflection should describe actual use, not a
-generic declaration.
+## Limits and ownership
+This single experimental dataset cannot establish performance for other
+airfoils, observer positions or flow regimes. Document input domain,
+measurement uncertainty, failure modes and unsupported uses. The report
+must distinguish software verification from predictive validation.
 
-Code and documentation: MIT licence in [`LICENSE`](LICENSE). Source data:
-CC BY 4.0 with attribution in [`data/README.md`](data/README.md).
+Review and understand all AI-assisted material; record actual checks and
+decisions in [AI_USE.md](AI_USE.md). Code/documentation use the MIT
+[licence](LICENSE); source data retains CC BY 4.0 attribution.
