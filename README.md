@@ -1,6 +1,8 @@
-# Airfoil self-noise prediction — MMA3001
+# NACA 0012 Aerofoil Self-Noise
 
-Individual project by Lachie Clements, Monash University.
+Project Report
+Semester 2, 2026
+Lachie Clements 33134529
 
 ## Engineering question
 How accurately can regression predict NACA 0012 airfoil self-noise across
