@@ -1,0 +1,19 @@
+{
+  "variant_id": "svr_03",
+  "configuration_id": "svr_03",
+  "model": "svr",
+  "seed": null,
+  "grid_order": 14,
+  "eligible": true,
+  "ineligibility_reason": "",
+  "convergence_warning_fits": 0,
+  "fits_attempted": 5,
+  "fits_failed": 0,
+  "equal_condition_mae_db": 3.930550690793793,
+  "mae_db": 3.9672571674393975,
+  "rmse_db": 5.231113054808946,
+  "r2": 0.4300163337386409,
+  "training_equal_condition_mae_db": 2.615367523617305,
+  "mean_structural_count": 921.8,
+  "mean_iterations": null
+}

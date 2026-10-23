@@ -1,0 +1,19 @@
+{
+  "variant_id": "training_mean_01",
+  "configuration_id": "training_mean_01",
+  "model": "training_mean",
+  "seed": null,
+  "grid_order": 1,
+  "eligible": true,
+  "ineligibility_reason": "",
+  "convergence_warning_fits": 0,
+  "fits_attempted": 5,
+  "fits_failed": 0,
+  "equal_condition_mae_db": 5.679567121920091,
+  "mae_db": 5.6850760889143395,
+  "rmse_db": 6.944350371761255,
+  "r2": -0.0044711038994562635,
+  "training_equal_condition_mae_db": 5.667518023342971,
+  "mean_structural_count": 0,
+  "mean_iterations": null
+}

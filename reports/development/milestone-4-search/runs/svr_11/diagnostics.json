@@ -1,0 +1,362 @@
+[
+  {
+    "model": "svr_11",
+    "fold": 1,
+    "status": "success",
+    "n_train": 953,
+    "n_validation": 241,
+    "fit_seconds": 0.032846199988853186,
+    "prediction_seconds": 0.011744299961719662,
+    "training_prediction_seconds": 0.041156899998895824,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.pipeline.Pipeline",
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ],
+      "steps": {
+        "scaler": {
+          "estimator_class": "sklearn.preprocessing._data.StandardScaler",
+          "n_features_in_": 5,
+          "feature_names_in_": [
+            "frequency_hz",
+            "angle_deg",
+            "chord_m",
+            "velocity_m_s",
+            "displacement_thickness_m"
+          ],
+          "mean_": [
+            2882.240293809024,
+            6.740503672612801,
+            0.1349158447009444,
+            49.70944386149004,
+            0.01068672191920252
+          ],
+          "var_": [
+            9505468.826833913,
+            33.47346963088893,
+            0.009162518122502638,
+            234.37854670015378,
+            0.00015142639876405766
+          ],
+          "scale_": [
+            3083.0940347050578,
+            5.785626122632617,
+            0.09572104325853661,
+            15.309426726698613,
+            0.012305543416040498
+          ],
+          "n_samples_seen_": 953
+        },
+        "regressor": {
+          "estimator_class": "sklearn.svm._classes.SVR",
+          "intercept_": [
+            119.23410029502003
+          ],
+          "n_features_in_": 5,
+          "support_vector_count": 645,
+          "n_support_": [
+            645
+          ],
+          "n_iter_": 2257,
+          "fit_status_": 0
+        }
+      }
+    }
+  },
+  {
+    "model": "svr_11",
+    "fold": 2,
+    "status": "success",
+    "n_train": 953,
+    "n_validation": 241,
+    "fit_seconds": 0.03208589996211231,
+    "prediction_seconds": 0.011600000027101487,
+    "training_prediction_seconds": 0.04276969999773428,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.pipeline.Pipeline",
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ],
+      "steps": {
+        "scaler": {
+          "estimator_class": "sklearn.preprocessing._data.StandardScaler",
+          "n_features_in_": 5,
+          "feature_names_in_": [
+            "frequency_hz",
+            "angle_deg",
+            "chord_m",
+            "velocity_m_s",
+            "displacement_thickness_m"
+          ],
+          "mean_": [
+            2915.167890870934,
+            6.451206715634838,
+            0.14320482686253938,
+            50.358866736621195,
+            0.01045616146379853
+          ],
+          "var_": [
+            10215362.091434902,
+            34.58369476629278,
+            0.009981434142493634,
+            228.25727972305933,
+            0.00014320504204513558
+          ],
+          "scale_": [
+            3196.148008374284,
+            5.880790318170916,
+            0.0999071275860418,
+            15.108185851486581,
+            0.011966830910693758
+          ],
+          "n_samples_seen_": 953
+        },
+        "regressor": {
+          "estimator_class": "sklearn.svm._classes.SVR",
+          "intercept_": [
+            120.30327624191627
+          ],
+          "n_features_in_": 5,
+          "support_vector_count": 653,
+          "n_support_": [
+            653
+          ],
+          "n_iter_": 1670,
+          "fit_status_": 0
+        }
+      }
+    }
+  },
+  {
+    "model": "svr_11",
+    "fold": 3,
+    "status": "success",
+    "n_train": 954,
+    "n_validation": 240,
+    "fit_seconds": 0.033353100006934255,
+    "prediction_seconds": 0.011906700034160167,
+    "training_prediction_seconds": 0.040623200009576976,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.pipeline.Pipeline",
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ],
+      "steps": {
+        "scaler": {
+          "estimator_class": "sklearn.preprocessing._data.StandardScaler",
+          "n_features_in_": 5,
+          "feature_names_in_": [
+            "frequency_hz",
+            "angle_deg",
+            "chord_m",
+            "velocity_m_s",
+            "displacement_thickness_m"
+          ],
+          "mean_": [
+            2900.9800838574424,
+            6.74706498951782,
+            0.13421530398322853,
+            51.98228511530399,
+            0.0112347511278826
+          ],
+          "var_": [
+            10151237.273188254,
+            33.66687293707615,
+            0.009103936495347848,
+            255.37009498789155,
+            0.00017325375151448349
+          ],
+          "scale_": [
+            3186.1006376428622,
+            5.802316170037285,
+            0.09541455075274341,
+            15.980303344676894,
+            0.013162589088567777
+          ],
+          "n_samples_seen_": 954
+        },
+        "regressor": {
+          "estimator_class": "sklearn.svm._classes.SVR",
+          "intercept_": [
+            119.16555640722852
+          ],
+          "n_features_in_": 5,
+          "support_vector_count": 648,
+          "n_support_": [
+            648
+          ],
+          "n_iter_": 1703,
+          "fit_status_": 0
+        }
+      }
+    }
+  },
+  {
+    "model": "svr_11",
+    "fold": 4,
+    "status": "success",
+    "n_train": 954,
+    "n_validation": 240,
+    "fit_seconds": 0.03316110000014305,
+    "prediction_seconds": 0.011212999990675598,
+    "training_prediction_seconds": 0.03959150001173839,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.pipeline.Pipeline",
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ],
+      "steps": {
+        "scaler": {
+          "estimator_class": "sklearn.preprocessing._data.StandardScaler",
+          "n_features_in_": 5,
+          "feature_names_in_": [
+            "frequency_hz",
+            "angle_deg",
+            "chord_m",
+            "velocity_m_s",
+            "displacement_thickness_m"
+          ],
+          "mean_": [
+            2886.9392033542977,
+            7.001572327044025,
+            0.13554654088050314,
+            50.786477987421385,
+            0.01192552188784067
+          ],
+          "var_": [
+            9869034.971146535,
+            33.51807928879396,
+            0.009091068966021916,
+            251.8126787903959,
+            0.0001859585472037191
+          ],
+          "scale_": [
+            3141.5020246924137,
+            5.789480053406693,
+            0.09534709731303788,
+            15.86860670602167,
+            0.013636661879056731
+          ],
+          "n_samples_seen_": 954
+        },
+        "regressor": {
+          "estimator_class": "sklearn.svm._classes.SVR",
+          "intercept_": [
+            119.90383192008575
+          ],
+          "n_features_in_": 5,
+          "support_vector_count": 640,
+          "n_support_": [
+            640
+          ],
+          "n_iter_": 2377,
+          "fit_status_": 0
+        }
+      }
+    }
+  },
+  {
+    "model": "svr_11",
+    "fold": 5,
+    "status": "success",
+    "n_train": 962,
+    "n_validation": 232,
+    "fit_seconds": 0.034347300010267645,
+    "prediction_seconds": 0.010935100028291345,
+    "training_prediction_seconds": 0.04267739999340847,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.pipeline.Pipeline",
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ],
+      "steps": {
+        "scaler": {
+          "estimator_class": "sklearn.preprocessing._data.StandardScaler",
+          "n_features_in_": 5,
+          "feature_names_in_": [
+            "frequency_hz",
+            "angle_deg",
+            "chord_m",
+            "velocity_m_s",
+            "displacement_thickness_m"
+          ],
+          "mean_": [
+            2999.620582120582,
+            6.057068607068608,
+            0.14175945945945947,
+            50.19074844074844,
+            0.0099397346975052
+          ],
+          "var_": [
+            10753770.879950596,
+            29.817418849762923,
+            0.00904711199471821,
+            234.32385411759105,
+            0.0001587761650619537
+          ],
+          "scale_": [
+            3279.2942655319293,
+            5.460532835700461,
+            0.09511630772227342,
+            15.307640383729657,
+            0.012600641454384522
+          ],
+          "n_samples_seen_": 962
+        },
+        "regressor": {
+          "estimator_class": "sklearn.svm._classes.SVR",
+          "intercept_": [
+            120.79305452764277
+          ],
+          "n_features_in_": 5,
+          "support_vector_count": 676,
+          "n_support_": [
+            676
+          ],
+          "n_iter_": 2133,
+          "fit_status_": 0
+        }
+      }
+    }
+  }
+]

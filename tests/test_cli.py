@@ -1,4 +1,4 @@
-"""Small CLI workflows use synthetic data and never perform model selection."""
+"""CLI checks and small explicitly synthetic workflows."""
 
 import json
 import os
@@ -107,6 +107,42 @@ def test_module_help_command_works(tmp_path: Path) -> None:
     )
     assert result.returncode == 0, result.stderr
     assert "check-split" in result.stdout
+
+
+@pytest.mark.parametrize("command", ["development-study", "benchmark-development"])
+def test_study_commands_require_explicit_output(command):
+    with pytest.raises(SystemExit) as exc:
+        main([command])
+    assert exc.value.code == 2
+
+
+def test_synthetic_study_cli_uses_saved_assignments(tmp_path, source_args, monkeypatch):
+    from copy import deepcopy
+    protocol = json.loads(Path("configs/milestone4.json").read_text())
+    for variable in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS", "NUMEXPR_NUM_THREADS"):
+        monkeypatch.setenv(variable, "1")
+    # Keep this CLI test small; all-five-model paths are checked separately.
+    protocol["families"] = protocol["families"][:2]
+    protocol.update(run_kind="synthetic_cli_check", expected_development_rows=36,
+                    expected_development_conditions=12, configuration_count=2,
+                    variant_count=2, cv_fit_budget=10, total_fit_budget=22)
+    protocol["benchmark"].update(batch_rows=16, single_rows=4, blocks=2,
+                                 minimum_block_seconds=0, prediction_warmup_rounds=1)
+    protocol_path = tmp_path / "protocol.json"
+    protocol_path.write_text(json.dumps(protocol))
+    split = tmp_path / "split"
+    main(["make-split", *source_args, "--directory", str(split)])
+    before = {path.name: path.read_bytes() for path in split.iterdir()}
+    search, benchmark = tmp_path / "search", tmp_path / "benchmark"
+    common = [*source_args, "--directory", str(split), "--protocol", str(protocol_path)]
+    assert main(["development-study", *common, "--output-dir", str(search)]) == 0
+    assert main(["benchmark-development", *common, "--selection",
+                 str(search / "selected_configurations.json"), "--output-dir", str(benchmark)]) == 0
+    assert json.loads((search / "search.json").read_text())["fits_attempted"] == 10
+    assert json.loads((benchmark / "benchmark.json").read_text())["fits_attempted"] == 12
+    assert before == {path.name: path.read_bytes() for path in split.iterdir()}
+    with pytest.raises(FileExistsError):
+        main(["development-study", *common, "--output-dir", str(search)])
 
 
 def test_check_split_rejects_missing_bundle(tmp_path: Path, source_args: list[str]) -> None:

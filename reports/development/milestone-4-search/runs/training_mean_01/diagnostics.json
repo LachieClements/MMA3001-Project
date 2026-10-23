@@ -1,0 +1,147 @@
+[
+  {
+    "model": "training_mean_01",
+    "fold": 1,
+    "status": "success",
+    "n_train": 953,
+    "n_validation": 241,
+    "fit_seconds": 0.00047910003922879696,
+    "prediction_seconds": 0.00017099996330216527,
+    "training_prediction_seconds": 0.00018069997895509005,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.dummy.DummyRegressor",
+      "constant_": [
+        [
+          124.93312277019938
+        ]
+      ],
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ]
+    }
+  },
+  {
+    "model": "training_mean_01",
+    "fold": 2,
+    "status": "success",
+    "n_train": 953,
+    "n_validation": 241,
+    "fit_seconds": 0.0003892999957315624,
+    "prediction_seconds": 0.00017449998995289207,
+    "training_prediction_seconds": 0.00019339995924383402,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.dummy.DummyRegressor",
+      "constant_": [
+        [
+          124.97291605456454
+        ]
+      ],
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ]
+    }
+  },
+  {
+    "model": "training_mean_01",
+    "fold": 3,
+    "status": "success",
+    "n_train": 954,
+    "n_validation": 240,
+    "fit_seconds": 0.0003728000447154045,
+    "prediction_seconds": 0.00016329996287822723,
+    "training_prediction_seconds": 0.00019120000069960952,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.dummy.DummyRegressor",
+      "constant_": [
+        [
+          125.07698322851152
+        ]
+      ],
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ]
+    }
+  },
+  {
+    "model": "training_mean_01",
+    "fold": 4,
+    "status": "success",
+    "n_train": 954,
+    "n_validation": 240,
+    "fit_seconds": 0.0003703000256791711,
+    "prediction_seconds": 0.0001642999704927206,
+    "training_prediction_seconds": 0.00018509995425119996,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.dummy.DummyRegressor",
+      "constant_": [
+        [
+          124.68117085953878
+        ]
+      ],
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ]
+    }
+  },
+  {
+    "model": "training_mean_01",
+    "fold": 5,
+    "status": "success",
+    "n_train": 962,
+    "n_validation": 232,
+    "fit_seconds": 0.0004062000080011785,
+    "prediction_seconds": 0.00017399998614564538,
+    "training_prediction_seconds": 0.00018480001017451286,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.dummy.DummyRegressor",
+      "constant_": [
+        [
+          125.12408523908523
+        ]
+      ],
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ]
+    }
+  }
+]

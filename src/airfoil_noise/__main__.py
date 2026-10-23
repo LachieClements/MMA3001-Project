@@ -1,4 +1,4 @@
-"""Audit data, verify frozen assignments and explicitly run development baselines."""
+"""Audit frozen data and explicitly run development-only studies."""
 
 import argparse
 import json
@@ -42,12 +42,16 @@ def main(argv: list[str] | None = None) -> int:
 
     Notes
     -----
-    Only baseline-cv fits estimators. It uses raw inputs and checked saved folds.
+    baseline-cv, development-study and benchmark-development explicitly fit.
     Final evaluation is not implemented or invoked by these commands.
     """
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
-    for command in ("audit", "make-split", "check-split", "baseline-cv"):
+    figures = sub.add_parser("plot-development")
+    figures.add_argument("--search-dir", type=Path, required=True)
+    figures.add_argument("--benchmark-dir", type=Path, required=True)
+    figures.add_argument("--output-dir", type=Path, required=True)
+    for command in ("audit", "make-split", "check-split", "baseline-cv", "development-study", "benchmark-development"):
         part = sub.add_parser(command)
         part.add_argument("--data", type=Path, default=DEFAULT_DATA)
         part.add_argument("--expected-sha256", default=SOURCE_SHA256)
@@ -61,12 +65,41 @@ def main(argv: list[str] | None = None) -> int:
             part.add_argument("--folds", type=int, default=5)
         if command == "check-split":
             part.add_argument("--coverage-output", type=Path, help="Write a new input-only coverage CSV")
-        if command == "baseline-cv":
+        if command in ("baseline-cv", "development-study", "benchmark-development"):
             part.add_argument("--output-dir", type=Path, required=True, help="New development run directory")
+        if command in ("development-study", "benchmark-development"):
+            part.add_argument("--protocol", type=Path, default=Path("configs/milestone4.json"))
+        if command == "benchmark-development":
+            part.add_argument("--selection", type=Path, required=True)
     args = parser.parse_args(argv)
-    if args.command == "baseline-cv" and args.output_dir.exists():
+    if hasattr(args, "output_dir") and args.output_dir.exists():
         raise FileExistsError(f"Refusing to replace {args.output_dir}.")
+    if args.command == "plot-development":
+        from airfoil_noise.plotting import plot_development
+        print(plot_development(args.search_dir, args.benchmark_dir, args.output_dir))
+        return 0
     data = load_airfoil(args.data, expected_sha256=args.expected_sha256)
+    if args.command in ("development-study", "benchmark-development"):
+        from airfoil_noise.development import run_study
+        from airfoil_noise.benchmarking import benchmark_selected
+        _, _, metadata = read_frozen_splits(data, args.directory)
+        development, row_folds = load_development(data, args.directory)
+        protocol = json.loads(args.protocol.read_text(encoding="utf-8"))
+        provenance = {
+            "source_path": str(args.data), "source_sha256": data.attrs["source_sha256"],
+            "split_directory": str(args.directory), "frozen_split_metadata": metadata,
+            "protocol_path": str(args.protocol), "protocol_sha256": file_sha256(args.protocol),
+            "implementation_sha256": {
+                path.name: file_sha256(path) for path in sorted(Path(__file__).parent.glob("*.py"))
+            },
+        }
+        if args.command == "development-study":
+            record = run_study(development, row_folds, protocol, args.output_dir, provenance=provenance)
+            print(f'Frozen accuracy leader: {record["accuracy_leader"]}')
+        else:
+            record = benchmark_selected(development, args.selection, protocol, args.output_dir, provenance=provenance)
+            print(json.dumps(record, indent=2))
+        return 0
     if args.command == "audit":
         text = json.dumps(audit_data(data), indent=2, allow_nan=False) + "\n"
         if args.output:

@@ -1,0 +1,20 @@
+{
+  "kind": "repeated_development_benchmark",
+  "finished_utc": "2026-10-23T14:18:43.675321+00:00",
+  "selection_sha256": "93a740f1111ee554c67fc54f246cfc41f2d49216e5fad7dff00a1f913dad7d2e",
+  "fits_attempted": 30,
+  "fits_failed": 0,
+  "prediction_failures": {},
+  "prediction_warnings": [],
+  "actual_prediction_calls_completed_blocks": 394735,
+  "prediction_call_note": "Completed blocks include warmup/calibration/measured. Failed-block attempted counts are additional in prediction_failures.",
+  "single_loop": "for round in range(rounds): for prepared_row in the same 32 rows: estimator.predict(prepared_row)",
+  "latency_statistic": "Median and IQR of block mean seconds per separately dispatched predict call.",
+  "fit_order": "One warmup, then five measured rounds rotating family order.",
+  "prediction_order": "Per mode calibrate each model, then rotate model order across measured blocks.",
+  "serialization": "len(pickle.dumps(estimator, protocol=5)); not peak RAM",
+  "wall_seconds": 59.780581399973016,
+  "timing_scope": "Fit/predict timers include preprocessing and exclude preparation, diagnostics, serialization and writes.",
+  "repeats_are_seed_sensitivity": false,
+  "final_test_evaluated": false
+}

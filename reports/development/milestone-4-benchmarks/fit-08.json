@@ -1,0 +1,24 @@
+{
+  "model": "tree",
+  "stage": "measured",
+  "repeat": 1,
+  "status": "success",
+  "warnings": [],
+  "error": null,
+  "seconds": 0.004086700035259128,
+  "fitted": {
+    "estimator_class": "sklearn.tree._classes.DecisionTreeRegressor",
+    "n_features_in_": 5,
+    "feature_names_in_": [
+      "frequency_hz",
+      "angle_deg",
+      "chord_m",
+      "velocity_m_s",
+      "displacement_thickness_m"
+    ],
+    "node_count": 2383,
+    "depth": 22,
+    "leaf_count": 1192
+  },
+  "convergence_warning": false
+}

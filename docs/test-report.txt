@@ -935,3 +935,175 @@ git --no-optional-locks diff --cached --name-only returned no files.
 All 14 changed files are within the approved Milestone 3 source/test/docs scope;
 there are no new untracked project files. Protected file/index hashes and HEAD
 were checked again after documentation updates and remained unchanged.
+
+================================================================================
+Milestone 4 executed checks (2026-10-24T01:28:32.391255+11:00)
+================================================================================
+Working directory: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+Python: C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe
+HEAD: b46376c2c7042eebe9c87509e0dd3b54d59511a7 (unchanged; no M4 commit/push)
+
+All verification/experiment subprocesses removed PYTHONPATH and PYTHONHOME and set:
+OMP_NUM_THREADS=1
+MKL_NUM_THREADS=1
+OPENBLAS_NUM_THREADS=1
+NUMEXPR_NUM_THREADS=1
+PYTHONDONTWRITEBYTECODE=1
+MPLCONFIGDIR=C:\Users\lachi\AppData\Local\Temp\mma3001-milestone4-wbr70vkm\matplotlib
+Environment variables apply to child processes, not global machine settings.
+Search and benchmark also use threadpool_limits(1) and verify loaded pools.
+The review bundle contains actual argv/cwd/environment JSON and output, plus
+run_command.py, verify_records.py and the interpretation script.
+
+
+Installation: python -m pip install -e ".[dev]" in the existing temporary
+Milestone 2 environment. The first sandboxed attempt could not reach the package
+index (WinError 10013). The approved network-enabled retry succeeded, installing
+Matplotlib 3.10.9 and dependencies; pip check found no broken requirements.
+This updated an existing editable installation; it was not a clean-venv check.
+Read-only Windows hardware CIM queries were sandbox-blocked, then succeeded
+with approval. No global Git configuration changed.
+
+Focused synthetic verification:
+........................................................................ [ 77%]
+.....................                                                    [100%]
+93 passed in 23.32s
+
+Full suite, after calibration/failure/leakage cases:
+........................................................................ [ 23%]
+........................................................................ [ 47%]
+........................................................................ [ 70%]
+........................................................................ [ 94%]
+..................                                                       [100%]
+306 passed in 30.14s
+
+All 306 collected tests passed; zero skipped, xfailed, xpassed or deselected.
+No pytest failure or unexpected warning occurred. Deliberate solver/prediction
+failures and ConvergenceWarnings are captured test cases.
+After a plotting-label-only change, the requested one-test file also passed:
+.                                                                        [100%]
+1 passed in 6.94s
+
+Other files were not collected in that focused check; no real-data fits repeated.
+
+Console audit, module check-split, console help and pip check returned zero.
+pdoc regenerated HTML for the current modules. A documentation helper initially
+had a nested-quote SyntaxError before writing any project files, followed by a
+missing-helper error. The corrected helper succeeded; failed command/output is
+retained in the bundle. These were documentation errors, not test/fit failures.
+Visual review found overlapping labels; only plotting.py changed after model
+runs. Original figures remain and reviewed/ contains regenerated figures.
+This precise plotting-only hash difference is documented; fit code still matches.
+
+Real development ran once: 235 CV + 30 benchmark fits = 265. No failed fits,
+replacement fits, retries or search expansion. 78/90 MLP CV fits and all six
+MLP full-development benchmark fits warned. No MLP configuration passes the
+all-15-fits warning-free rule. Warning-qualified complete predictions remain
+eligible. No final-test predictions or performance scores were calculated.
+Family selections/accuracy leader were frozen before benchmarks; engineering
+recommendation (SVR) was frozen afterward without changing those configurations.
+
+Read-only record verification:
+{
+  "protected_files_unchanged": 14,
+  "oof_rows_verified": 56118,
+  "training_rows_verified": 224472,
+  "cv_fits": 235,
+  "cv_failed_fits": 0,
+  "cv_convergence_warned_fits": 78,
+  "benchmark_fits": 30,
+  "total_real_data_fits": 265,
+  "actual_prediction_calls": 394735,
+  "accuracy_leader": "svr",
+  "final_test_evaluated": false,
+  "fit_implementation_unchanged": true,
+  "post_study_source_change": "plotting.py labels/manifest only; original figures retained",
+  "HEAD_unchanged": true,
+  "staged_files": 0
+}
+
+Metrics/seed means/selected minima, source rows/folds, 265-fit budget, raw timing
+statistics, call counts and complete pipeline reconstruction were checked
+without fitting. Model size is protocol-5 bytes, not peak RAM. No physical
+validity, acceptable dB threshold, final performance or student understanding
+is established by software tests.
+
+Actual argv, with environment/removals above:
+
+audit-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\airfoil-noise.exe audit
+
+benchmarks-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B -m airfoil_noise benchmark-development --protocol configs/milestone4.json --directory data/splits --selection reports/development/milestone-4-search/selected_configurations.json --output-dir reports/development/milestone-4-benchmarks
+
+check-split-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B -m airfoil_noise check-split
+
+console-help-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\airfoil-noise.exe --help
+
+development-study-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B -m airfoil_noise development-study --protocol configs/milestone4.json --directory data/splits --output-dir reports/development/milestone-4-search
+
+document-evidence-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B C:\Users\lachi\AppData\Local\Temp\mma3001-milestone4-wbr70vkm\document_evidence.py
+
+document-evidence-corrected-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B C:\Users\lachi\AppData\Local\Temp\mma3001-milestone4-wbr70vkm\document_evidence.py
+
+figure-verification-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B -m pytest tests/test_plotting.py -q -ra
+
+figures-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B -m airfoil_noise plot-development --search-dir reports/development/milestone-4-search --benchmark-dir reports/development/milestone-4-benchmarks --output-dir reports/development/milestone-4-figures
+
+final-pdoc-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B -m pdoc -o docs/api airfoil_noise airfoil_noise.__main__
+
+focused-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B -m pytest tests/test_development.py tests/test_benchmarking.py tests/test_plotting.py tests/test_validation.py tests/test_cli.py -q -ra
+
+full-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B -m pytest -q -ra
+
+interpretation-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B C:\Users\lachi\AppData\Local\Temp\mma3001-milestone4-wbr70vkm\interpret_records.py
+
+pdoc-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B -m pdoc -o docs/api airfoil_noise airfoil_noise.__main__
+
+pip-check-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -m pip check
+
+pip-freeze-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -m pip freeze --all
+
+reviewed-figures-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B -m airfoil_noise plot-development --search-dir reports/development/milestone-4-search --benchmark-dir reports/development/milestone-4-benchmarks --output-dir reports/development/milestone-4-figures/reviewed
+
+verify-records-after-figures-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B C:\Users\lachi\AppData\Local\Temp\mma3001-milestone4-wbr70vkm\verify_records.py
+
+verify-records-command.json
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -B C:\Users\lachi\AppData\Local\Temp\mma3001-milestone4-wbr70vkm\verify_records.py
+
+Additional executed commands:
+C:\Users\lachi\AppData\Local\Temp\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\Scripts\python.exe -m pip install -e ".[dev]"
+Get-CimInstance Win32_Processor | Select-Object Name,NumberOfCores,NumberOfLogicalProcessors
+Get-CimInstance Win32_ComputerSystem | Select-Object TotalPhysicalMemory
+git --no-optional-locks status --short
+git --no-optional-locks diff --check
+git --no-optional-locks diff --cached --name-only
+
+
+Final documentation/hygiene checks:
+- Generated 12 HTML pages; 29 local HTML links resolve.
+- README local links resolve, including reviewed figure/recommendation records.
+- Normalised trailing whitespace in 12 generated HTML/JS files only.
+- git --no-optional-locks diff --check: exit 0 (LF/CRLF advisories only).
+- git --no-optional-locks diff --cached --name-only: empty.
+- HEAD remains b46376c2c7042eebe9c87509e0dd3b54d59511a7.
+- No original data, frozen assignment, earlier result, commit or remote changed.
+The review ZIP is written outside the checkout, includes complete current
+source/tests/configuration and records, and excludes generated HTML, teaching
+materials, environments, caches and .git. Its manifest binds each included file.

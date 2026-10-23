@@ -1,0 +1,6 @@
+model,node_count,depth,leaf_count,support_vector_count,n_iter_,parameter_count,loss_
+training_mean,,,,,,,
+linear,,,,,,,
+tree,2383,22,1192,,,,
+svr,,,,1129,28684,,
+mlp,,,,,2000,341,5.0975822999321521

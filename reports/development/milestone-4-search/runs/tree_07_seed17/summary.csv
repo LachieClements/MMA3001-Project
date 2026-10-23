@@ -1,0 +1,2 @@
+model,n_observations,mae_db,rmse_db,r2,r2_undefined_reason,n_conditions,equal_condition_mae_db
+tree_07_seed17,1194,2.8872680067001677,3.9297150887045187,0.67834054106133834,,84,2.8499330858999841

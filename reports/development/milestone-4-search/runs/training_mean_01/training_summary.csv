@@ -1,0 +1,2 @@
+model,n_observations,mae_db,rmse_db,r2,r2_undefined_reason,n_conditions,equal_condition_mae_db
+training_mean_01,4776,5.6734801865000248,6.9271558250482608,0.00049697574889295826,,84,5.6675180233429714

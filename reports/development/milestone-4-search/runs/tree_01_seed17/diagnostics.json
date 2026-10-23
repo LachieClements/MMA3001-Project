@@ -1,0 +1,137 @@
+[
+  {
+    "model": "tree_01_seed17",
+    "fold": 1,
+    "status": "success",
+    "n_train": 953,
+    "n_validation": 241,
+    "fit_seconds": 0.0018138999585062265,
+    "prediction_seconds": 0.0008367000264115632,
+    "training_prediction_seconds": 0.0008900000248104334,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.tree._classes.DecisionTreeRegressor",
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ],
+      "node_count": 15,
+      "depth": 3,
+      "leaf_count": 8
+    }
+  },
+  {
+    "model": "tree_01_seed17",
+    "fold": 2,
+    "status": "success",
+    "n_train": 953,
+    "n_validation": 241,
+    "fit_seconds": 0.0015887999907135963,
+    "prediction_seconds": 0.0008196000126190484,
+    "training_prediction_seconds": 0.0009507999639026821,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.tree._classes.DecisionTreeRegressor",
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ],
+      "node_count": 15,
+      "depth": 3,
+      "leaf_count": 8
+    }
+  },
+  {
+    "model": "tree_01_seed17",
+    "fold": 3,
+    "status": "success",
+    "n_train": 954,
+    "n_validation": 240,
+    "fit_seconds": 0.0016091999714262784,
+    "prediction_seconds": 0.0008242999901995063,
+    "training_prediction_seconds": 0.0009209000272676349,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.tree._classes.DecisionTreeRegressor",
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ],
+      "node_count": 15,
+      "depth": 3,
+      "leaf_count": 8
+    }
+  },
+  {
+    "model": "tree_01_seed17",
+    "fold": 4,
+    "status": "success",
+    "n_train": 954,
+    "n_validation": 240,
+    "fit_seconds": 0.0016428999952040613,
+    "prediction_seconds": 0.0008312000427395105,
+    "training_prediction_seconds": 0.0008422999526374042,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.tree._classes.DecisionTreeRegressor",
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ],
+      "node_count": 15,
+      "depth": 3,
+      "leaf_count": 8
+    }
+  },
+  {
+    "model": "tree_01_seed17",
+    "fold": 5,
+    "status": "success",
+    "n_train": 962,
+    "n_validation": 232,
+    "fit_seconds": 0.0016895000007934868,
+    "prediction_seconds": 0.0008245999924838543,
+    "training_prediction_seconds": 0.0008385999826714396,
+    "warnings": [],
+    "convergence_warning": false,
+    "error": null,
+    "fitted": {
+      "estimator_class": "sklearn.tree._classes.DecisionTreeRegressor",
+      "n_features_in_": 5,
+      "feature_names_in_": [
+        "frequency_hz",
+        "angle_deg",
+        "chord_m",
+        "velocity_m_s",
+        "displacement_thickness_m"
+      ],
+      "node_count": 15,
+      "depth": 3,
+      "leaf_count": 8
+    }
+  }
+]

@@ -416,3 +416,17 @@ def test_unknown_json_objects_rejected_before_output_creation(observations, tmp_
     with pytest.raises(TypeError):
         save_development_results(result, output, provenance={"opaque": object()})
     assert not output.exists()
+
+
+def test_optional_training_predictions_are_separate_from_oof_selection(observations, tmp_path):
+    original = evaluate_development(*observations)
+    recorded = evaluate_development(*observations, record_training=True)
+    pd.testing.assert_frame_equal(original["predictions"], recorded["predictions"])
+    pd.testing.assert_frame_equal(original["summary"], recorded["summary"])
+    training = recorded["training_predictions"]
+    assert len(training) == 4 * len(observations[0]) * 2
+    assert (training["fit_fold"] != training["fold"]).all()
+    assert not training.duplicated(["model", "fit_fold", "row_id"]).any()
+    save_development_results(recorded, tmp_path / "training", provenance={"kind": "synthetic"})
+    assert (tmp_path / "training" / "training_predictions.csv").exists()
+    assert "training_predictions" not in original

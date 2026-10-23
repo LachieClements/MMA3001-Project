@@ -241,3 +241,55 @@ limits/loss history, and explain why disabled validation-based early stopping
 still permits training-loss stopping. Record actual student checks, disagreements
 and reflections when they occur. Planned searches and seed sensitivity must
 be agreed before the later real-data development study.
+
+## Milestone 4: approved development search and separate benchmarks
+
+Date: 2026-10-24T01:28:32.391255+11:00
+The student supplied/approved grids, seeds and fixed settings, and clarified
+pre-benchmark family/accuracy selection versus later engineering recommendation,
+all-15-fit converged-only eligibility and the 32 separate-call latency loop.
+AI drafted essentially all new M4 source, tests, protocol and interpretation
+in this session (approximately 100% of this session's new code/document drafting,
+not a measured percentage of the whole assignment). Existing reviewed utilities
+and evaluator were reused. Student authorship and engineering decisions remain
+the student's responsibility.
+
+AI implemented the bounded runner, optional training records, seed-mean selection,
+complete structured pipeline JSON, warning/failure isolation, repeated timings
+and record-derived figures. It ran 306 full-suite tests successfully, then the
+authorised 235 CV + 30 benchmark fits with no replacements or search expansion.
+A later one-test synthetic figure check passed after a plotting-label correction.
+Temporary deliberate faults check failure handling/call counts and are restored
+by fixtures; there are no active injected faults.
+
+SVR C=100, epsilon=0.1, gamma=0.2 selected at 2.338213 dB equal-condition OOF MAE.
+MLP (20,10), alpha=0.01 selected by three-seed mean 3.364101 dB, with predefined
+seed17 representing it for benchmarks. 78/90 MLP CV fits and all six MLP benchmark
+fits warn; no all-15-fits warning-free MLP configuration qualifies. No real fit
+failed. SVR's recommendation was frozen after considering measured cost,
+accuracy, warnings and complexity, including slower batch prediction and its
+10.502 dB worst-condition error. Future final-test evidence cannot retune choices.
+
+Record checks independently recomputed metrics/minima without refitting, traced
+56118 OOF and 224472 training rows, verified configurations/folds, total265 fits,
+thread settings, exact394735 prediction calls and timing summaries. Original
+data, assignments and prior reviewed results keep their bytes. Matplotlib was
+installed into the existing temporary editable environment after a sandbox
+network denial was resolved by the approved retry; this is not a fresh-venv
+reproduction. Visual review found overlapping labels, fixed only in plotting.py;
+new reviewed figures retain original outputs and repeat no real fits/timings.
+Fit-record hashes differ only for this documented plotting revision.
+
+A documentation helper had a nested-quote SyntaxError before writing any project
+files, then a missing-helper error; it was corrected without changing numerical
+outputs. The evidence and failure logs are retained. AI generated documentation
+and the review bundle. No M4 commit/push or final-test evaluation occurred.
+
+These are AI-executed checks, not independent student review. Prior external M3
+review is student-reported. Nothing here claims student understanding or checking.
+Student review should trace a condition through a fold, explain seed means
+versus ensembles/best seed, distinguish total search cost from selected-model fit
+cost, inspect the 32-row separate-call loop and loss/warning records, and defend
+accuracy/throughput/worst-condition trade-offs. Notebook, individual report,
+presentation and personal critical reflection remain student work. Record actual
+student checks/disagreements when they occur rather than asserting them early.

@@ -1,0 +1,30 @@
+{
+  "kind": "development_figures",
+  "source_sha256": {
+    "reports\\development\\milestone-4-search\\selected_configurations.json": "93a740f1111ee554c67fc54f246cfc41f2d49216e5fad7dff00a1f913dad7d2e",
+    "reports\\development\\milestone-4-benchmarks\\summary.csv": "84580cc34d6e5993ffe83c59ecdda24be37fd0abcbd59551fa0a22560d517e70",
+    "reports\\development\\milestone-4-benchmarks\\benchmark.json": "419d45602b252dfbe5a9c3ebdd0abc85a10a9fec0f6423605d6d17dba588522a",
+    "reports\\development\\milestone-4-search\\variants.json": "4a2795c8a41c6fd76044b156530834a2995fc861bde4cfb6ee6d3eb34942c0de",
+    "reports\\development\\milestone-4-search\\variant_scores.csv": "c030a3c436e47fba0901abf8bcc6b5923ec990bf3d4d06169ff66b036356c974",
+    "reports\\development\\milestone-4-search\\configuration_scores.csv": "dc079dbc36bc3f4cebb50c2fc2f8e1e545e1015c72e64d5386a49c596f671b7f",
+    "reports\\development\\milestone-4-search\\runs\\mlp_06_seed17\\diagnostics.json": "cc48224df888219beff67529d23a93680bac498cb4a35ebe005b842738d6c10b",
+    "reports\\development\\milestone-4-search\\runs\\mlp_06_seed29\\diagnostics.json": "3db9711a2c6b9a2e3c267d208b79fb4ce0a0c182f4e18e0db8e79da46bb7aed9",
+    "reports\\development\\milestone-4-search\\runs\\mlp_06_seed43\\diagnostics.json": "99ceca7e8292c3dafde02ac1c8522f882dc24a3743f7238853f70943cf897abc",
+    "reports\\development\\milestone-4-search\\runs\\training_mean_01\\condition_metrics.csv": "40bad0e3ad6cbb92b458528f55b9c7b1f91433fc005632d604e3b015b4e20daf",
+    "reports\\development\\milestone-4-search\\runs\\linear_01\\condition_metrics.csv": "973e4ac147dcd4da553a2a6364b578aa43bdcf05941356b48b7e535b08ebb0c6",
+    "reports\\development\\milestone-4-search\\runs\\tree_07_seed17\\condition_metrics.csv": "177bb5040c5e58d687efdbb5e243dc6ec8ea74ce7dde242664d352cd5eecbd73",
+    "reports\\development\\milestone-4-search\\runs\\svr_14\\condition_metrics.csv": "d1223fce637130f9a9612efbbab8f288c73ca904fb95f2ad25fe1dc165214d18",
+    "reports\\development\\milestone-4-search\\runs\\mlp_06_seed17\\condition_metrics.csv": "f2fa5425ebc627a70209066050fba3c6f769598785dda295d0af00bcf475aef0"
+  },
+  "figures": [
+    "accuracy_vs_training_time",
+    "accuracy_vs_prediction_time",
+    "tree_complexity",
+    "svr_sensitivity",
+    "mlp_sensitivity",
+    "mlp_convergence",
+    "condition_errors"
+  ],
+  "fits_attempted": 0,
+  "final_test_evaluated": false
+}

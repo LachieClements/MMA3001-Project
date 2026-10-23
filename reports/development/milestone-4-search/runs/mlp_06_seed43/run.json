@@ -1,0 +1,263 @@
+{
+  "schema_version": 2,
+  "kind": "development_cross_validation",
+  "status": "success",
+  "started_utc": "2026-10-23T14:16:40.755172+00:00",
+  "evaluation_seconds": 13.837479699985124,
+  "models": {
+    "mlp_06_seed43": {
+      "configuration_schema_version": 1,
+      "estimator_class": "sklearn.pipeline.Pipeline",
+      "parameters": {
+        "memory": null,
+        "steps": [
+          {
+            "__type__": "tuple",
+            "items": [
+              "scaler",
+              {
+                "configuration_schema_version": 1,
+                "estimator_class": "sklearn.preprocessing._data.StandardScaler",
+                "parameters": {
+                  "copy": true,
+                  "with_mean": true,
+                  "with_std": true
+                }
+              }
+            ]
+          },
+          {
+            "__type__": "tuple",
+            "items": [
+              "regressor",
+              {
+                "configuration_schema_version": 1,
+                "estimator_class": "sklearn.neural_network._multilayer_perceptron.MLPRegressor",
+                "parameters": {
+                  "activation": "relu",
+                  "alpha": 0.01,
+                  "batch_size": "auto",
+                  "beta_1": 0.9,
+                  "beta_2": 0.999,
+                  "early_stopping": false,
+                  "epsilon": 1e-08,
+                  "hidden_layer_sizes": {
+                    "__type__": "tuple",
+                    "items": [
+                      20,
+                      10
+                    ]
+                  },
+                  "learning_rate": "constant",
+                  "learning_rate_init": 0.001,
+                  "loss": "squared_error",
+                  "max_fun": 15000,
+                  "max_iter": 2000,
+                  "momentum": 0.9,
+                  "n_iter_no_change": 20,
+                  "nesterovs_momentum": true,
+                  "power_t": 0.5,
+                  "random_state": 43,
+                  "shuffle": true,
+                  "solver": "adam",
+                  "tol": 0.0001,
+                  "validation_fraction": 0.1,
+                  "verbose": false,
+                  "warm_start": false
+                }
+              }
+            ]
+          }
+        ],
+        "transform_input": null,
+        "verbose": false
+      }
+    }
+  },
+  "model_methods": {
+    "mlp_06_seed43": "mlp"
+  },
+  "feature_columns": [
+    "frequency_hz",
+    "angle_deg",
+    "chord_m",
+    "velocity_m_s",
+    "displacement_thickness_m"
+  ],
+  "feature_transformations": {
+    "mlp_06_seed43": [
+      {
+        "step_name": "scaler",
+        "configuration_schema_version": 1,
+        "estimator_class": "sklearn.preprocessing._data.StandardScaler",
+        "parameters": {
+          "copy": true,
+          "with_mean": true,
+          "with_std": true
+        }
+      }
+    ]
+  },
+  "target_transformation": "none",
+  "model_random_seeds": {
+    "mlp_06_seed43": 43
+  },
+  "seed_explanation": "Regressor random_state; null for deterministic methods. Split seeds are separate provenance.",
+  "primary_metric": "equal_condition_mae_db over all out-of-fold rows",
+  "r2_policy": "Undefined for n < 2 or exactly constant truth; CSV blank / JSON null.",
+  "n_observations": 1194,
+  "n_conditions": 84,
+  "n_folds": 5,
+  "fits_attempted": 5,
+  "fits_succeeded": 5,
+  "fits_failed": 0,
+  "n_configurations": 1,
+  "configurations_per_model": {
+    "mlp": 1
+  },
+  "search_performed": false,
+  "training_predictions_recorded": true,
+  "configuration_selection": "None: only the explicitly supplied configurations are evaluated.",
+  "timing_note": "Single fit/predict timings, without warmup or repetitions; preliminary diagnostics only.",
+  "environment": {
+    "python": "3.10.5 (tags/v3.10.5:f377153, Jun  6 2022, 16:14:13) [MSC v.1929 64 bit (AMD64)]",
+    "executable": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\python.exe",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+    "logical_cpus": 12,
+    "packages": {
+      "mma3001-airfoil-noise": "0.1.0",
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "scipy": "1.15.3",
+      "scikit-learn": "1.7.2",
+      "pytest": "9.1.1",
+      "pdoc": "16.0.0",
+      "matplotlib": "3.10.9",
+      "threadpoolctl": "3.7.0"
+    },
+    "thread_environment": {
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1"
+    },
+    "thread_pools": [
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-13e2df515630b4a41f92893938845698.dll",
+        "version": "0.3.29",
+        "threading_layer": "pthreads",
+        "architecture": "Haswell"
+      },
+      {
+        "user_api": "openmp",
+        "internal_api": "openmp",
+        "num_threads": 1,
+        "prefix": "vcomp",
+        "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Lib\\site-packages\\sklearn\\.libs\\vcomp140.dll",
+        "version": null
+      },
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Lib\\site-packages\\scipy.libs\\libscipy_openblas-f07f5a5d207a3a47104dca54d6d0c86a.dll",
+        "version": "0.3.28",
+        "threading_layer": "pthreads",
+        "architecture": "Haswell"
+      }
+    ]
+  },
+  "provenance": {
+    "source_path": "data\\raw\\airfoil_self_noise.dat",
+    "source_sha256": "74c75fd71783f1e6b71f8a622b993dc592897a97cd689c5090a07147a1b097b3",
+    "split_directory": "data\\splits",
+    "frozen_split_metadata": {
+      "schema_version": 1,
+      "source_sha256": "74c75fd71783f1e6b71f8a622b993dc592897a97cd689c5090a07147a1b097b3",
+      "input_fingerprint": "a3940bc812a64fad2f3d5cbf771da0d7cc2380ef106c988ed70ed063c78a6538",
+      "condition_columns": [
+        "chord_m",
+        "velocity_m_s",
+        "angle_deg"
+      ],
+      "row_id_scheme": "row_ plus one-based source record number, padded to six digits",
+      "condition_id_scheme": "c=<chord>|v=<velocity>|a=<angle>, using str(float(value))",
+      "holdout": {
+        "algorithm": "GroupShuffleSplit",
+        "seed": 3001,
+        "test_fraction": 0.2
+      },
+      "folds": {
+        "algorithm": "GroupKFold",
+        "n_splits": 5,
+        "shuffle": false,
+        "seed": null
+      },
+      "counts": {
+        "development": {
+          "conditions": 84,
+          "rows": 1194
+        },
+        "test": {
+          "conditions": 22,
+          "rows": 309
+        },
+        "validation_folds": {
+          "1": {
+            "conditions": 17,
+            "rows": 241
+          },
+          "2": {
+            "conditions": 17,
+            "rows": 241
+          },
+          "3": {
+            "conditions": 17,
+            "rows": 240
+          },
+          "4": {
+            "conditions": 17,
+            "rows": 240
+          },
+          "5": {
+            "conditions": 16,
+            "rows": 232
+          }
+        }
+      },
+      "assignment_sha256": {
+        "conditions.csv": "7b276f489f0ea0e90a78be46d9fb9323e6400dbd37c6f91a93248221839b79f3",
+        "development_folds.csv": "838e206edfec7f753e30ae731be964310cf5ee05c00f86010e910fded603c04f"
+      },
+      "environment": {
+        "python": "3.10.5",
+        "numpy": "2.2.6",
+        "pandas": "2.3.3",
+        "scikit-learn": "1.7.2"
+      },
+      "record_sha256": "03a82901bb9fb7a60d20113c6a17ac44b65daa73c1831dadb1b1540e5f2bf7b2"
+    },
+    "protocol_path": "configs\\milestone4.json",
+    "protocol_sha256": "0189645827341cb31c69a3362587527d87c309cd8e16569084a214c07d25052f",
+    "implementation_sha256": {
+      "__init__.py": "52910cff40ad209d4ec704b434939e15517be7c1bebbee9d35fb0791157bdd98",
+      "__main__.py": "c78ad64df0bb047bee4e4e2950511af6ac064b335adc5ee3e7c0bf550c53b9d4",
+      "baseline.py": "7c493be5be2e8eacef9322e5d5d2dd19daaf92e31e3e2521faa462794839d830",
+      "benchmarking.py": "186ebbd4eb430211bfaeb8cecf8218651d1755b341ca464381e365663f2d1886",
+      "data.py": "934fb73dd9a413224406b3cca4674fbae25fe2d26e339e6f2f8c00e82a772544",
+      "development.py": "fd15512b02ebbbc7bfc62620f3789ea24f70b7beb87faabb3651835baf1b0c6c",
+      "metrics.py": "1d768ba4374b5267f0ad00a173241cfdd4cc9d8e8a5215a204278458f9a4058f",
+      "models.py": "45303354daddea96a095b1a5765c8c767e549380c7cb666a707111e9c350397d",
+      "plotting.py": "eae07fa2f8173a1a61fd40939a21f1715eac995ce4f17f12c3533cd640315cf7",
+      "split.py": "dd580ba5ab7843b6c049dbcfd70b399b90fc945b88e0bf2e29b0e9d1bb89a2b0",
+      "validation.py": "9eea5004ab853321d73dc72f5d74b588e4090176ca03bef36e0624ba0e58a428"
+    },
+    "search_protocol_sha256": "996b55e34fc16312fb6ecc1d1f76f5d02a3a0e8e0b369a532425a90e554af6da"
+  }
+}

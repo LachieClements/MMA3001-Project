@@ -1,0 +1,19 @@
+{
+  "variant_id": "tree_07_seed17",
+  "configuration_id": "tree_07",
+  "model": "tree",
+  "seed": 17,
+  "grid_order": 9,
+  "eligible": true,
+  "ineligibility_reason": "",
+  "convergence_warning_fits": 0,
+  "fits_attempted": 5,
+  "fits_failed": 0,
+  "equal_condition_mae_db": 2.849933085899984,
+  "mae_db": 2.8872680067001677,
+  "rmse_db": 3.9297150887045187,
+  "r2": 0.6783405410613383,
+  "training_equal_condition_mae_db": 0.0,
+  "mean_structural_count": 1905.8,
+  "mean_iterations": null
+}

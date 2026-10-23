@@ -1,0 +1,19 @@
+{
+  "variant_id": "tree_04_seed17",
+  "configuration_id": "tree_04",
+  "model": "tree",
+  "seed": 17,
+  "grid_order": 6,
+  "eligible": true,
+  "ineligibility_reason": "",
+  "convergence_warning_fits": 0,
+  "fits_attempted": 5,
+  "fits_failed": 0,
+  "equal_condition_mae_db": 3.365141669405942,
+  "mae_db": 3.3920814937155654,
+  "rmse_db": 4.372814728482208,
+  "r2": 0.60171279713881,
+  "training_equal_condition_mae_db": 2.539191169337188,
+  "mean_structural_count": 121.8,
+  "mean_iterations": null
+}

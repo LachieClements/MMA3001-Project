@@ -48,11 +48,10 @@ training mean and **3.771 dB** for linear regression (pooled RMSE: 6.944 and
 4.855 dB respectively). These are development comparisons, not final-test
 estimates. Full results and limitations are in the interpretation linked below.
 
-Milestone 3 adds decision tree, scaled RBF SVR and small scaled MLP construction
-to the same evaluator. Verification uses synthetic data; these new methods
-have not yet been compared on the real development observations. The reviewed
-Milestone 2 records remain unchanged. No tuning study or final evaluation has
-been run for this milestone.
+Milestone 3 added decision tree, scaled RBF SVR and small scaled MLP pipelines
+to the same evaluator. Milestone 4 uses the approved bounded development
+search and separate repeated benchmarks described below. The reviewed
+Milestone 2 records remain unchanged. No final-test evaluation has been run.
 
 ## Setup and checks
 
@@ -224,9 +223,9 @@ options cannot be combined. Configurations are checked before any fold fit,
 then cloned per fold so nested scalers/regressors share no fitted state. The
 model column in predictions and metric tables is the configuration ID; run.json
 maps it to the underlying method. The evaluator does not generate, search or
-select configurations. Planned search budgets and sensitivity experiments
-remain for Milestone 4; supplying several named settings is not an independent
-final validation procedure.
+select configurations. The Milestone 4 runner expands only the approved explicit grid and invokes
+this evaluator once per configuration/seed. These tuned comparisons are
+development evidence rather than independent final validation.
 
 New run records use schema version 2. They contain per-configuration methods,
 actual preprocessing and random states rather than a blanket "no transforms"
@@ -265,17 +264,90 @@ comparable to an SVR solver iteration. Complexity counts describe different stru
 cost units. JSON is checked before output creation so unsupported objects cannot
 leave partially written metric tables after a serialization failure.
 
+## Milestone 4 development study
+
+The [approved protocol](docs/milestone-4-protocol.md) defines every search value,
+fixed setting, seed, failure rule, tie rule and timing loop. The machine-readable
+[configuration](configs/milestone4.json) expands to 35 parameter configurations,
+47 configuration/seed variants and 235 grouped CV fits. All use the saved folds.
+MLP uses seeds 17, 29 and 43; its selection score averages the three overall OOF
+equal-condition MAEs. Seed 17 represents the chosen MLP in speed measurements;
+it is not a best-seed choice or an ensemble. No automatic early stopping is used.
+
+Each variant is saved separately. Failures cannot erase other variants; an
+incomplete variant is ineligible, and an MLP configuration needs all three
+seeds. Finite complete results with ConvergenceWarnings remain eligible but are
+labelled warning-qualified. Converged-only sensitivity requires all 15 MLP fits
+to complete without such warnings. There are no replacement fits or expanded
+searches after results. Training predictions carry both their saved fold and
+fit_fold, appear four times per observation, and never enter selection.
+
+The runner freezes one choice per eligible family and the accuracy leader
+before benchmarks. The benchmark uses one warmup plus five measured fresh fits
+per family, with identical representative seeds and rotating method order.
+There are at most 30 additional fits, or 265 real-data fits in total. Search
+cost, selected-model training cost, 256-row batch time and separately dispatched
+one-row latency are distinct records. The same 32 prepared one-row frames cycle
+in every single-observation round. Warmup, calibration and 20 measured blocks
+have explicit call counts. Medians and IQRs describe block mean seconds per
+call, not an individual-call p95. Scaling is included in pipeline timings.
+Serialized protocol-5 model size is recorded; peak RAM and FLOPs are not measured.
+
+To reproduce intentionally, use **new directories** and the same recorded
+package versions. These commands launch the full study, not routine checks:
+
+~~~powershell
+$env:OMP_NUM_THREADS = '1'
+$env:MKL_NUM_THREADS = '1'
+$env:OPENBLAS_NUM_THREADS = '1'
+$env:NUMEXPR_NUM_THREADS = '1'
+python -m airfoil_noise development-study --protocol configs/milestone4.json --directory data/splits --output-dir reports/development/search-reproduction
+python -m airfoil_noise benchmark-development --protocol configs/milestone4.json --directory data/splits --selection reports/development/search-reproduction/selected_configurations.json --output-dir reports/development/benchmarks-reproduction
+python -m airfoil_noise plot-development --search-dir reports/development/search-reproduction --benchmark-dir reports/development/benchmarks-reproduction --output-dir reports/development/figures-reproduction
+~~~
+
+Process-local thread variables are required before Python imports. The runner
+also applies threadpool_limits(1) and checks loaded libraries. Baseline-cv keeps
+its original two-model purpose. Audit/check-split never fit; no final-evaluation
+command exists. Synthetic tests use separately labelled small protocols and
+never change the real grid's 2000-epoch MLP limit.
+
+Recorded outputs:
+
+- [Search and selected configurations](reports/development/milestone-4-search/selected_configurations.json),
+  per-variant OOF/training predictions, diagnostics and full pipeline records.
+- [Repeated benchmarks](reports/development/milestone-4-benchmarks/summary.csv),
+  raw fit records, prediction blocks and prepared-row identifiers.
+- [Development interpretation](reports/development/milestone-4-search/interpretation.md)
+  and [engineering recommendation](reports/development/milestone-4-benchmarks/recommendation.json).
+- [Reviewed figure manifest](reports/development/milestone-4-figures/reviewed/manifest.json), PNG and
+  SVG accuracy/time, complexity, convergence, sensitivity and all-condition plots.
+
+The frozen SVR (C=100, epsilon=0.1, gamma=0.2) has development equal-condition
+MAE **2.338 dB**; the tree has **2.850 dB**. MLP's three-seed score is **3.364 dB**
+and remains warning-qualified. All 265 approved real-data fits completed with
+zero failures; 78/90 MLP CV fits warned and no all-15-fits warning-free MLP
+configuration qualified. Full tests: **306 passed**. SVR is recommended after
+benchmarking, with its slower batch prediction and 10.502 dB worst-condition
+MAE explicitly acknowledged. See the interpretation for timing IQRs and limits.
+
+Original figures are retained; reviewed/ fixes overlapping labels without
+repeating fits or timings. plotting.py alone differs from the source hash saved
+before those experiments; the fitting implementation still matches exactly.
+
+The engineering recommendation considers cost, accuracy, warnings and complexity
+**after** benchmarks and is frozen before any future final evaluation. It does
+not alter the previously selected configurations. Development tuning estimates
+can be optimistic; no acceptable dB threshold or extrapolation claim is inferred.
+
 ## Remaining milestones
 
-1. Propose modest search spaces, fit budgets and a small predefined set of MLP
-   seeds before running the development study.
-2. Run grouped development comparisons, tuning, seed sensitivity and separate
-   fit/prediction/search cost measurements. Select using equal-condition MAE,
-   supported by pooled metrics, diagnostics and engineering trade-offs.
-3. Present frozen configurations, rationale and the exact final procedure for
+1. Review the completed development study and frozen engineering recommendation.
+2. Present the frozen configurations, rationale and exact final procedure for
    student approval before opening final-test results.
-4. Complete final evaluation, figures, report support, HTML documentation and
-   a fresh-environment reproduction/submission check.
+3. Complete authorised final evaluation, figures, report support and a fresh
+   environment reproduction/submission check. Prepare the investigation notebook
+   and student report/presentation; these are not completed by the API docs.
 
 ## Repository and assessment
 

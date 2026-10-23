@@ -1,0 +1,10 @@
+{
+  "kind": "milestone_4_full_development",
+  "wall_seconds": 244.16041080001742,
+  "fits_attempted": 235,
+  "fits_failed": 0,
+  "cv_fit_budget": 235,
+  "timing_scope": "Sequential evaluation and per-variant saving plus selection; excludes preflight/loading and plotting.",
+  "status": "completed",
+  "final_test_evaluated": false
+}

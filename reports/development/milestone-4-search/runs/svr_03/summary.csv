@@ -1,0 +1,2 @@
+model,n_observations,mae_db,rmse_db,r2,r2_undefined_reason,n_conditions,equal_condition_mae_db
+svr_03,1194,3.9672571674393975,5.2311130548089464,0.4300163337386409,,84,3.930550690793793

@@ -1,0 +1,19 @@
+{
+  "variant_id": "mlp_03_seed17",
+  "configuration_id": "mlp_03",
+  "model": "mlp",
+  "seed": 17,
+  "grid_order": 32,
+  "eligible": true,
+  "ineligibility_reason": "",
+  "convergence_warning_fits": 5,
+  "fits_attempted": 5,
+  "fits_failed": 0,
+  "equal_condition_mae_db": 3.8785946083495344,
+  "mae_db": 3.906678139878951,
+  "rmse_db": 5.167424270947664,
+  "r2": 0.4438109431923951,
+  "training_equal_condition_mae_db": 3.3115632248309814,
+  "mean_structural_count": 141.0,
+  "mean_iterations": 2000.0
+}

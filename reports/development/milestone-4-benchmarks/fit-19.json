@@ -1,0 +1,26 @@
+{
+  "model": "training_mean",
+  "stage": "measured",
+  "repeat": 3,
+  "status": "success",
+  "warnings": [],
+  "error": null,
+  "seconds": 0.0002986000035889447,
+  "fitted": {
+    "estimator_class": "sklearn.dummy.DummyRegressor",
+    "constant_": [
+      [
+        124.95793634840872
+      ]
+    ],
+    "n_features_in_": 5,
+    "feature_names_in_": [
+      "frequency_hz",
+      "angle_deg",
+      "chord_m",
+      "velocity_m_s",
+      "displacement_thickness_m"
+    ]
+  },
+  "convergence_warning": false
+}

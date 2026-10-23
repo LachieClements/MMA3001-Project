@@ -1,0 +1,19 @@
+{
+  "variant_id": "linear_01",
+  "configuration_id": "linear_01",
+  "model": "linear",
+  "seed": null,
+  "grid_order": 2,
+  "eligible": true,
+  "ineligibility_reason": "",
+  "convergence_warning_fits": 0,
+  "fits_attempted": 5,
+  "fits_failed": 0,
+  "equal_condition_mae_db": 3.7710563012340375,
+  "mae_db": 3.767674119337021,
+  "rmse_db": 4.85462572936748,
+  "r2": 0.5091082821412523,
+  "training_equal_condition_mae_db": 3.7240142879936875,
+  "mean_structural_count": 0,
+  "mean_iterations": null
+}

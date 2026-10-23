@@ -1,0 +1,37 @@
+{
+  "model": "linear",
+  "stage": "measured",
+  "repeat": 3,
+  "status": "success",
+  "warnings": [],
+  "error": null,
+  "seconds": 0.0012530999956652522,
+  "fitted": {
+    "estimator_class": "sklearn.linear_model._base.LinearRegression",
+    "coef_": [
+      -0.0012765226804093486,
+      -0.4002141118630882,
+      -35.81602570019893,
+      0.09876720259712901,
+      -162.90695362328648
+    ],
+    "intercept_": 133.03178402278635,
+    "rank_": 5,
+    "singular_": [
+      109826.31308413288,
+      533.4382612138705,
+      189.83391827683718,
+      2.847380643034957,
+      0.2790371905798647
+    ],
+    "n_features_in_": 5,
+    "feature_names_in_": [
+      "frequency_hz",
+      "angle_deg",
+      "chord_m",
+      "velocity_m_s",
+      "displacement_thickness_m"
+    ]
+  },
+  "convergence_warning": false
+}

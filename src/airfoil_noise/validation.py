@@ -118,6 +118,7 @@ def evaluate_development(
     *,
     model_names: tuple[str, ...] | None = None,
     configurations: dict[str, dict] | None = None,
+    record_training: bool = False,
 ) -> dict:
     """Fit fresh estimators and collect one prediction per development row/model.
 
@@ -141,6 +142,10 @@ def evaluate_development(
         Several explicitly supplied settings/seeds for a method are allowed;
         no configurations are generated or selected by this function. The
         existing 'model' column holds these IDs, linked to methods in run.json.
+    record_training : bool, default False
+        Also save predictions on each fold's training rows, labelled with
+        fit_fold separately from their saved validation fold. These repeated
+        training observations describe complexity; they never select models.
 
     Returns
     -------
@@ -178,7 +183,7 @@ def evaluate_development(
         ]
         regressor = estimator.steps[-1][1] if isinstance(estimator, Pipeline) else estimator
         seeds[name] = regressor.get_params(deep=False).get("random_state")
-    predictions, diagnostics = [], []
+    predictions, diagnostics, training = [], [], []
     for name, prototype in prototypes.items():
         for fold in sorted(aligned["fold"].unique()):
             estimator = clone(prototype)
@@ -187,6 +192,7 @@ def evaluate_development(
                 "model": name, "fold": int(fold), "status": "failed",
                 "n_train": int((~valid).sum()), "n_validation": int(valid.sum()),
                 "fit_seconds": None, "prediction_seconds": None,
+                "training_prediction_seconds": None,
                 "warnings": [], "convergence_warning": False, "error": None, "fitted": {},
             }
             # Warnings are retained even if the same fit subsequently fails.
@@ -208,6 +214,18 @@ def evaluate_development(
                     rows["truth_db"] = y[valid]
                     rows["prediction_db"] = predicted
                     record["fitted"] = _fitted_diagnostics(estimator)
+                    if record_training:
+                        phase = "training_prediction"
+                        phase_start = perf_counter()
+                        train_predicted = np.asarray(estimator.predict(x.iloc[np.flatnonzero(~valid)]))
+                        record["training_prediction_seconds"] = perf_counter() - phase_start
+                        regression_metrics(y[~valid], train_predicted, aligned.loc[~valid, "condition_id"])
+                        train_rows = aligned.loc[~valid].copy()
+                        train_rows.insert(0, "model", name)
+                        train_rows["fit_fold"] = int(fold)
+                        train_rows["truth_db"] = y[~valid]
+                        train_rows["prediction_db"] = train_predicted
+                        training.append(train_rows)
                     predictions.append(rows.loc[:, list(PREDICTION_COLUMNS)])
                     record["status"] = "success"
                 except Exception as exc:
@@ -243,7 +261,7 @@ def evaluate_development(
                 folds.append({"model": name, "fold": int(fold), **regression_metrics(
                     subset["truth_db"], subset["prediction_db"], subset["condition_id"],
                 )})
-    return {
+    result = {
         "status": "success" if complete else "failed",
         "predictions": prediction_table,
         "summary": pd.DataFrame(summaries),
@@ -267,11 +285,19 @@ def evaluate_development(
             "n_configurations": len(prototypes),
             "configurations_per_model": {method: list(methods.values()).count(method) for method in sorted(set(methods.values()))},
             "search_performed": False,
+            "training_predictions_recorded": record_training,
             "configuration_selection": "None: only the explicitly supplied configurations are evaluated.",
             "timing_note": "Single fit/predict timings, without warmup or repetitions; preliminary diagnostics only.",
             "environment": environment_details(),
         },
     }
+    if record_training:
+        result["training_predictions"] = pd.concat(training, ignore_index=True) if training else pd.DataFrame()
+        result["training_summary"] = pd.DataFrame([
+            {"model": name, **regression_metrics(rows["truth_db"], rows["prediction_db"], rows["condition_id"])}
+            for name, rows in result["training_predictions"].groupby("model")
+        ]) if complete else pd.DataFrame()
+    return result
 
 
 def environment_details() -> dict:
@@ -286,7 +312,7 @@ def environment_details() -> dict:
     """
     variables = ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS", "NUMEXPR_NUM_THREADS")
     packages = {}
-    for package in ("mma3001-airfoil-noise", "numpy", "pandas", "scipy", "scikit-learn", "pytest", "pdoc"):
+    for package in ("mma3001-airfoil-noise", "numpy", "pandas", "scipy", "scikit-learn", "pytest", "pdoc", "matplotlib", "threadpoolctl"):
         try:
             packages[package] = version(package)
         except PackageNotFoundError:
@@ -342,6 +368,8 @@ def save_development_results(results: dict, directory: str | Path, *, provenance
     tables = ["predictions"]
     if results["status"] == "success":
         tables += ["summary", "condition_metrics", "fold_metrics"]
+        if "training_predictions" in results:
+            tables += ["training_predictions", "training_summary"]
     for name in tables:
         with (destination / f"{name}.csv").open("x", encoding="utf-8", newline="") as stream:
             results[name].to_csv(stream, index=False, lineterminator="\n", float_format="%.17g")

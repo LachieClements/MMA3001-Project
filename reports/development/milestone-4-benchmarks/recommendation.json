@@ -1,0 +1,85 @@
+{
+  "kind": "frozen_development_engineering_recommendation",
+  "frozen_utc": "2026-10-23T14:24:18.381671+00:00",
+  "recommended_model": "svr",
+  "accuracy_leader": "svr",
+  "configuration_id": "svr_14",
+  "configuration": {
+    "configuration_schema_version": 1,
+    "estimator_class": "sklearn.pipeline.Pipeline",
+    "parameters": {
+      "memory": null,
+      "steps": [
+        {
+          "__type__": "tuple",
+          "items": [
+            "scaler",
+            {
+              "configuration_schema_version": 1,
+              "estimator_class": "sklearn.preprocessing._data.StandardScaler",
+              "parameters": {
+                "copy": true,
+                "with_mean": true,
+                "with_std": true
+              }
+            }
+          ]
+        },
+        {
+          "__type__": "tuple",
+          "items": [
+            "regressor",
+            {
+              "configuration_schema_version": 1,
+              "estimator_class": "sklearn.svm._classes.SVR",
+              "parameters": {
+                "C": 100,
+                "cache_size": 200,
+                "coef0": 0.0,
+                "degree": 3,
+                "epsilon": 0.1,
+                "gamma": 0.2,
+                "kernel": "rbf",
+                "max_iter": -1,
+                "shrinking": true,
+                "tol": 0.001,
+                "verbose": false
+              }
+            }
+          ]
+        }
+      ],
+      "transform_input": null,
+      "verbose": false
+    }
+  },
+  "seed": null,
+  "family_configurations_unchanged": true,
+  "selection_sha256": "93a740f1111ee554c67fc54f246cfc41f2d49216e5fad7dff00a1f913dad7d2e",
+  "rationale": [
+    "Lowest pre-benchmark selected equal-condition OOF MAE: 2.3382132912045446 dB.",
+    "No failed fits or convergence warnings for SVR in search or benchmarks.",
+    "Median all-development fit about 0.147 s; slower batch prediction than the tree is an explicit trade-off.",
+    "Better condition MAE than linear for 74/84 conditions, but worst-condition error remains material.",
+    "MLP requires greater training/search effort and remains warning-qualified without improving accuracy."
+  ],
+  "tradeoffs": [
+    "Tree provides much faster batch prediction and training with higher mean condition error.",
+    "Linear remains the simplest interpretable fitted relationship; training mean is only a reference.",
+    "SVR uses 1129 support vectors after development refit, so prediction cost depends on many stored observations.",
+    "SVR worst development-condition MAE is 10.502350930176137 dB; this is not a uniform error guarantee."
+  ],
+  "scope": "Recommendation for this dataset domain using five supplied inputs, including displacement thickness.",
+  "final_test_evaluated": false,
+  "final_evaluation_requires_separate_approval": true,
+  "evidence_sha256": {
+    "reports\\development\\milestone-4-search\\protocol.json": "996b55e34fc16312fb6ecc1d1f76f5d02a3a0e8e0b369a532425a90e554af6da",
+    "reports\\development\\milestone-4-search\\selected_configurations.json": "93a740f1111ee554c67fc54f246cfc41f2d49216e5fad7dff00a1f913dad7d2e",
+    "reports\\development\\milestone-4-search\\configuration_scores.csv": "dc079dbc36bc3f4cebb50c2fc2f8e1e545e1015c72e64d5386a49c596f671b7f",
+    "reports\\development\\milestone-4-search\\cost_summary.csv": "dfc4e1da58bf5d67d1f89c9c70abb570a7980bd75f9e6906617fc3b43aca54c3",
+    "reports\\development\\milestone-4-benchmarks\\summary.csv": "84580cc34d6e5993ffe83c59ecdda24be37fd0abcbd59551fa0a22560d517e70",
+    "reports\\development\\milestone-4-benchmarks\\benchmark.json": "419d45602b252dfbe5a9c3ebdd0abc85a10a9fec0f6423605d6d17dba588522a",
+    "reports\\development\\milestone-4-benchmarks\\complexity_summary.csv": "4c9a2a590908bf8c6b1c18f4930a867a259f54ed3cd41ab8bf5aef4795a614f0",
+    "reports\\development\\milestone-4-figures\\reviewed\\manifest.json": "4f9a8213b5d54af6af84db9910c1ec718b5c34f20eaf04680de7fecd05a7af23"
+  }
+}

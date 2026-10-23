@@ -1,0 +1,86 @@
+{
+  "source_path": "data\\raw\\airfoil_self_noise.dat",
+  "source_sha256": "74c75fd71783f1e6b71f8a622b993dc592897a97cd689c5090a07147a1b097b3",
+  "split_directory": "data\\splits",
+  "frozen_split_metadata": {
+    "schema_version": 1,
+    "source_sha256": "74c75fd71783f1e6b71f8a622b993dc592897a97cd689c5090a07147a1b097b3",
+    "input_fingerprint": "a3940bc812a64fad2f3d5cbf771da0d7cc2380ef106c988ed70ed063c78a6538",
+    "condition_columns": [
+      "chord_m",
+      "velocity_m_s",
+      "angle_deg"
+    ],
+    "row_id_scheme": "row_ plus one-based source record number, padded to six digits",
+    "condition_id_scheme": "c=<chord>|v=<velocity>|a=<angle>, using str(float(value))",
+    "holdout": {
+      "algorithm": "GroupShuffleSplit",
+      "seed": 3001,
+      "test_fraction": 0.2
+    },
+    "folds": {
+      "algorithm": "GroupKFold",
+      "n_splits": 5,
+      "shuffle": false,
+      "seed": null
+    },
+    "counts": {
+      "development": {
+        "conditions": 84,
+        "rows": 1194
+      },
+      "test": {
+        "conditions": 22,
+        "rows": 309
+      },
+      "validation_folds": {
+        "1": {
+          "conditions": 17,
+          "rows": 241
+        },
+        "2": {
+          "conditions": 17,
+          "rows": 241
+        },
+        "3": {
+          "conditions": 17,
+          "rows": 240
+        },
+        "4": {
+          "conditions": 17,
+          "rows": 240
+        },
+        "5": {
+          "conditions": 16,
+          "rows": 232
+        }
+      }
+    },
+    "assignment_sha256": {
+      "conditions.csv": "7b276f489f0ea0e90a78be46d9fb9323e6400dbd37c6f91a93248221839b79f3",
+      "development_folds.csv": "838e206edfec7f753e30ae731be964310cf5ee05c00f86010e910fded603c04f"
+    },
+    "environment": {
+      "python": "3.10.5",
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "scikit-learn": "1.7.2"
+    },
+    "record_sha256": "03a82901bb9fb7a60d20113c6a17ac44b65daa73c1831dadb1b1540e5f2bf7b2"
+  },
+  "protocol_path": "configs\\milestone4.json",
+  "protocol_sha256": "0189645827341cb31c69a3362587527d87c309cd8e16569084a214c07d25052f",
+  "implementation_sha256": {
+    "__init__.py": "52910cff40ad209d4ec704b434939e15517be7c1bebbee9d35fb0791157bdd98",
+    "__main__.py": "c78ad64df0bb047bee4e4e2950511af6ac064b335adc5ee3e7c0bf550c53b9d4",
+    "baseline.py": "7c493be5be2e8eacef9322e5d5d2dd19daaf92e31e3e2521faa462794839d830",
+    "benchmarking.py": "186ebbd4eb430211bfaeb8cecf8218651d1755b341ca464381e365663f2d1886",
+    "data.py": "934fb73dd9a413224406b3cca4674fbae25fe2d26e339e6f2f8c00e82a772544",
+    "development.py": "fd15512b02ebbbc7bfc62620f3789ea24f70b7beb87faabb3651835baf1b0c6c",
+    "metrics.py": "1d768ba4374b5267f0ad00a173241cfdd4cc9d8e8a5215a204278458f9a4058f",
+    "models.py": "45303354daddea96a095b1a5765c8c767e549380c7cb666a707111e9c350397d",
+    "plotting.py": "eae07fa2f8173a1a61fd40939a21f1715eac995ce4f17f12c3533cd640315cf7",
+    "split.py": "dd580ba5ab7843b6c049dbcfd70b399b90fc945b88e0bf2e29b0e9d1bb89a2b0",
+    "validation.py": "9eea5004ab853321d73dc72f5d74b588e4090176ca03bef36e0624ba0e58a428"
+  }
+}

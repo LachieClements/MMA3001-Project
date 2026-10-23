@@ -383,3 +383,139 @@ tzdata==2026.5
 
 The editable URL identifies base HEAD, not uncommitted Milestone 3 changes.
 Reproduce from the current source snapshot with recorded versions; dependency ranges are not a lock.
+
+================================================================================
+Milestone 4 actual environment (2026-10-24T01:28:32.391255+11:00)
+================================================================================
+
+All verification/experiment subprocesses removed PYTHONPATH and PYTHONHOME and set:
+OMP_NUM_THREADS=1
+MKL_NUM_THREADS=1
+OPENBLAS_NUM_THREADS=1
+NUMEXPR_NUM_THREADS=1
+PYTHONDONTWRITEBYTECODE=1
+MPLCONFIGDIR=C:\Users\lachi\AppData\Local\Temp\mma3001-milestone4-wbr70vkm\matplotlib
+Environment variables apply to child processes, not global machine settings.
+Search and benchmark also use threadpool_limits(1) and verify loaded pools.
+The review bundle contains actual argv/cwd/environment JSON and output, plus
+run_command.py, verify_records.py and the interpretation script.
+
+
+Installation: python -m pip install -e ".[dev]" in the existing temporary
+Milestone 2 environment. The first sandboxed attempt could not reach the package
+index (WinError 10013). The approved network-enabled retry succeeded, installing
+Matplotlib 3.10.9 and dependencies; pip check found no broken requirements.
+This updated an existing editable installation; it was not a clean-venv check.
+Read-only Windows hardware CIM queries were sandbox-blocked, then succeeded
+with approval. No global Git configuration changed.
+
+{
+  "python": "3.10.5 (tags/v3.10.5:f377153, Jun  6 2022, 16:14:13) [MSC v.1929 64 bit (AMD64)]",
+  "executable": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Scripts\\python.exe",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+  "logical_cpus": 12,
+  "packages": {
+    "mma3001-airfoil-noise": "0.1.0",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "scipy": "1.15.3",
+    "scikit-learn": "1.7.2",
+    "pytest": "9.1.1",
+    "pdoc": "16.0.0",
+    "matplotlib": "3.10.9",
+    "threadpoolctl": "3.7.0"
+  },
+  "thread_environment": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "thread_pools": [
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-13e2df515630b4a41f92893938845698.dll",
+      "version": "0.3.29",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    },
+    {
+      "user_api": "openmp",
+      "internal_api": "openmp",
+      "num_threads": 1,
+      "prefix": "vcomp",
+      "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Lib\\site-packages\\sklearn\\.libs\\vcomp140.dll",
+      "version": null
+    },
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone2-a610baf1ed4a41d8ac9ffc5ffbc10923\\Lib\\site-packages\\scipy.libs\\libscipy_openblas-f07f5a5d207a3a47104dca54d6d0c86a.dll",
+      "version": "0.3.28",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    }
+  ]
+}
+Hardware, read-only Windows CIM query:
+{
+  "timestamp": "2026-10-23T14:13:31.6910625Z",
+  "processors": [
+    {
+      "Name": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+      "NumberOfCores": 6,
+      "NumberOfLogicalProcessors": 12
+    }
+  ],
+  "computer": {
+    "TotalPhysicalMemory": 34275053568
+  }
+}
+Package inventory:
+cloudpickle==3.1.2
+colorama==0.4.6
+contourpy==1.3.2
+cycler==0.12.1
+exceptiongroup==1.3.1
+fonttools==4.65.0
+iniconfig==2.3.1
+Jinja2==3.1.6
+joblib==1.6.0
+kiwisolver==1.5.1
+markdown2==2.5.5
+MarkupSafe==3.0.4
+matplotlib==3.10.9
+-e git+https://github.com/LachieClements/MMA3001-Project.git@b46376c2c7042eebe9c87509e0dd3b54d59511a7#egg=mma3001_airfoil_noise
+numpy==2.2.6
+packaging==26.3
+pandas==2.3.3
+pdoc==16.0.0
+pillow==12.3.0
+pip==22.0.4
+pluggy==1.7.0
+Pygments==2.21.0
+pyparsing==3.3.3
+pytest==9.1.1
+python-dateutil==3.0.0
+pytz==2026.5
+scikit-learn==1.7.2
+scipy==1.15.3
+setuptools==58.1.0
+six==1.17.0
+threadpoolctl==3.7.0
+tomli==2.5.0
+typing_extensions==4.16.0
+tzdata==2026.5
+
+The editable Git revision above is the M3 checkpoint, not a source lock for
+uncommitted M4 work. Install complete review source with the README command;
+do not interpret the inventory's Git revision as including unpublished changes.
+Archive manifests bind current source bytes. Ranges/inventory are not a
+cross-platform lockfile. No peak-RAM, FLOP, power-mode or profiler measurement
+is claimed. Runtime measurements describe this machine/software.
