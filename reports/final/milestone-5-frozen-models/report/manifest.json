@@ -1,0 +1,24 @@
+{
+  "kind": "saved_prediction_report",
+  "fits_attempted": 0,
+  "prediction_calls": 0,
+  "source_prediction_sha256": "c3425298441d0de7a4e7b0ca1a4352e13ca9b108947e9cdaeb610a1bfda06e6e",
+  "primary_model": "svr",
+  "files": {
+    "condition_metrics.csv": "b516aae467be69c8a4d71867062affa5455ee13bfa370f2cd163be3e59fe9e1f",
+    "development_vs_final.csv": "e730e3a3cc7a2fcac5574878d87af0b59bc62da228a1834ca5a0e45a9e940133",
+    "figures/condition_key.csv": "6815923311826afe9aff9c93ed729f9bd437b8b3a037a07727f6c76bd98a9b17",
+    "figures/condition_mae.png": "99c16004071d4105cb153c14cb4d7cb521c1a48b2dbcf9af77efc5ce0b3f6bf0",
+    "figures/condition_mae.svg": "b52cbd6cf3f3dbb9856527237cdd3f222d2e9539b8843ba3590198ddad7ed06a",
+    "figures/frequency_sweeps_01.png": "ad210d977acbb80461fc0bc2dbbeb18f45c9cd2fd414c265ce2bb57bc490045a",
+    "figures/frequency_sweeps_01.svg": "81686f38f1f60ed574a11cb0108c80e26e08c822426c9832b0f3c55484f073f9",
+    "figures/frequency_sweeps_02.png": "01e0a4f859c943f8a7d4308131a56440e91e5e5199ae443196990439690d0aa2",
+    "figures/frequency_sweeps_02.svg": "6e34f242004e97ac888dd7fe3a2cbb064f1f72abce9e332776d3c259efb49bb9",
+    "figures/manifest.json": "017b05508c6d2d7ab8d0ee569c1f60d3e82f3c2e6022b84f038e67721cab4309",
+    "figures/predicted_vs_measured.png": "71f0e4b35ddf80a7da6c5f8986c9e602955935e98bb7bd687c51e1497c86a718",
+    "figures/predicted_vs_measured.svg": "5b831a1b99459fbc3772b15422e7799c4443ed53e7433c21ddecfccac12b00d9",
+    "figures/residuals_by_frequency.png": "c097cf3b41dcafbc4439cb1256c0b18004521d7bcccf1b8ac24308a8ee2e0384",
+    "figures/residuals_by_frequency.svg": "204b4943fcee81b498e845d7eb5de68544e18f2bc74270f8c58d4d0ff6430beb",
+    "summary.csv": "12feb777e4b85dfb452e326a370132c6d1392556f468032ce7e6f9320bab1a43"
+  }
+}

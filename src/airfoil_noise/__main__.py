@@ -1,8 +1,9 @@
-"""Audit frozen data and explicitly run development-only studies."""
+"""Audit frozen data and explicitly invoke development or final workflows."""
 
 import argparse
 import json
 from pathlib import Path
+import sys
 
 from airfoil_noise.baseline import development_baselines
 from airfoil_noise.data import SOURCE_SHA256, audit_data, file_sha256, load_airfoil
@@ -21,7 +22,7 @@ def _write_new(path: Path, text: str) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Run an explicit data/split check or development-only baseline study.
+    """Run an explicit check, experiment or saved-record report.
 
     Parameters
     ----------
@@ -43,7 +44,8 @@ def main(argv: list[str] | None = None) -> int:
     Notes
     -----
     baseline-cv, development-study and benchmark-development explicitly fit.
-    Final evaluation is not implemented or invoked by these commands.
+    Only final-evaluate can invoke the final holdout workflow. It requires
+    separate approval; report-final reads saved records without model calls.
     """
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -51,6 +53,15 @@ def main(argv: list[str] | None = None) -> int:
     figures.add_argument("--search-dir", type=Path, required=True)
     figures.add_argument("--benchmark-dir", type=Path, required=True)
     figures.add_argument("--output-dir", type=Path, required=True)
+    final = sub.add_parser("final-evaluate", help="Explicit frozen holdout run; separate approval required")
+    final.add_argument("--data", type=Path, default=DEFAULT_DATA)
+    final.add_argument("--directory", type=Path, default=DEFAULT_SPLITS)
+    final.add_argument("--selection", type=Path, required=True)
+    final.add_argument("--recommendation", type=Path, required=True)
+    final.add_argument("--output-dir", type=Path, required=True)
+    report = sub.add_parser("report-final", help="Regenerate saved-record tables/figures with no model calls")
+    report.add_argument("--run-dir", type=Path, required=True)
+    report.add_argument("--output-dir", type=Path, required=True)
     for command in ("audit", "make-split", "check-split", "baseline-cv", "development-study", "benchmark-development"):
         part = sub.add_parser(command)
         part.add_argument("--data", type=Path, default=DEFAULT_DATA)
@@ -74,6 +85,15 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if hasattr(args, "output_dir") and args.output_dir.exists():
         raise FileExistsError(f"Refusing to replace {args.output_dir}.")
+    if args.command == "final-evaluate":
+        from airfoil_noise.final_evaluation import execute_final_command
+        args.invocation = list(sys.argv) if argv is None else ["airfoil-noise", *argv]
+        return execute_final_command(args)
+    if args.command == "report-final":
+        from airfoil_noise.final_evaluation import regenerate_final_report
+        regenerate_final_report(args.run_dir, args.output_dir)
+        print(f"Saved-record report written to {args.output_dir}; zero fits/predict calls.")
+        return 0
     if args.command == "plot-development":
         from airfoil_noise.plotting import plot_development
         print(plot_development(args.search_dir, args.benchmark_dir, args.output_dir))

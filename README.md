@@ -19,7 +19,7 @@ The comparison concerns the experimental domain represented by this dataset.
 It cannot establish prediction quality for other airfoils, observer positions,
 measurement arrangements or unsupported flow regimes.
 
-## Current status: Milestone 3
+## Current status: Milestone 5 final holdout evaluation completed
 
 The raw source is unchanged and passes the recorded SHA-256 check. It contains
 1,503 observations, 106 chord–velocity–angle conditions, no exact duplicates and
@@ -51,11 +51,18 @@ estimates. Full results and limitations are in the interpretation linked below.
 Milestone 3 added decision tree, scaled RBF SVR and small scaled MLP pipelines
 to the same evaluator. Milestone 4 uses the approved bounded development
 search and separate repeated benchmarks described below. The reviewed
-Milestone 2 records remain unchanged. No final-test evaluation has been run.
+Milestone 2 records remain unchanged. The separately approved final holdout run
+is complete; its results and warning are recorded below.
 
 ## Setup and checks
 
-Use Python 3.10 or later. From the repository root:
+Use Python 3.10 or later. The declared package range is scikit-learn
+**>=1.7,<2**: the saved configurations include LinearRegression.tol and
+MLPRegressor.loss, which require version 1.7 or later. This range permits
+installation; it does not certify identical results across every allowed
+release. The recorded experiments used **scikit-learn 1.7.2**.
+
+For routine installation and software checks, from the repository root:
 
 ~~~powershell
 python -m venv .venv
@@ -69,6 +76,30 @@ python -m airfoil_noise check-split
 python -m pytest -q
 pdoc -o docs/api airfoil_noise airfoil_noise.__main__
 ~~~
+
+For reproduction of the recorded model configurations, start with a **new**
+virtual environment and explicitly constrain scikit-learn to its recorded
+version in the installation command:
+
+~~~powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install -e ".[dev]" "scikit-learn==1.7.2"
+python -m pip check
+airfoil-noise --help
+airfoil-noise audit
+airfoil-noise check-split
+python -m pytest -q -ra
+~~~
+
+Use a different environment directory if .venv already exists. These checks
+audit the source and saved assignments and run synthetic model tests; they
+do not rerun the real-data development search, benchmarks or final evaluation.
+The exact original Python and remaining package versions are recorded in
+[docs/environment.txt](docs/environment.txt). Pinning scikit-learn alone is
+not a complete environment lock and does not guarantee bit-for-bit numerical
+or timing reproduction on another machine. Older saved constructor records
+remain immutable; incompatible classes/parameter schemas fail explicitly.
 
 The console entry point airfoil-noise offers the same commands as
 python -m airfoil_noise. [docs/environment.txt](docs/environment.txt) identifies
@@ -308,8 +339,8 @@ python -m airfoil_noise plot-development --search-dir reports/development/search
 
 Process-local thread variables are required before Python imports. The runner
 also applies threadpool_limits(1) and checks loaded libraries. Baseline-cv keeps
-its original two-model purpose. Audit/check-split never fit; no final-evaluation
-command exists. Synthetic tests use separately labelled small protocols and
+its original two-model purpose. Audit/check-split never fit; final-evaluate is a separate explicit command
+that requires separate approval before use. Synthetic tests use separately labelled small protocols and
 never change the real grid's 2000-epoch MLP limit.
 
 Recorded outputs:
@@ -332,22 +363,115 @@ benchmarking, with its slower batch prediction and 10.502 dB worst-condition
 MAE explicitly acknowledged. See the interpretation for timing IQRs and limits.
 
 Original figures are retained; reviewed/ fixes overlapping labels without
-repeating fits or timings. plotting.py alone differs from the source hash saved
-before those experiments; the fitting implementation still matches exactly.
+repeating fits or timings. Later Milestone 5 additions extend CLI/plotting and
+add a final module; the M4 model/development-evaluation modules and historical
+source-hash records remain unchanged.
 
 The engineering recommendation considers cost, accuracy, warnings and complexity
-**after** benchmarks and is frozen before any future final evaluation. It does
+**after** benchmarks and was frozen before final evaluation. It does
 not alter the previously selected configurations. Development tuning estimates
 can be optimistic; no acceptable dB threshold or extrapolation claim is inferred.
 
+## Milestone 5: approved final evaluation completed
+
+The [final-evaluation protocol](docs/milestone-5-protocol.md) fixes the selected
+mean, linear, tree, scaled RBF SVR and scaled MLP configurations. SVR stays the
+primary engineering recommendation. The complete settings are reconstructed
+from the immutable M4 selection record, with file and canonical configuration
+hashes checked. MLP uses predetermined seed **17**, not the best seed or an
+ensemble; automatic early stopping remains disabled.
+
+Only the explicit final-evaluate command can invoke this path. The approved
+real experiment completed **five fresh fits** on all **1,194 development rows**,
+five batch predict calls over all **309 held-out rows / 22 conditions**, and **1,545
+prediction records**. No CV, new features, tuning, alternate seeds, replacement
+fits or benchmark repetitions occurred. The inference function rejects holdout
+targets; truth is joined by validated row IDs after prediction. Every pipeline
+fits its scaler only on development inputs.
+
+Implementation checks use small labelled synthetic fixtures: **50 focused tests**
+and **340 complete-suite tests passed** before the real evaluation. Those tests
+did not evaluate the real holdout. Run
+installed tests with the documented scikit-learn **1.7.2** environment:
+
+~~~powershell
+python -m pytest tests/test_final_evaluation.py tests/test_cli.py tests/test_plotting.py -q -ra
+python -m pytest -q -ra
+~~~
+
+The following command was executed **once** after separate approval on
+24 October 2026. Its output directory is protected; do not rerun the evaluation
+or change settings after inspecting the results:
+
+~~~powershell
+$env:OMP_NUM_THREADS = '1'
+$env:MKL_NUM_THREADS = '1'
+$env:OPENBLAS_NUM_THREADS = '1'
+$env:NUMEXPR_NUM_THREADS = '1'
+python -m airfoil_noise final-evaluate --data data/raw/airfoil_self_noise.dat --directory data/splits --selection reports/development/milestone-4-search/selected_configurations.json --recommendation reports/development/milestone-4-benchmarks/recommendation.json --output-dir reports/final/milestone-5-frozen-models
+~~~
+
+The new directory refuses overwrite before fitting. It saves run metadata,
+source/split/configuration hashes, complete settings/seeds, environment/command,
+original-byte frozen-choice snapshots, holdout inputs, predictions and diagnostics.
+Metric tables and figures in report/ are generated from reloaded predictions.csv.
+completion.json is written last only after all five models and saved records
+validate and the report succeeds. Finite convergence-warning results remain
+warning-qualified. A failed model leaves partial records, a failed status and
+no comparison report or completion marker; failures are never silently retried.
+
+The report contains the primary equal-condition MAE, pooled MAE/RMSE/R2 with
+existing undefined-value handling, all 110 model/condition error rows, and
+stage-labelled representative OOF/final comparisons. MLP's seed-17 OOF score
+is distinguished from its three-seed configuration-selection score. Figures
+show every observation/condition: measured versus predicted, residuals versus
+frequency, an all-condition error heatmap and frequency sweeps for all22
+conditions in fixed ID order, paginated eleven per page.
+
+To regenerate reports into a NEW directory using saved records only:
+
+~~~powershell
+python -m airfoil_noise report-final --run-dir reports/final/milestone-5-frozen-models --output-dir reports/final/milestone-5-report-reproduction
+~~~
+
+This command validates saved checksums/coverage and makes **zero estimator
+construction, fit or predict calls**. The Python functions regenerate_final_report
+and plot_final support the same separation. Original raw data or fitted model
+files are not needed to regenerate reporting. The completed
+[final summary](reports/final/milestone-5-frozen-models/report/summary.csv),
+[all condition errors](reports/final/milestone-5-frozen-models/report/condition_metrics.csv)
+and [figures](reports/final/milestone-5-frozen-models/report/figures/) come from
+the protected saved predictions.
+
+The [results narrative](docs/milestone-5-results.md) interprets the final errors
+alongside the saved M4 cost evidence. Those batch timings used **256 observations**;
+the **32-observation** pool was cycled through separate individual prediction calls.
+
+Final equal-condition MAE is **5.398 dB** (mean), **3.739 dB** (linear),
+**2.254 dB** (tree), **2.503 dB** (SVR) and **3.066 dB** (MLP).
+The tree has the lowest observed holdout error; SVR remains the primary
+recommendation fixed using development evidence. SVR's worst condition MAE is
+**11.876 dB**, so its average is not a uniform error guarantee. MLP seed 17
+reached 2,000 iterations with a ConvergenceWarning. Its finite complete
+predictions remain explicitly warning-qualified; no model failed or was retried.
+The completion status is success_warning_qualified. Fit/predict durations in
+this run are diagnostics; the prior repeated M4 benchmarks remain the cost
+evidence. These final results do not establish performance for other airfoils
+or measurement arrangements, or an acceptable engineering error threshold.
+
+After holdout exposure, configurations, seeds and primary SVR recommendation
+stay fixed even if another model has lower test error. Unexpected results are
+reported honestly. No acceptable engineering dB threshold or extrapolation
+claim is inferred.
+
 ## Remaining milestones
 
-1. Review the completed development study and frozen engineering recommendation.
-2. Present the frozen configurations, rationale and exact final procedure for
-   student approval before opening final-test results.
-3. Complete authorised final evaluation, figures, report support and a fresh
-   environment reproduction/submission check. Prepare the investigation notebook
-   and student report/presentation; these are not completed by the API docs.
+1. Review the completed final predictions, diagnostics, tables and figures.
+2. Prepare the investigation notebook, student report/presentation and submission
+   reproduction/packaging checks. Reproduce reports from saved records without
+   repeating the final fits or changing the frozen settings.
+3. Obtain separate approval before committing or pushing. Those actions remain
+   unauthorised by approval of the final evaluation.
 
 ## Repository and assessment
 
@@ -357,7 +481,7 @@ can be optimistic; no acceptable dB threshold or extrapolation claim is inferred
 | data/splits/ | Frozen condition/fold CSVs and provenance metadata |
 | src/airfoil_noise/ | Data/split checks, estimator builders, metrics and shared validation |
 | tests/ | Software verification |
-| reports/ | Saved audit, input coverage and traceable development records |
+| reports/ | Saved audit, input coverage and traceable development/final records |
 | notebooks/ | Future investigation calling package functions |
 | docs/api/ | Generated HTML API documentation |
 | AI_USE.md | Actual AI assistance, checks, errors and student decisions |

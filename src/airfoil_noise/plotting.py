@@ -1,4 +1,4 @@
-"""Development figures generated exclusively from saved experiment records."""
+"""Development and final figures generated exclusively from saved records."""
 
 import json
 from pathlib import Path
@@ -177,4 +177,110 @@ def plot_development(search_directory: str | Path, benchmark_directory: str | Pa
     write_json(destination / "manifest.json", {"kind": "development_figures", "source_sha256": used,
                                                "plotting_source_sha256": file_sha256(Path(__file__)),
                                                "figures": figures, "fits_attempted": 0, "final_test_evaluated": False})
+    return figures
+
+
+def plot_final(run_directory: str | Path, directory: str | Path) -> list[str]:
+    """Plot every saved holdout observation/condition without model calls.
+
+    Parameters
+    ----------
+    run_directory : str or pathlib.Path
+        Complete records validated by final_evaluation.load_final_records.
+    directory : str or pathlib.Path
+        New protected figure directory.
+
+    Returns
+    -------
+    list of str
+        PNG/SVG stems: five-model parity and residual panels, all-condition
+        error heatmap, and frequency sweeps paginated in condition-ID order.
+        No examples are selected by prediction errors.
+    """
+    from airfoil_noise.final_evaluation import MODEL_ORDER, load_final_records
+    source, destination = Path(run_directory), Path(directory)
+    if destination.exists():
+        raise FileExistsError(destination)
+    records = load_final_records(source)
+    predictions, inputs = records["predictions"], records["inputs"]
+    destination.mkdir(parents=True, exist_ok=False)
+    figures = []
+
+    def save(fig, name):
+        fig.tight_layout()
+        for extension in ("png", "svg"):
+            fig.savefig(destination / f"{name}.{extension}", dpi=180)
+        plt.close(fig)
+        figures.append(name)
+
+    fig, axes = plt.subplots(1, 5, figsize=(16, 3.6), sharex=True, sharey=True)
+    lower = min(predictions["truth_db"].min(), predictions["prediction_db"].min())
+    upper = max(predictions["truth_db"].max(), predictions["prediction_db"].max())
+    margin = max(.5, .04 * (upper - lower))
+    for name, ax in zip(MODEL_ORDER, axes):
+        rows = predictions[predictions["model"] == name]
+        ax.scatter(rows["truth_db"], rows["prediction_db"], s=10, alpha=.6)
+        ax.plot([lower - margin, upper + margin], [lower - margin, upper + margin], "k--", linewidth=.8)
+        ax.set(title=name + (" (primary)" if name == "svr" else ""), xlabel="Measured (dB)",
+               xlim=(lower - margin, upper + margin), ylim=(lower - margin, upper + margin))
+    axes[0].set_ylabel("Predicted (dB)")
+    save(fig, "predicted_vs_measured")
+
+    fig, axes = plt.subplots(1, 5, figsize=(16, 3.6), sharex=True, sharey=True)
+    joined = predictions.merge(inputs[["row_id", "frequency_hz"]], on="row_id", validate="many_to_one")
+    for name, ax in zip(MODEL_ORDER, axes):
+        rows = joined[joined["model"] == name]
+        ax.scatter(rows["frequency_hz"], rows["truth_db"] - rows["prediction_db"], s=10, alpha=.6)
+        ax.axhline(0, color="black", linestyle="--", linewidth=.8)
+        ax.set(xscale="log", xlabel="Frequency (Hz)", title=name)
+    axes[0].set_ylabel("Measured minus predicted (dB)")
+    save(fig, "residuals_by_frequency")
+
+    identifiers = sorted(inputs["condition_id"].unique())
+    table = records["condition_metrics"].pivot(index="model", columns="condition_id", values="mae_db")
+    table = table.loc[list(MODEL_ORDER), identifiers]
+    fig, ax = plt.subplots(figsize=(max(7, .45 * len(identifiers)), 4))
+    grid = ax.imshow(table, aspect="auto", cmap="viridis")
+    ax.set(yticks=range(5), yticklabels=MODEL_ORDER, xticks=range(len(identifiers)),
+           xticklabels=[str(i + 1) for i in range(len(identifiers))],
+           xlabel="All conditions, numbered in sorted condition-ID order (key in condition_key.csv)",
+           title="Per-condition MAE (dB); every withheld condition")
+    fig.colorbar(grid, ax=ax, label="MAE (dB)")
+    save(fig, "condition_mae")
+    from airfoil_noise.development import write_table
+    write_table(destination / "condition_key.csv", pd.DataFrame({
+        "condition_number": range(1, len(identifiers) + 1), "condition_id": identifiers,
+    }))
+
+    # Every condition appears once, on pages of at most eleven panels.
+    for start in range(0, len(identifiers), 11):
+        page = identifiers[start:start + 11]
+        fig, axes = plt.subplots((len(page) + 2) // 3, 3, figsize=(15, 3 * ((len(page) + 2) // 3)),
+                                 squeeze=False)
+        for condition, ax in zip(page, axes.flat):
+            rows = joined[joined["condition_id"] == condition].sort_values("frequency_hz")
+            operating = inputs[inputs["condition_id"] == condition].iloc[0]
+            title = (
+                f'{identifiers.index(condition) + 1}: c={operating["chord_m"]:.4g} m, '
+                f'v={operating["velocity_m_s"]:.4g} m/s\n'
+                f'angle={operating["angle_deg"]:.4g} deg'
+            )
+            measured = rows[rows["model"] == "training_mean"]
+            ax.plot(measured["frequency_hz"], measured["truth_db"], "k.-", label="measured")
+            for name in MODEL_ORDER:
+                subset = rows[rows["model"] == name]
+                ax.plot(subset["frequency_hz"], subset["prediction_db"], linewidth=.9, label=name)
+            ax.set(xscale="log", xlabel="Frequency (Hz)", ylabel="Noise (dB)", title=title)
+        for ax in list(axes.flat)[len(page):]:
+            ax.set_visible(False)
+        axes.flat[0].legend(fontsize=7, ncol=2)
+        save(fig, f"frequency_sweeps_{start // 11 + 1:02d}")
+    write_json(destination / "manifest.json", {
+        "kind": "saved_final_prediction_figures", "run_kind": records["run"]["kind"],
+        "source_prediction_sha256": file_sha256(source / "predictions.csv"),
+        "evaluation_sha256": file_sha256(source / "evaluation.json"),
+        "plotting_source_sha256": file_sha256(Path(__file__)),
+        "figures": figures, "condition_ids_in_order": identifiers,
+        "fits_attempted": 0, "prediction_calls": 0,
+    })
     return figures

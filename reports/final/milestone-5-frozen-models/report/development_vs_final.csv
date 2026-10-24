@@ -1,0 +1,11 @@
+model,stage,seed,equal_condition_mae_db,configuration_selection_score_db,selection_score_note
+training_mean,development_oof_representative,,5.6795671219200914,5.6795671219200914,MLP selection averages three seed scores; representative uses seed 17.
+training_mean,final_test,,5.397600201172339,5.6795671219200914,MLP selection averages three seed scores; representative uses seed 17.
+linear,development_oof_representative,,3.7710563012340375,3.7710563012340375,MLP selection averages three seed scores; representative uses seed 17.
+linear,final_test,,3.7392125691619409,3.7710563012340375,MLP selection averages three seed scores; representative uses seed 17.
+tree,development_oof_representative,17,2.8499330858999841,2.8499330858999841,MLP selection averages three seed scores; representative uses seed 17.
+tree,final_test,17,2.2537679375882589,2.8499330858999841,MLP selection averages three seed scores; representative uses seed 17.
+svr,development_oof_representative,,2.3382132912045446,2.3382132912045446,MLP selection averages three seed scores; representative uses seed 17.
+svr,final_test,,2.5030000698879271,2.3382132912045446,MLP selection averages three seed scores; representative uses seed 17.
+mlp,development_oof_representative,17,3.2653323558166276,3.36410108707264,MLP selection averages three seed scores; representative uses seed 17.
+mlp,final_test,17,3.0659011271421122,3.36410108707264,MLP selection averages three seed scores; representative uses seed 17.

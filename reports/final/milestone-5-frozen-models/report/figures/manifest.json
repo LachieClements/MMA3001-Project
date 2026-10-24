@@ -1,0 +1,40 @@
+{
+  "kind": "saved_final_prediction_figures",
+  "run_kind": "final_holdout",
+  "source_prediction_sha256": "c3425298441d0de7a4e7b0ca1a4352e13ca9b108947e9cdaeb610a1bfda06e6e",
+  "evaluation_sha256": "062b8944b778b3c92fec656aa6855297af2a4ac3df70b2e98615d412c78be8d6",
+  "plotting_source_sha256": "a1b5a1d1c9c1c6013e5af64be241202dea3d5823ad47d1d1920315d9d2ca41ed",
+  "figures": [
+    "predicted_vs_measured",
+    "residuals_by_frequency",
+    "condition_mae",
+    "frequency_sweeps_01",
+    "frequency_sweeps_02"
+  ],
+  "condition_ids_in_order": [
+    "c=0.0254|v=31.7|a=4.8",
+    "c=0.0254|v=55.5|a=17.4",
+    "c=0.0254|v=71.3|a=22.2",
+    "c=0.0508|v=39.6|a=0.0",
+    "c=0.0508|v=39.6|a=15.4",
+    "c=0.0508|v=39.6|a=8.4",
+    "c=0.0508|v=55.5|a=8.4",
+    "c=0.1016|v=39.6|a=15.6",
+    "c=0.1016|v=39.6|a=8.9",
+    "c=0.1016|v=55.5|a=0.0",
+    "c=0.1016|v=55.5|a=6.7",
+    "c=0.1016|v=71.3|a=15.6",
+    "c=0.1524|v=31.7|a=5.4",
+    "c=0.1524|v=31.7|a=9.9",
+    "c=0.1524|v=71.3|a=0.0",
+    "c=0.1524|v=71.3|a=5.4",
+    "c=0.2286|v=31.7|a=0.0",
+    "c=0.2286|v=39.6|a=4.0",
+    "c=0.2286|v=55.5|a=2.0",
+    "c=0.2286|v=71.3|a=4.0",
+    "c=0.2286|v=71.3|a=5.3",
+    "c=0.3048|v=71.3|a=0.0"
+  ],
+  "fits_attempted": 0,
+  "prediction_calls": 0
+}

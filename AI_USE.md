@@ -293,3 +293,200 @@ cost, inspect the 32-row separate-call loop and loss/warning records, and defend
 accuracy/throughput/worst-condition trade-offs. Notebook, individual report,
 presentation and personal critical reflection remain student work. Record actual
 student checks/disagreements when they occur rather than asserting them early.
+
+## Milestone4 cleanup and proposed final-evaluation protocol
+
+Date: 2026-10-24T07:30:33.813048+11:00
+The student explicitly authorised a dependency-floor correction and fresh
+installation/software verification, while withholding permission to commit,
+push, implement Milestone5 or evaluate the holdout. The student reported that
+Milestone4's development study had been reviewed. AI observed the clean main
+checkout at35a4bb4; connected GitHub read-only metadata confirmed private
+visibility and the same main SHA. This records existing state, not an AI commit.
+
+AI made the student-specified >=1.7,<2 correction, clarified the README's
+supported range versus exact recorded sklearn1.7.2 environment, and appended
+this session's actual records. Approximately100% of the new documentation
+drafting/verification scripting in this cleanup was AI-assisted; the dependency
+decision and requested scope came from the student. Historical records and all
+science outputs remain untouched.
+
+A new isolated venv installed the editable project with sklearn1.7.2. Initial
+sandboxed dependency resolution failed before runtime installation; the approved
+network-enabled retry succeeded. A patch context mismatch was corrected before
+project edits were applied. All306 installed-package tests passed in41.65s,
+with no skips/xfails/deselections and no unexpected warnings. pip check, installed
+console/module audit and frozen-bundle commands, outside-checkout imports/help,
+metadata-floor assertions and five frozen configuration round-trips passed
+without PYTHONPATH or sys.path injection. Model fits in tests are synthetic;
+no real-data experiment, timing repetition or final-target evaluation ran.
+
+AI drafted a separate approval-only Milestone5 proposal in temporary review
+evidence: retain primarySVR, reconstruct the five saved configurations, use
+MLPseed17, perform five development fits and1545 holdout prediction records,
+and retain warnings/failures without retuning. No final-evaluation source,
+tests, CLI or experiment output was implemented or executed. The checkpoint
+remains unstaged/uncommitted pending student approval. These are AI-executed
+checks, not claims that the student independently checked or understood them.
+Student review of the proposed final procedure/diagnostics remains necessary.
+
+## Milestone5 implementation and synthetic verification only
+
+Date: 2026-10-24T08:01:26.466970+11:00
+The student approved the bounded final module/CLI/record-derived plots/tests/docs
+scope and explicitly withheld permission to evaluate the real holdout, commit,
+push or change GitHub settings. AI preserved the existing uncommitted dependency
+cleanup and all frozen science outputs. No new model choices or settings were
+selected. SVR remains primary, and the future representative MLP stays seed17.
+
+AI drafted essentially all new M5 source, tests, protocol and documentation in
+this session (approximately100% of this session's implementation drafting;
+not a measured percentage of the entire assignment). It reused the reviewed
+model reconstruction, data/split, metric, diagnostic and record-writing helpers.
+The new inference boundary rejects holdout truth, uses five original features,
+fits fresh complete estimators once each, and attaches truth only after prediction.
+Saved-record reporting/plotting constructs no estimators and makes no fit/predict
+calls; complete-record hashes/coverage are checked before reporting.
+
+AI executed the focused tests (47,49,then50 passed) and complete suites
+(339,then340 passed after a visual-label/pagination addition) in the documented
+installed sklearn1.7.2 environment. No pytest failure occurred; skips/xfails/
+deselections were zero. Deliberate synthetic fit/predict/I/O failures and MLP
+ConvergenceWarnings verify retention, no retries, partial records and no false
+completion. Tests verify scaler statistics, held-out truth isolation, row/condition
+alignment, five fresh fits/predict calls, unchanged configuration hashes/seed17,
+hand calculations and report regeneration with model calls disabled.
+
+Visual inspection found long synthetic IDs crowded sweep titles; AI used numbered
+operating-condition titles with units and retained full IDs in a saved key.
+The final22-condition synthetic case verifies all110 condition errors and both
+sweep pages. API HTML was regenerated and locally linked pages checked. The
+542 protected files and historical record byte prefixes were verified unchanged.
+No real-data fit/predict, search, benchmark rerun or final-target evaluation ran.
+All numerical smoke records are synthetic, including those in the review ZIP.
+
+The real command is implemented but remains unrun. Its future budget is five
+fits and1545 predictions; settings/recommendation cannot be changed based on
+test performance. Finite convergence-warning runs stay warning-qualified;
+failed/incomplete evaluations never receive a successful comparison report or
+completion marker. Software tests do not prove physical validity, acceptable
+error, final convergence or final accuracy.
+
+These were AI-executed checks, not independent student verification. Student
+review should trace a row through inference/truth join and saved scoring, explain
+the five-fit budget and version/hash controls, inspect a failed synthetic run and
+the no-model-call regeneration path, and verify the exact command before giving
+separate real-holdout approval. No claim of student understanding is made.
+
+
+## Report checkout correction and disposable-clone verification
+
+Date: 2026-10-24T11:25:15.171141+11:00
+The student reported independent340-test review success and authorized only the
+/reports/** -text rule and appended verification records. AI added that rule,
+retaining raw-dataset and LF assignment-CSV rules. The user specified the policy;
+AI drafted approximately100% of this session's small edit and appended record
+text (not a measured fraction of the project). Earlier implementation and all
+scientific outputs/settings/seeds/recommendation were preserved.
+
+AI copied the current tree and two already saved synthetic runs into a temporary
+fixture repository, committed only there, cloned without checkout, set clone-local
+core.autocrlf=true, then checked out. A control file converted to CRLF; all516
+project reports and46 saved synthetic files retained their hashes. Approved
+selection/recommendation anchors, raw source and both CSV hashes matched.
+A fresh installed sklearn1.7.2 environment imported clone/src from outside the
+checkout without PYTHONPATH or sys.path workarounds.
+
+The temporary helper initially overconstrained metadata JSON byte endings, and
+the saved-record guard used the wrong run-kind field; both were corrected without
+changing source, integrity checks or records. Sandboxed pip build-dependency
+resolution failed; a network-enabled retry of the same README command succeeded.
+A temporary Unicode display issue and documentation-script quoting error were
+corrected; an optional denied process query was not retried. These unsuccessful
+attempts are recorded explicitly in the reproducibility appendix.
+
+AI ran installed audit/check-split, two source/frozen tests, all340 tests and
+pip check successfully. No skipped/expected failures/deselections or pytest
+warnings summary. Saved-record regeneration produced three tables and four/five
+figure pairs from the two saved runs with constructors, fit, predict and evaluation
+blocked; observed call counts were0. Old records/manifests/figure bytes and
+historical documentation prefixes remained unchanged. No experiments were
+repeated to obtain these fixtures. Project HEAD/index/configuration and all569
+other starting file hashes were verified unchanged.
+
+These are AI-executed follow-up checks, not claims of independent student checking
+or understanding. The correction addresses checkout integrity, not predictive
+validity. No real-data study, benchmark repetition, real-holdout evaluation,
+project commit/push or GitHub setting change occurred. Further such actions
+require separate approval.
+
+
+## Approved single final holdout execution and reporting
+
+Date:2026-10-24T11:45:00.791807+11:00
+The student explicitly authorized one execution after the passed checkout/full
+test checks. AI inspected the unchanged reviewed worktree and verified frozen
+source/split/configuration hashes,1194/309 row counts,84/22 conditions, separation,
+feature order, primarySVR, MLPseed17 and sklearn1.7.2/thread settings before fitting.
+The environment versions matched the successful340-test clone suite. No preflight
+failure occurred. AI ran the reviewed final-evaluate CLI exactly once: five fresh
+fits, five309-row batch prediction calls and1545 saved prediction records.
+
+All five models completed. MLPseed17 reached2000 iterations with one preserved
+ConvergenceWarning; finite complete results remain warning-qualified under the
+existing policy. No model failed, no fit was retried, and no setting/seed or primary
+recommendation changed. Tree had the lowest holdout equal-condition MAE (2.254dB)
+versus SVR2.503dB. AI reported the reversed development ranking and SVR's worst
+condition MAE11.876dB without inventing a physical cause, acceptable threshold or
+new selection stage. SVR remains primary as chosen before final evaluation.
+
+AI verified saved-record hashes, complete source/row/condition alignment and
+development-only scaler statistics with all model construction/fit/predict and
+evaluation functions blocked. All three metric tables recomputed byte-identically;
+all24 run files stayed unchanged. AI inspected the five generated PNG figures,
+including both sweep pages showing every condition, without changing them. No
+new tests or implementation were written; the prior340-test result was rechecked,
+not rerun after exposing final results. No additional fits, tuning, CV or benchmarks
+followed the approved run.
+
+AI drafted the execution helper scripts, actual command/environment/check logs,
+README status/results and review narrative/package (approximately100% of this
+session's drafting, not a measured project-wide fraction). These are AI-executed
+checks and interpretations, not independent student verification or understanding.
+Student review should explain equal-condition versus pooled errors, the held-out
+condition failure, preserved MLP warning and why a final result cannot be used to
+retune or switch the predeclared primary recommendation. No project commit/push
+or GitHub setting change occurred. Prior records/bytes were retained.
+
+
+## Milestone 5 documentation corrections and approval-only checkpoint
+
+Date: 2026-10-24T12:01:15.583962+11:00
+The student identified two documentation issues. AI's earlier review narrative
+incorrectly called the saved benchmark a32-observation batch; the immutable
+benchmark protocol records batch_rows=256 and single_rows=32. AI corrected the
+versioned narrative in docs/milestone-5-results.md and linked it from README: the
+256 observations form the batch, while32 prepared observations cycle through
+separate individual predict calls. Original benchmark values/records were not
+changed. The earlier review ZIP/narrative remain historical copies; the current
+version explicitly corrects that interpretation.
+
+AI replaced the stale protocol heading and added a dated approval/completion
+note. Its original procedure body remains intact. The documented actual run
+completed24 October2026 at00:40:44UTC /11:40:44AEDT, with five fits/five batch
+calls/1545 records and the retained MLP warning; no new experiment was needed.
+
+AI prepared an exact file list for a proposed single M5 commit and ordinary
+main-to-main push. Read-only GitHub queries confirmed the unchanged repository
+name, private visibility, and remote main matching local35a4bb4. No files were
+staged and no commit/push/configuration mutation occurred. All540 existing report
+files, including the24 final artifacts, retain their bytes. Source/tests/data,
+settings/seeds and primarySVR are unchanged. No tests, fits, predictions or
+benchmarks were rerun for these text corrections. Latest340-test evidence remains
+historical rather than a new execution claim.
+
+The student supplied the correction; AI drafted the revised text/checkpoint and
+verification scripts (approximately100% of this session's drafting, not a measured
+project contribution). These are AI-executed checks, not a claim of independent
+student checking or understanding. Commit and push await explicit approval of
+the concrete scope.

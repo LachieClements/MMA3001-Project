@@ -90,10 +90,50 @@ def test_custom_source_requires_declared_checksum(source_args: list[str]) -> Non
 
 
 @pytest.mark.parametrize("command", ["final-evaluation", "evaluate-final"])
-def test_final_evaluation_is_not_available(command: str) -> None:
+def test_unrecognised_final_aliases_are_rejected(command: str) -> None:
     with pytest.raises(SystemExit) as exc:
         main([command])
     assert exc.value.code == 2
+
+
+def test_final_evaluate_routes_only_an_explicit_complete_command(tmp_path, monkeypatch):
+    from airfoil_noise import final_evaluation
+    calls = []
+    monkeypatch.setattr(final_evaluation, "execute_final_command", lambda args: calls.append(args) or 0)
+    with pytest.raises(SystemExit):
+        main([])
+    with pytest.raises(SystemExit):
+        main(["final-evaluate"])
+    assert not calls
+    assert main(["final-evaluate", "--selection", "selection.json",
+                 "--recommendation", "recommendation.json", "--output-dir", str(tmp_path / "new")]) == 0
+    assert len(calls) == 1
+    assert calls[0].selection == Path("selection.json")
+    assert calls[0].invocation[1] == "final-evaluate"
+
+
+def test_final_existing_output_rejected_before_loading(tmp_path, monkeypatch):
+    from airfoil_noise import final_evaluation
+    def forbidden(*args, **kwargs):
+        pytest.fail("Existing outputs must be rejected before reading data or frozen choices.")
+    monkeypatch.setattr(final_evaluation, "read_frozen_choices", forbidden)
+    with pytest.raises(FileExistsError):
+        main(["final-evaluate", "--selection", "unused", "--recommendation", "unused",
+              "--output-dir", str(tmp_path)])
+
+
+def test_nonapproved_final_choices_rejected_before_source_access(tmp_path, monkeypatch):
+    from airfoil_noise import final_evaluation
+    def forbidden(*args, **kwargs):
+        pytest.fail("Invalid frozen choices must not load real source targets.")
+    monkeypatch.setattr(final_evaluation, "load_airfoil", forbidden)
+    selection, recommendation = tmp_path / "selection.json", tmp_path / "recommendation.json"
+    selection.write_text("{}")
+    recommendation.write_text("{}")
+    with pytest.raises(ValueError, match="checksum"):
+        main(["final-evaluate", "--selection", str(selection), "--recommendation", str(recommendation),
+              "--output-dir", str(tmp_path / "not-created")])
+    assert not (tmp_path / "not-created").exists()
 
 
 def test_module_help_command_works(tmp_path: Path) -> None:

@@ -519,3 +519,360 @@ do not interpret the inventory's Git revision as including unpublished changes.
 Archive manifests bind current source bytes. Ranges/inventory are not a
 cross-platform lockfile. No peak-RAM, FLOP, power-mode or profiler measurement
 is claimed. Runtime measurements describe this machine/software.
+
+================================================================================
+Milestone4 dependency-guidance cleanup and fresh-install verification
+================================================================================
+
+Date (Australia/Sydney): 2026-10-24T07:30:33.813048+11:00
+Base checkout: main @35a4bb47ec7f0e44e571d48b403cb0bb6030a7d4.
+The initial working tree/index was clean. Milestone4 already exists in that
+commit and GitHub main was read-only verified at the same SHA. GitHub metadata
+reports LachieClements/MMA3001-Project private, default branch main.
+Origin fetch/push destination: https://github.com/LachieClements/MMA3001-Project.git
+No branch, visibility, remote, history or GitHub setting was modified.
+
+Cleanup changes scikit-learn>=1.5,<2 to >=1.7,<2 because saved constructor records
+include LinearRegression.tol and MLPRegressor.loss. Supported installation range
+is distinct from the recorded experiment version, scikit-learn1.7.2.
+Historical experiment environments/outputs were not rewritten or rerun.
+
+Fresh temporary environment: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv
+Created with python -m venv (include-system-site-packages=false), using Python3.10.5.
+Venv executables were called directly instead of activating; this is the same
+documented venv/editable-install procedure. Installed with:
+C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -m pip install -e ".[dev]" "scikit-learn==1.7.2"
+The first sandboxed attempt failed resolving setuptools>=75 build dependencies;
+the approved network-enabled retry succeeded in that new venv. The first
+attempt failed before installing project/runtime dependencies. Both logs remain.
+No old milestone venv, PYTHONPATH or sys.path workaround was used.
+
+Subprocesses removed PYTHONPATH and PYTHONHOME; PYTHONDONTWRITEBYTECODE=1.
+OMP_NUM_THREADS, MKL_NUM_THREADS, OPENBLAS_NUM_THREADS, NUMEXPR_NUM_THREADS=1
+are process-local. MPLCONFIGDIR points to C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\matplotlib.
+PIP_DISABLE_PIP_VERSION_CHECK=1 and PIP_RETRIES=0 affected installer diagnostics
+only. Actual argv/cwd/environment/returncode/duration are recorded below.
+
+Fresh installed-package/environment probe (run outside the checkout):
+{
+  "fresh_environment_verified": true,
+  "cwd": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi",
+  "prefix": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv",
+  "base_prefix": "C:\\Users\\lachi\\AppData\\Local\\Programs\\Python\\Python310",
+  "package_file": "C:\\Users\\lachi\\Documents\\2026 - University\\MMA3001\\Project\\MMA3001-Project\\src\\airfoil_noise\\__init__.py",
+  "installed_sklearn_requirement": "scikit-learn<2,>=1.7",
+  "direct_url": {
+    "dir_info": {
+      "editable": true
+    },
+    "url": "file:///C:/Users/lachi/Documents/2026%20-%20University/MMA3001/Project/MMA3001-Project"
+  },
+  "environment": {
+    "python": "3.10.5 (tags/v3.10.5:f377153, Jun  6 2022, 16:14:13) [MSC v.1929 64 bit (AMD64)]",
+    "executable": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Scripts\\python.exe",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+    "logical_cpus": 12,
+    "packages": {
+      "mma3001-airfoil-noise": "0.1.0",
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "scipy": "1.15.3",
+      "scikit-learn": "1.7.2",
+      "pytest": "9.1.1",
+      "pdoc": "16.0.0",
+      "matplotlib": "3.10.9",
+      "threadpoolctl": "3.7.0"
+    },
+    "thread_environment": {
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1"
+    },
+    "thread_pools": [
+      {
+        "user_api": "openmp",
+        "internal_api": "openmp",
+        "num_threads": 1,
+        "prefix": "vcomp",
+        "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Lib\\site-packages\\sklearn\\.libs\\vcomp140.dll",
+        "version": null
+      },
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-13e2df515630b4a41f92893938845698.dll",
+        "version": "0.3.29",
+        "threading_layer": "pthreads",
+        "architecture": "Haswell"
+      },
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Lib\\site-packages\\scipy.libs\\libscipy_openblas-f07f5a5d207a3a47104dca54d6d0c86a.dll",
+        "version": "0.3.28",
+        "threading_layer": "pthreads",
+        "architecture": "Haswell"
+      }
+    ]
+  },
+  "configuration_sha256": {
+    "training_mean": "8207df3c3fc204d71b91e7039541845039422cddde5d2af65f42d70673b4b8b6",
+    "linear": "528ec3949ab9dcc0941bc4a5c16f3f603b921b0c94ba771fc16ba9d5265caa04",
+    "tree": "bfe382800ab16898a39e6ca119a92c212c3ce70b815dedc52ca0eb7be11c27c2",
+    "svr": "3e35b4c034c9bd7ee7ea4d9888e68bf6e2fd3a120aa35493b777c3debb0fc6f0",
+    "mlp": "c340318227047df9d71ce8ef07c39f23c936b7a534ad8cc3d853b95a2fb76f6a"
+  },
+  "configuration_hash_encoding": "SHA256 of sorted compact JSON, UTF-8, allow_nan=False",
+  "selection_sha256": "93a740f1111ee554c67fc54f246cfc41f2d49216e5fad7dff00a1f913dad7d2e",
+  "recommendation_sha256": "75afe0565d0314d8a9f284fa7f96582a1970adf1745e4951f9a00e3b77258a8c",
+  "real_models_fitted": 0,
+  "final_test_evaluated": false
+}
+Installed metadata rejects scikit-learn1.6.1 and allows1.7; the actual loaded
+version is exactly1.7.2. The environment's sys.prefix differs from base_prefix
+and editable direct_url.json identifies this checkout. All five saved pipeline/
+estimator records round-trip unchanged without fitting, with MLP seed17.
+Full package inventory (not a cross-platform lockfile):
+cloudpickle==3.1.2
+colorama==0.4.6
+contourpy==1.3.2
+cycler==0.12.1
+exceptiongroup==1.3.1
+fonttools==4.65.0
+iniconfig==2.3.1
+Jinja2==3.1.6
+joblib==1.6.0
+kiwisolver==1.5.1
+markdown2==2.5.5
+MarkupSafe==3.0.4
+matplotlib==3.10.9
+# Editable Git install with no remote (mma3001-airfoil-noise==0.1.0)
+-e c:\users\lachi\documents\2026 - university\mma3001\project\mma3001-project
+numpy==2.2.6
+packaging==26.3
+pandas==2.3.3
+pdoc==16.0.0
+pillow==12.3.0
+pip==22.0.4
+pluggy==1.7.0
+Pygments==2.21.0
+pyparsing==3.3.3
+pytest==9.1.1
+python-dateutil==3.0.0
+pytz==2026.5
+scikit-learn==1.7.2
+scipy==1.15.3
+setuptools==58.1.0
+six==1.17.0
+threadpoolctl==3.7.0
+tomli==2.5.0
+typing_extensions==4.16.0
+tzdata==2026.5
+
+Inventory annotations are not authoritative for Git remotes; origin was
+separately verified above. A fresh editable install refreshes ignored
+src/mma3001_airfoil_noise.egg-info build metadata; those files are excluded
+from the proposed checkpoint. Other allowed sklearn versions/platforms were
+not tested, and no bitwise or timing reproduction is claimed.
+
+================================================================================
+Milestone5 implementation: actual installed environment
+================================================================================
+
+Date (Australia/Sydney): 2026-10-24T08:01:26.466970+11:00
+Base HEAD remains35a4bb47ec7f0e44e571d48b403cb0bb6030a7d4, branch main.
+The five uncommitted dependency-cleanup files present at the start were preserved;
+pyproject.toml's >=1.7,<2 correction was not changed during M5 implementation.
+No Git staging, commit, push, remote/settings change or history rewrite occurred.
+
+Environment reused unchanged: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe
+This is the isolated environment created for the preceding fresh-install check,
+with installed editable package and scikit-learn1.7.2; it was not recreated here.
+No new dependencies or PYTHONPATH/sys.path workaround was introduced.
+Subprocesses removed PYTHONPATH/PYTHONHOME and set PYTHONDONTWRITEBYTECODE=1,
+OMP_NUM_THREADS=MKL_NUM_THREADS=OPENBLAS_NUM_THREADS=NUMEXPR_NUM_THREADS=1.
+MPLCONFIGDIR=C:\Users\lachi\AppData\Local\Temp\mma3001-milestone5-82dn2xbp\matplotlib.
+PIP_DISABLE_PIP_VERSION_CHECK=1 and PIP_RETRIES=0 remain helper-process settings.
+
+Only implementation and synthetic verification were approved. No real-data
+model fits, prediction calls, development search/benchmarks or final holdout
+performance evaluation occurred. The intended real output directory does not
+exist. All final-workflow smoke outputs come from explicitly synthetic fixtures.
+
+{
+  "environment": {
+    "python": "3.10.5 (tags/v3.10.5:f377153, Jun  6 2022, 16:14:13) [MSC v.1929 64 bit (AMD64)]",
+    "executable": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Scripts\\python.exe",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+    "logical_cpus": 12,
+    "packages": {
+      "mma3001-airfoil-noise": "0.1.0",
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "scipy": "1.15.3",
+      "scikit-learn": "1.7.2",
+      "pytest": "9.1.1",
+      "pdoc": "16.0.0",
+      "matplotlib": "3.10.9",
+      "threadpoolctl": "3.7.0"
+    },
+    "thread_environment": {
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1"
+    },
+    "thread_pools": [
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-13e2df515630b4a41f92893938845698.dll",
+        "version": "0.3.29",
+        "threading_layer": "pthreads",
+        "architecture": "Haswell"
+      },
+      {
+        "user_api": "openmp",
+        "internal_api": "openmp",
+        "num_threads": 1,
+        "prefix": "vcomp",
+        "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Lib\\site-packages\\sklearn\\.libs\\vcomp140.dll",
+        "version": null
+      },
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Lib\\site-packages\\scipy.libs\\libscipy_openblas-f07f5a5d207a3a47104dca54d6d0c86a.dll",
+        "version": "0.3.28",
+        "threading_layer": "pthreads",
+        "architecture": "Haswell"
+      }
+    ]
+  },
+  "new_environment_created_this_milestone": false,
+  "environment_origin": "Fresh environment created for the preceding dependency-cleanup verification; reused unchanged.",
+  "selection_sha256": "93a740f1111ee554c67fc54f246cfc41f2d49216e5fad7dff00a1f913dad7d2e",
+  "recommendation_sha256": "75afe0565d0314d8a9f284fa7f96582a1970adf1745e4951f9a00e3b77258a8c",
+  "configuration_sha256": {
+    "training_mean": "8207df3c3fc204d71b91e7039541845039422cddde5d2af65f42d70673b4b8b6",
+    "linear": "528ec3949ab9dcc0941bc4a5c16f3f603b921b0c94ba771fc16ba9d5265caa04",
+    "tree": "bfe382800ab16898a39e6ca119a92c212c3ce70b815dedc52ca0eb7be11c27c2",
+    "svr": "3e35b4c034c9bd7ee7ea4d9888e68bf6e2fd3a120aa35493b777c3debb0fc6f0",
+    "mlp": "c340318227047df9d71ce8ef07c39f23c936b7a534ad8cc3d853b95a2fb76f6a"
+  },
+  "real_fits": 0,
+  "real_predict_calls": 0,
+  "holdout_evaluated": false
+}
+The supported range remains sklearn>=1.7,<2; this verification used exactly1.7.2.
+Recorded M4 experiment environments and all outputs retain their original bytes.
+This is software/synthetic verification, not a new timing or accuracy experiment.
+
+
+2026-10-24: Approved Milestone5 real final holdout execution
+Recorded:2026-10-24T11:45:00.791807+11:00
+This is a new actual run; preceding synthetic/development records are historical.
+The installed environment was reused without package changes and matched the
+versions in the successful340-test checkout check. No new environment was created.
+{
+  "python": "3.10.5 (tags/v3.10.5:f377153, Jun  6 2022, 16:14:13) [MSC v.1929 64 bit (AMD64)]",
+  "executable": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Scripts\\python.exe",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+  "logical_cpus": 12,
+  "packages": {
+    "mma3001-airfoil-noise": "0.1.0",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "scipy": "1.15.3",
+    "scikit-learn": "1.7.2",
+    "pytest": "9.1.1",
+    "pdoc": "16.0.0",
+    "matplotlib": "3.10.9",
+    "threadpoolctl": "3.7.0"
+  },
+  "thread_environment": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "thread_pools": [
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-13e2df515630b4a41f92893938845698.dll",
+      "version": "0.3.29",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    },
+    {
+      "user_api": "openmp",
+      "internal_api": "openmp",
+      "num_threads": 1,
+      "prefix": "vcomp",
+      "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Lib\\site-packages\\sklearn\\.libs\\vcomp140.dll",
+      "version": null
+    },
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Lib\\site-packages\\scipy.libs\\libscipy_openblas-f07f5a5d207a3a47104dca54d6d0c86a.dll",
+      "version": "0.3.28",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    }
+  ]
+}
+{
+  "argv": [
+    "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "airfoil_noise",
+    "final-evaluate",
+    "--data",
+    "data/raw/airfoil_self_noise.dat",
+    "--directory",
+    "data/splits",
+    "--selection",
+    "reports/development/milestone-4-search/selected_configurations.json",
+    "--recommendation",
+    "reports/development/milestone-4-benchmarks/recommendation.json",
+    "--output-dir",
+    "reports/final/milestone-5-frozen-models"
+  ],
+  "cwd": "C:\\Users\\lachi\\Documents\\2026 - University\\MMA3001\\Project\\MMA3001-Project",
+  "environment_overrides": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-final-once-xl76tx0q\\matplotlib",
+    "PYTHONIOENCODING": "utf-8"
+  },
+  "removed_environment": [
+    "PYTHONPATH",
+    "PYTHONHOME"
+  ],
+  "started_utc": "2026-10-24T00:40:28.818437+00:00",
+  "returncode": 0,
+  "wall_seconds": 16.130219399987254,
+  "ended_utc": "2026-10-24T00:40:44.951805+00:00"
+}

@@ -1107,3 +1107,722 @@ Final documentation/hygiene checks:
 The review ZIP is written outside the checkout, includes complete current
 source/tests/configuration and records, and excludes generated HTML, teaching
 materials, environments, caches and .git. Its manifest binds each included file.
+
+================================================================================
+Milestone4 dependency cleanup: fresh installed-package verification
+================================================================================
+
+Date (Australia/Sydney): 2026-10-24T07:30:33.813048+11:00
+Base checkout: main @35a4bb47ec7f0e44e571d48b403cb0bb6030a7d4.
+The initial working tree/index was clean. Milestone4 already exists in that
+commit and GitHub main was read-only verified at the same SHA. GitHub metadata
+reports LachieClements/MMA3001-Project private, default branch main.
+Origin fetch/push destination: https://github.com/LachieClements/MMA3001-Project.git
+No branch, visibility, remote, history or GitHub setting was modified.
+
+Cleanup changes scikit-learn>=1.5,<2 to >=1.7,<2 because saved constructor records
+include LinearRegression.tol and MLPRegressor.loss. Supported installation range
+is distinct from the recorded experiment version, scikit-learn1.7.2.
+Historical experiment environments/outputs were not rewritten or rerun.
+
+Fresh temporary environment: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv
+Created with python -m venv (include-system-site-packages=false), using Python3.10.5.
+Venv executables were called directly instead of activating; this is the same
+documented venv/editable-install procedure. Installed with:
+C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -m pip install -e ".[dev]" "scikit-learn==1.7.2"
+The first sandboxed attempt failed resolving setuptools>=75 build dependencies;
+the approved network-enabled retry succeeded in that new venv. The first
+attempt failed before installing project/runtime dependencies. Both logs remain.
+No old milestone venv, PYTHONPATH or sys.path workaround was used.
+
+Subprocesses removed PYTHONPATH and PYTHONHOME; PYTHONDONTWRITEBYTECODE=1.
+OMP_NUM_THREADS, MKL_NUM_THREADS, OPENBLAS_NUM_THREADS, NUMEXPR_NUM_THREADS=1
+are process-local. MPLCONFIGDIR points to C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\matplotlib.
+PIP_DISABLE_PIP_VERSION_CHECK=1 and PIP_RETRIES=0 affected installer diagnostics
+only. Actual argv/cwd/environment/returncode/duration are recorded below.
+
+Full executed pytest output:
+........................................................................ [ 23%]
+........................................................................ [ 47%]
+........................................................................ [ 70%]
+........................................................................ [ 94%]
+..................                                                       [100%]
+306 passed in 41.65s
+
+All306 collected tests passed in41.65s; zero skipped, expected failures,
+unexpected passes or deselections. No pytest warnings summary occurred.
+Synthetic tests intentionally capture convergence warnings and injected failures.
+This cleanup ran no real-data search, benchmarks, selected-model refits or
+final-test predictions/metrics. The suite's model fits are synthetic.
+pip check:
+No broken requirements found.
+
+Installed console --help/audit/check-split and module --help/audit/check-split
+all returned0. The module/environment probe also passed outside the checkout.
+Raw checksum remains74c75fd71783f1e6b71f8a622b993dc592897a97cd689c5090a07147a1b097b3.
+Frozen counts remain1194/84 development and309/22 holdout with unchanged folds.
+Five frozen configurations reconstructed unchanged, including seed17 MLP;
+no fitting was used for that check. Selection/recommendation hashes are in
+the environment record above and the separate fresh-environment.json evidence.
+
+An initial multi-file patch was rejected on README context before writing any
+files; targeted patches succeeded. Initial installation failure is explicitly
+recorded above; there were no test failures. No implementation/test/HTML file
+was changed for this metadata correction. Existing generated API docs were
+preserved rather than regenerated for a dependency/README change.
+
+Exact actual commands (absolute venv paths; direct invocation instead of activation):
+
+create-venv-command.json
+argv: python -m venv C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 13.243453599978238}
+
+install-first-command.json
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -m pip install -e .[dev] scikit-learn==1.7.2
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 1, "wall_seconds": 5.0561410000082105}
+
+install-approved-command.json
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -m pip install -e .[dev] scikit-learn==1.7.2
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 100.25200620002579}
+
+full-pytest-command.json
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B -m pytest -q -ra
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 42.569985100009944}
+
+pip-check-command.json
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -m pip check
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 1.965256399998907}
+
+outside-environment-command.json
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\inspect_environment.py
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 2.599309000011999}
+
+console-help-command.json
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\airfoil-noise.exe --help
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 2.3934796000248753}
+
+outside-module-help-command.json
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B -m airfoil_noise --help
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 2.2962711000000127}
+
+audit-command.json
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\airfoil-noise.exe audit
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 2.3811727999709547}
+
+pip-freeze-command.json
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -m pip freeze --all
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 1.2383012000354938}
+
+frozen-bundle-command.json
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\airfoil-noise.exe check-split
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 2.224777700030245}
+
+module-audit-command.json
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B -m airfoil_noise audit
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 2.1819785000407137}
+
+module-frozen-bundle-command.json
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B -m airfoil_noise check-split
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 2.1140789999626577}
+
+Additional read-only checks: git status --short, branch --show-current,
+diff --cached --name-only, diff HEAD --stat, log/show/rev-parse,
+remote get-url origin and remote get-url --push origin.
+GitHub connected read-only calls: get_repo(LachieClements/MMA3001-Project),
+search_branches(main), fetch_commit(main). No git add/commit/push/fetch performed.
+Runtime range >=1.7,<2 is not a tested version matrix. These software checks
+do not establish physical validity or independently reproduce the empirical
+study. Milestone5 remains a proposal awaiting approval.
+
+================================================================================
+Milestone5 implementation and synthetic verification
+================================================================================
+
+Date (Australia/Sydney): 2026-10-24T08:01:26.466970+11:00
+Base HEAD remains35a4bb47ec7f0e44e571d48b403cb0bb6030a7d4, branch main.
+The five uncommitted dependency-cleanup files present at the start were preserved;
+pyproject.toml's >=1.7,<2 correction was not changed during M5 implementation.
+No Git staging, commit, push, remote/settings change or history rewrite occurred.
+
+Environment reused unchanged: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe
+This is the isolated environment created for the preceding fresh-install check,
+with installed editable package and scikit-learn1.7.2; it was not recreated here.
+No new dependencies or PYTHONPATH/sys.path workaround was introduced.
+Subprocesses removed PYTHONPATH/PYTHONHOME and set PYTHONDONTWRITEBYTECODE=1,
+OMP_NUM_THREADS=MKL_NUM_THREADS=OPENBLAS_NUM_THREADS=NUMEXPR_NUM_THREADS=1.
+MPLCONFIGDIR=C:\Users\lachi\AppData\Local\Temp\mma3001-milestone5-82dn2xbp\matplotlib.
+PIP_DISABLE_PIP_VERSION_CHECK=1 and PIP_RETRIES=0 remain helper-process settings.
+
+Only implementation and synthetic verification were approved. No real-data
+model fits, prediction calls, development search/benchmarks or final holdout
+performance evaluation occurred. The intended real output directory does not
+exist. All final-workflow smoke outputs come from explicitly synthetic fixtures.
+
+Focused runs:
+...............................................                          [100%]
+47 passed in 36.27s
+
+.................................................                        [100%]
+49 passed in 22.32s
+
+The first47 tests passed. Two additional failure/integrity cases then passed in
+the49-test run. A final22-condition pagination case was added after visual review:
+..................................................                       [100%]
+50 passed in 27.70s
+
+Complete installed suite on final implementation:
+........................................................................ [ 21%]
+........................................................................ [ 42%]
+........................................................................ [ 63%]
+........................................................................ [ 84%]
+....................................................                     [100%]
+340 passed in 46.59s
+
+The earlier complete suite also passed339 tests before the final plot-title/
+22-condition coverage addition. The final suite collected340 tests: all passed;
+zero skipped, xfailed, xpassed or deselected. No pytest warning summary occurred.
+No test failure occurred. Synthetic MLP iteration-limit warnings, deliberate fit/
+predict failures, malformed predictions and I/O failures are expected captured
+cases, not real empirical failures. No ranking or wall-clock threshold is asserted.
+
+Coverage proves one fresh fit and one test predict per model; train-only scaling;
+feature/target/ID separation; held-out truth isolation; exact frozen JSON/hash/
+seed reconstruction; stable row/condition alignment; complete saved predictions;
+hand-calculated unequal-group metrics and undefined constant-target R2; retained
+loss/warning/failure diagnostics; protected-output refusal; absence of completion/
+reports for failed models; and no estimator construction/fit/predict during
+saved-record regeneration. The22-condition synthetic test creates110 condition
+metric rows and both sweep pages with all conditions represented.
+
+Successful synthetic smoke example: five fits, five predictions over9 fixture
+observations,45 prediction records and15 per-condition rows. A distinct22-condition
+fixture has44 observations,220 predictions and110 condition metric rows.
+Neither example is the real309-row holdout and no smoke output is labelled as
+an empirical real-data result. SVR remains primary even though the synthetic
+constructed linear relationship can favour linear regression.
+
+pdoc regenerated current13-page API docs. Local-link and protected-file checks
+are retained in protected-verification.json. Generated trailing whitespace only
+was normalised; no source changed after the final suite. Visual review found
+crowded long synthetic condition IDs, corrected to numbered operating titles
+with units and an exact condition_key.csv; full IDs remain unchanged.
+pip check passed. Installed console help and both new command help screens
+passed outside source-data evaluation, including from outside the checkout.
+Only --help was invoked for real final-evaluate; it never loaded holdout targets.
+
+The542 protected starting hashes (data, frozen folds, settings/recommendation,
+every prior experiment output and unchanged utilities/tests) match. Dataset:
+74c75fd71783f1e6b71f8a622b993dc592897a97cd689c5090a07147a1b097b3
+Selection:93a740f1111ee554c67fc54f246cfc41f2d49216e5fad7dff00a1f913dad7d2e
+Recommendation:75afe0565d0314d8a9f284fa7f96582a1970adf1745e4951f9a00e3b77258a8c
+HEAD/index unchanged. Historical environment/test/AI byte prefixes are preserved.
+
+Actual argv, cwd, controlled environment and outcomes:
+
+focused-1
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B -m pytest tests/test_final_evaluation.py tests/test_cli.py tests/test_plotting.py -q -ra
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone5-82dn2xbp\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 37.236457300023176}
+
+focused-2
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B -m pytest tests/test_final_evaluation.py tests/test_cli.py tests/test_plotting.py -q -ra
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone5-82dn2xbp\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 23.17018839996308}
+
+full-suite
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B -m pytest -q -ra
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone5-82dn2xbp\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 43.05640050000511}
+
+api-docs
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B -m pdoc -o docs/api airfoil_noise airfoil_noise.__main__
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone5-82dn2xbp\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 4.882577900018077}
+
+dependency-check
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -m pip check
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone5-82dn2xbp\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 1.6288386999513023}
+
+console-help
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\airfoil-noise.exe --help
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone5-82dn2xbp\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 2.3132770999800414}
+
+environment
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B C:\Users\lachi\AppData\Local\Temp\mma3001-milestone5-82dn2xbp\inspect_environment.py
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-milestone5-82dn2xbp
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone5-82dn2xbp\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 2.2260992999654263}
+
+final-command-help
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B -m airfoil_noise final-evaluate --help
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-milestone5-82dn2xbp
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone5-82dn2xbp\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 2.0252835000283085}
+
+report-command-help
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B -m airfoil_noise report-final --help
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-milestone5-82dn2xbp
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone5-82dn2xbp\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 2.0201523000141606}
+
+focused-final
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B -m pytest tests/test_final_evaluation.py tests/test_cli.py tests/test_plotting.py -q -ra
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone5-82dn2xbp\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 28.628407699987292}
+
+full-final
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B -m pytest -q -ra
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone5-82dn2xbp\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 47.47145950002596}
+
+api-final
+argv: C:\Users\lachi\AppData\Local\Temp\mma3001-m4-dependency-check-d0sfzxwi\venv\Scripts\python.exe -B -m pdoc -o docs/api airfoil_noise airfoil_noise.__main__
+cwd: C:\Users\lachi\Documents\2026 - University\MMA3001\Project\MMA3001-Project
+environment overrides: {"PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1", "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-milestone5-82dn2xbp\\matplotlib", "PIP_DISABLE_PIP_VERSION_CHECK": "1", "PIP_RETRIES": "0"}
+removed: ["PYTHONPATH", "PYTHONHOME"]
+outcome: {"returncode": 0, "wall_seconds": 4.4050494999974035}
+
+Additional read-only/hygiene commands: git status --short, log,
+diff HEAD --stat, diff --check, diff --cached --name-only, tracked/untracked file
+lists, and Python SHA256/prefix/HTML-link checks. Evidence scripts and manifests
+are included in the external review ZIP. Generated API files are regenerated in
+the repository; source plus generation/link-check evidence is in the ZIP.
+
+Acceptance is software correctness/traceability; there is no engineering dB
+threshold. Real model reliability, final performance and physical validity are
+unassessed here. The known M4 MLP warnings are not resolved by these synthetic
+tests. A real evaluation, commit and push still require separate approval.
+
+
+2026-10-24: Report checkout byte preservation (append-only verification)
+Recorded: 2026-10-24T11:25:15.171141+11:00
+Installed suite in a disposable core.autocrlf=true checkout (set before checkout).
+This supplements, rather than replaces, previous milestone/experiment records.
+Clone: C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\clone
+Interpreter: C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\venv\Scripts\python.exe
+No PYTHONPATH or sys.path workaround. Import verified from outside the checkout.
+Versions: {"matplotlib": "3.10.9", "mma3001-airfoil-noise": "0.1.0", "numpy": "2.2.6", "pandas": "2.3.3", "pdoc": "16.0.0", "pip": "22.0.4", "pytest": "9.1.1", "scikit-learn": "1.7.2", "scipy": "1.15.3", "setuptools": "58.1.0", "threadpoolctl": "3.7.0"}
+OMP/MKL/OPENBLAS/NUMEXPR thread counts:1. Full environment, commands, guard code,
+and unsuccessful setup/helper attempts are appended in reproducibility-report.txt.
+
+[installed-readme-command]
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\clone
+C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\venv\Scripts\python.exe -m pip install -e .[dev] scikit-learn==1.7.2
+exit=1; elapsed=4.001s
+
+[installed-readme-command-network-enabled]
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\clone
+C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\venv\Scripts\python.exe -m pip install -e .[dev] scikit-learn==1.7.2
+exit=0; elapsed=91.083s
+
+[installed-environment-outside-clone]
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks
+C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\venv\Scripts\python.exe -B C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\probe_environment.py
+exit=0; elapsed=7.852s
+
+[installed-audit]
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\clone
+C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\venv\Scripts\airfoil-noise.exe audit
+exit=0; elapsed=2.053s
+{
+  "source_sha256": "74c75fd71783f1e6b71f8a622b993dc592897a97cd689c5090a07147a1b097b3",
+  "row_id_scheme": "row_ plus one-based source record number, padded to six digits",
+  "condition_id_scheme": "c=<chord>|v=<velocity>|a=<angle>, using str(float(value))",
+  "columns": [
+    "frequency_hz",
+    "angle_deg",
+    "chord_m",
+    "velocity_m_s",
+    "displacement_thickness_m",
+    "spl_db"
+  ],
+  "feature_columns": [
+    "frequency_hz",
+    "angle_deg",
+    "chord_m",
+    "velocity_m_s",
+    "displacement_thickness_m"
+  ],
+  "condition_columns": [
+    "chord_m",
+    "velocity_m_s",
+    "angle_deg"
+  ],
+  "rows": 1503,
+  "exact_duplicate_rows": 0,
+  "conditions": 106,
+  "smallest_sweep": 8,
+  "largest_sweep": 19,
+  "repeated_condition_frequency_rows": 0,
+  "thickness_conflicts": [],
+  "ranges": {
+    "frequency_hz": [
+      200.0,
+      20000.0
+    ],
+    "angle_deg": [
+      0.0,
+      22.2
+    ],
+    "chord_m": [
+      0.0254,
+      0.3048
+    ],
+    "velocity_m_s": [
+      31.7,
+      71.3
+    ],
+    "displacement_thickness_m": [
+      0.000400682,
+      0.0584113
+    ],
+    "spl_db": [
+      103.38,
+      140.987
+    ]
+  }
+}
+
+[installed-check-split]
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\clone
+C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\venv\Scripts\airfoil-noise.exe check-split
+exit=0; elapsed=2.239s
+{
+  "development": {
+    "conditions": 84,
+    "rows": 1194
+  },
+  "test": {
+    "conditions": 22,
+    "rows": 309
+  },
+  "validation_folds": {
+    "1": {
+      "conditions": 17,
+      "rows": 241
+    },
+    "2": {
+      "conditions": 17,
+      "rows": 241
+    },
+    "3": {
+      "conditions": 17,
+      "rows": 240
+    },
+    "4": {
+      "conditions": 17,
+      "rows": 240
+    },
+    "5": {
+      "conditions": 16,
+      "rows": 232
+    }
+  }
+}
+
+[saved-record-regeneration-model-calls-blocked]
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks
+C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\venv\Scripts\python.exe -B C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\regenerate_saved.py
+exit=1; elapsed=2.126s
+
+[saved-record-regeneration-verified]
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks
+C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\venv\Scripts\python.exe -B C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\regenerate_saved.py
+exit=0; elapsed=16.386s
+
+[source-and-frozen-bundle-tests]
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\clone
+C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\venv\Scripts\python.exe -B -m pytest -q -ra tests/test_data.py::test_source_file_integrity_and_audit tests/test_split.py::test_committed_bundle_matches_original_source
+exit=0; elapsed=2.464s
+..                                                                       [100%]
+2 passed in 1.75s
+
+[installed-full-pytest]
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\clone
+C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\venv\Scripts\python.exe -B -m pytest -q -ra
+exit=0; elapsed=49.539s
+........................................................................ [ 21%]
+........................................................................ [ 42%]
+........................................................................ [ 63%]
+........................................................................ [ 84%]
+....................................................                     [100%]
+340 passed in 48.67s
+
+[installed-pip-check]
+cwd: C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\clone
+C:\Users\lachi\AppData\Local\Temp\mma3001-report-checkout-ahutliks\venv\Scripts\python.exe -m pip check
+exit=0; elapsed=1.520s
+No broken requirements found.
+
+Skipped=0; xfailed=0; xpassed=0; deselected=0. No pytest warnings summary.
+The recorded setup/guard failures were corrected without changes to source,
+records or integrity checks. Existing synthetic convergence warnings were retained.
+Both saved runs regenerated reports with zero construction/fit/predict/evaluation
+calls. All565 protected clone file hashes matched before/after; clone stayed clean.
+All46 saved synthetic files remained byte-identical. No real-data experiment,
+benchmark repetition or real-holdout evaluation ran.
+
+Final hygiene checks: git diff --check -- .gitattributes AI_USE.md docs/reproducibility-report.txt docs/test-report.txt exited0 (no whitespace errors). Git emitted ordinary LF-to-CRLF advisories for those text/config/log files under the existing text policy; no report path had such an advisory and no files were renormalized. git diff --cached --name-only remained empty. The only task-specific changes are .gitattributes and appended entries in these three records.
+
+
+2026-10-24: Preflight and saved-record checks for the single approved final run
+Recorded:2026-10-24T11:45:00.791807+11:00
+The latest installed full-suite result remains340 passed in48.67s (previous
+disposable autocrlf=true checkout, scikit-learn1.7.2;0 skips/xfails/deselections).
+No new pytest invocation or source/test changes occurred in this execution.
+Preflight verified current reviewed bytes/runtime and that prior checkout result.
+Actual preflight command:
+{
+  "argv": [
+    "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Scripts\\python.exe",
+    "-B",
+    "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-final-once-xl76tx0q\\preflight.py"
+  ],
+  "cwd": "C:\\Users\\lachi\\Documents\\2026 - University\\MMA3001\\Project\\MMA3001-Project",
+  "environment_overrides": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-final-once-xl76tx0q\\matplotlib",
+    "PYTHONIOENCODING": "utf-8"
+  },
+  "removed_environment": [
+    "PYTHONPATH",
+    "PYTHONHOME"
+  ],
+  "started_utc": "2026-10-24T00:40:13.767102+00:00",
+  "returncode": 0,
+  "wall_seconds": 9.181572299974505,
+  "ended_utc": "2026-10-24T00:40:22.948312+00:00"
+}
+{
+  "status": "passed",
+  "reviewed_worktree_files_unchanged": 573,
+  "checkout_hashes_verified": 565,
+  "scikit_learn": "1.7.2",
+  "development": 1194,
+  "holdout": 309,
+  "conditions": 22,
+  "preflight_fit_calls": 0,
+  "preflight_predict_calls": 0
+}
+
+Actual real final command (one execution, not a pytest check):
+{
+  "argv": [
+    "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "airfoil_noise",
+    "final-evaluate",
+    "--data",
+    "data/raw/airfoil_self_noise.dat",
+    "--directory",
+    "data/splits",
+    "--selection",
+    "reports/development/milestone-4-search/selected_configurations.json",
+    "--recommendation",
+    "reports/development/milestone-4-benchmarks/recommendation.json",
+    "--output-dir",
+    "reports/final/milestone-5-frozen-models"
+  ],
+  "cwd": "C:\\Users\\lachi\\Documents\\2026 - University\\MMA3001\\Project\\MMA3001-Project",
+  "environment_overrides": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-final-once-xl76tx0q\\matplotlib",
+    "PYTHONIOENCODING": "utf-8"
+  },
+  "removed_environment": [
+    "PYTHONPATH",
+    "PYTHONHOME"
+  ],
+  "started_utc": "2026-10-24T00:40:28.818437+00:00",
+  "returncode": 0,
+  "wall_seconds": 16.130219399987254,
+  "ended_utc": "2026-10-24T00:40:44.951805+00:00"
+}
+Final records saved: success_warning_qualified. Primary recommendation remains SVR.
+
+Read-only saved-record verification command:
+{
+  "argv": [
+    "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-m4-dependency-check-d0sfzxwi\\venv\\Scripts\\python.exe",
+    "-B",
+    "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-final-once-xl76tx0q\\verify_saved.py"
+  ],
+  "cwd": "C:\\Users\\lachi\\Documents\\2026 - University\\MMA3001\\Project\\MMA3001-Project",
+  "environment_overrides": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "C:\\Users\\lachi\\AppData\\Local\\Temp\\mma3001-final-once-xl76tx0q\\matplotlib",
+    "PYTHONIOENCODING": "utf-8"
+  },
+  "removed_environment": [
+    "PYTHONPATH",
+    "PYTHONHOME"
+  ],
+  "returncode": 0,
+  "wall_seconds": 2.4828359999810345
+}
+{
+  "status": "success_warning_qualified",
+  "fits_attempted": 5,
+  "batch_prediction_calls": 5,
+  "prediction_records": 1545,
+  "conditions_per_model": 22,
+  "condition_metric_rows": 110,
+  "failures": 0,
+  "primary_model": "svr",
+  "lowest_holdout_error": "tree",
+  "warnings": {
+    "training_mean": [],
+    "linear": [],
+    "tree": [],
+    "svr": [],
+    "mlp": [
+      {
+        "category": "ConvergenceWarning",
+        "message": "Stochastic Optimizer: Maximum iterations (2000) reached and the optimization hasn't converged yet."
+      }
+    ]
+  },
+  "mlp_iterations": 2000,
+  "read_only_verification_model_calls": {
+    "construction": 0,
+    "fit": 0,
+    "predict": 0,
+    "evaluation": 0
+  },
+  "saved_record_tables_recomputed_byte_identically": true,
+  "source_truth_and_identifiers_match": true,
+  "development_only_scaler_statistics_match": true,
+  "original_final_output_files_unchanged": 24,
+  "all_previous_files_unchanged_before_doc_updates": 573,
+  "prediction_sha256": "c3425298441d0de7a4e7b0ca1a4352e13ca9b108947e9cdaeb610a1bfda06e6e",
+  "svr_equal_condition_mae_reduction_vs_mean_percent": 53.62753859864826,
+  "tree_lower_condition_mae_than_svr": 11,
+  "svr_lower_condition_mae_than_tree": 11,
+  "per_model_condition_mae_range": {
+    "training_mean": {
+      "minimum": 2.623677618863552,
+      "maximum": 9.75893634840872,
+      "worst_condition_id": "c=0.1016|v=39.6|a=15.6"
+    },
+    "linear": {
+      "minimum": 0.94808446487263,
+      "maximum": 6.697407899938252,
+      "worst_condition_id": "c=0.0254|v=31.7|a=4.8"
+    },
+    "tree": {
+      "minimum": 1.0612499999999976,
+      "maximum": 3.9310000000000014,
+      "worst_condition_id": "c=0.0254|v=71.3|a=22.2"
+    },
+    "svr": {
+      "minimum": 0.798662686145092,
+      "maximum": 11.876260582320864,
+      "worst_condition_id": "c=0.0254|v=71.3|a=22.2"
+    },
+    "mlp": {
+      "minimum": 1.3879400839931457,
+      "maximum": 7.645305248653277,
+      "worst_condition_id": "c=0.0254|v=71.3|a=22.2"
+    }
+  }
+}
+The saved tables were recalculated without estimator construction, fit, predict
+or evaluation calls. Source/condition alignment, scaler training statistics, all
+record/manifest hashes and five PNG/SVG pairs passed. All five PNGs were visually
+inspected without modifying plots/records. No preflight/check failure occurred.
+MLP emitted its preserved ConvergenceWarning at2000 iterations. Finite complete
+predictions remain warning-qualified;0 model failures,0 retries.
+
+
+2026-10-24: Documentation-only verification, no new pytest execution
+Recorded:2026-10-24T12:01:15.583962+11:00
+{
+  "date": "2026-10-24T12:01:15.583962+11:00",
+  "batch_rows": 256,
+  "single_observation_pool_rows": 32,
+  "original_protocol_body_preserved": true,
+  "report_files_byte_unchanged": 540,
+  "real_final_files_byte_unchanged": 24,
+  "source_tests_data_configs_unchanged_this_correction": true,
+  "tests_or_experiments_run": false,
+  "latest_full_suite": "340 passed in48.67s before final execution; unchanged source/tests",
+  "project_HEAD_index_config_unchanged": true,
+  "nothing_staged": true
+}
+Checked with standard-library Python assertions against saved protocol/file
+hashes. No model construction, fitting, prediction or experiment was invoked.
+The existing340-test installed-suite result is preserved, not rerun or relabelled.
+Final predictions/metrics/diagnostics/figures and all prior reports are unchanged.

@@ -1,0 +1,18 @@
+{
+  "status": "success_warning_qualified",
+  "fits_attempted": 5,
+  "prediction_calls": 5,
+  "models_failed": 0,
+  "fits_failed": 0,
+  "record_sha256": {
+    "run.json": "08c372e31b6a1618adf6398a23dff096b3079348791953c36ec2b188ee63942f",
+    "selection.json": "93a740f1111ee554c67fc54f246cfc41f2d49216e5fad7dff00a1f913dad7d2e",
+    "recommendation.json": "75afe0565d0314d8a9f284fa7f96582a1970adf1745e4951f9a00e3b77258a8c",
+    "holdout_inputs.csv": "8ccf18d15988b1cfbce3840afbc813156e1d0a2ddf24192ac97981f6ba6ef2ae",
+    "predictions.csv": "c3425298441d0de7a4e7b0ca1a4352e13ca9b108947e9cdaeb610a1bfda06e6e",
+    "diagnostics.json": "86ae0d819f8e3da37fd930c856c7bfcf8debd4107e856fb5fc0335604e9cb10f"
+  },
+  "completed_utc": "2026-10-24T00:40:44.684977+00:00",
+  "report_manifest_sha256": "fb440899679822ccd50207079dabee390ffcbc8d9f6a59a91a27799acf939501",
+  "evaluation_sha256": "062b8944b778b3c92fec656aa6855297af2a4ac3df70b2e98615d412c78be8d6"
+}

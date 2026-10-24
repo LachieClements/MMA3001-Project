@@ -13,7 +13,7 @@ authors = [{name = "Lachlan Clements"}]
 dependencies = [
     "numpy>=1.26,<3",
     "pandas>=2.1,<3",
-    "scikit-learn>=1.5,<2",
+    "scikit-learn>=1.7,<2",
     "matplotlib>=3.8,<4",
 ]
 

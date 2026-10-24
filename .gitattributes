@@ -3,3 +3,6 @@
 
 # Keep checksum-bound assignment CSVs identical after checkout.
 /data/splits/*.csv text eol=lf
+
+# Preserve exact bytes of checksum-bound report records and generated artifacts.
+/reports/** -text
