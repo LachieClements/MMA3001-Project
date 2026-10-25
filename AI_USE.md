@@ -490,3 +490,33 @@ verification scripts (approximately100% of this session's drafting, not a measur
 project contribution). These are AI-executed checks, not a claim of independent
 student checking or understanding. Commit and push await explicit approval of
 the concrete scope.
+
+
+## 2026-10-25: README orientation and detailed workflow guide
+
+The student explicitly requested a clone-and-cd quick start, contents list,
+direct HTML documentation link and local viewing instructions, prominent results
+and routine verification commands, and relocation of detailed milestone material
+into docs. Connected GitHub metadata confirmed public visibility before editing;
+no visibility change was necessary.
+
+ChatGPT/Codex drafted the new README and guide framing, moved the existing
+technical sections into docs/workflow.md, adjusted their relative links and
+replaced the obsolete remaining-milestones note with current submission guidance.
+Approximately all new wording and verification scripting in this task was
+AI-drafted. This is not a measured fraction of the whole assignment or a claim
+of independent student verification.
+
+Documentation checks validated 60 local links/heading references and balanced
+code fences, confirmed the clone URL/directory and HTML viewing commands, and
+verified that all 11 original fenced command blocks were retained unchanged in
+the guide. README length decreased from approximately 3,550 to 1,050 words.
+The proposed commit is limited to README.md, docs/workflow.md and this appended
+log entry. Existing AI-use entries are preserved.
+
+No Python source, tests, dependencies, raw data, assignments, experiment settings,
+predictions, timing records or generated API pages are edited. No software tests,
+model fits, predictions, development studies, benchmarks or final evaluation
+were rerun. The recorded 340-test result remains historical evidence. These
+documentation checks were AI-executed; student interpretation and explanation
+remain the student's responsibility.
